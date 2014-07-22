@@ -1,0 +1,60 @@
+table tbody tr.dnui_original{
+    background-color: #AAAAAA;
+} 
+
+table tbody tr.dnui_sons:nth-child(even){
+     background-color: #FFFFFF;
+}
+ 
+table tbody tr.dnui_sons:nth-child(odd){
+    
+    background-color: #EEEEEE;
+}
+
+.dnui .use{
+    
+    color: #00c700;
+}
+
+.dnui .not-use{
+    color: #c50000;
+}
+
+.right{
+    float: right;
+}
+
+
+#dnui_general ul{
+overflow:hidden; /*Clearing float. */
+      border-right:1px solid #fff;
+      height:35px;
+ 
+ }
+ #dnui_general li{
+      float:left;
+      list-style:none;
+ }
+ #dnui_general li a{
+      background:#ddd;
+      border:1px solid #fcfcfc;
+      border-right:0;
+      color:#666;
+      cursor:pointer;
+      display:block;
+      height:35px;
+      line-height:35px;
+      padding:0 30px;
+      text-decoration:none;
+      text-transform:uppercase;
+ }
+ #dnui_general li a:hover{
+      background:#eee;
+ }
+ #dnui_general li a.active{
+      background:#fbfbfb;
+      border:1px solid #fff;
+      border-right:0;
+      color:#333;
+ }
+ 
