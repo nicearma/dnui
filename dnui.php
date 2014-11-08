@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: DNUI (Delete not used images)
-  Version: 1.4
+  Version: 1.5
   Plugin URI: http://www.nicearma.com/delete-not-used-image-wordpress-dnui/
   Author: Nicearma
   Author URI: http://www.nicearma.com/
@@ -76,11 +76,14 @@ function DNUI() {
 add_action('wp_ajax_dnui_all', 'DNUI_ajax_image');
 
 function DNUI_ajax_image() {
-    $dnuiOption = $_POST["option"];
     
-    if (empty($dnuiOption)) {
+    $dnuiOption;
+    if(!empty($_POST["option"])){
+       $dnuiOption = $_POST["option"]; 
+    }else{
         $dnuiOption = unserialize(get_option("dnui_options"));
     }
+    
     $validator = array_filter(DNUI_validator($dnuiOption));
     
     if (empty($validator)) {

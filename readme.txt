@@ -6,7 +6,7 @@ Requires at least: 4.0
 Tested up to: 4.0
 Stable tag: 1.5
 
-Delete and update not used image and database
+Search/Delete all not used images from the database and make space in your server and clean up the database from all not unused images
  
 == Description ==
 
@@ -35,7 +35,8 @@ More information you can find it here http://www.nicearma.com/delete-not-used-im
 Version 1.5
 
 * Add compatibility with gallery (wordpress native gallery)
-* Bug fix has_cap
+* Fix of Bug has_cap
+* Fix of other bugs
 
 = Version <1.5 =
 

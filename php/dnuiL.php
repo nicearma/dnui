@@ -23,8 +23,9 @@ function DNUI_checkImageDB($ImageName, $postId) {
     $result = $wpdb->get_results($sql, "ARRAY_A");
     return $result;
 }
-function DNUI_checkImageServer($ImageSrc){
-   return file_exists($ImageSrc);
+function DNUI_checkImageServer($imageSrc){
+   // echo $imageSrc.file_exists($imageSrc)."\n";
+   return file_exists($imageSrc);
     
 }
 /**
@@ -68,8 +69,6 @@ function DNUI_getImages($i, $max, $order,$checkGallery) {
 
         $base = wp_upload_dir();
 
-        $base = $base['baseurl'];
-
         foreach ($result as $key => $value) {
             //  var_dump($value);
             $images[$key]["id"] = $value["id"];
@@ -78,7 +77,8 @@ function DNUI_getImages($i, $max, $order,$checkGallery) {
             $imp = explode("/", $images[$key]['meta_value']["file"]);
             $images[$key]['meta_value']["file"] = array_pop($imp);
             $folder = implode("/", $imp);
-            $images[$key]['base'] = "$base/$folder";
+            $images[$key]['baseDir'] = $base['basedir']."/$folder";
+            $images[$key]['base'] = $base['baseurl']."/$folder";
         }
     }
     
@@ -172,7 +172,7 @@ function DNUI_updateImages($value, $id) {
  * @param type $images
  * @return boolean
  */
-function DNUI_checkList($images,$InfoGalleries) {
+function DNUI_checkList(&$images,$infoGalleries) {
     
     foreach ($images as $key => $image) {
         
@@ -185,7 +185,7 @@ function DNUI_checkList($images,$InfoGalleries) {
             $images[$key]['meta_value']["use"] = false;
         }
         //var_dump($image);
-        $images[$key]['meta_value']["exits"]=DNUI_checkImageServer($image['base'].'/'.$image['meta_value']["file"]);
+        $images[$key]['meta_value']["exists"]=DNUI_checkImageServer($image['baseDir'].'/'.$image['meta_value']["file"]);
         
         foreach ($image['meta_value']['sizes'] as $keyS => $imageS) {
             clearstatcache();
@@ -200,23 +200,23 @@ function DNUI_checkList($images,$InfoGalleries) {
             if ($imageS["use"]) {
                 $images[$key]['meta_value']["use"] = true;
             }
-            $imageS["exits"]=DNUI_checkImageServer($image['meta_value']["file"].$imageS["file"]);
+            $imageS["exists"]=DNUI_checkImageServer($image['baseDir'].'/'.$imageS["file"]);
         }
         
        
-        if(array_key_exists($images[$key]['id'], $InfoGalleries)) {
+        if(array_key_exists($images[$key]['id'], $infoGalleries)) {
             
-            if(in_array('original', $InfoGalleries[$images[$key]['id']])){
+            if(in_array('original', $infoGalleries[$images[$key]['id']])){
                  $images[$key]['meta_value']["use"] = true;
-                $InfoGalleries= array_diff(array('original'),$InfoGalleries[$images[$key]['id']]);
+                $infoGalleries= array_diff(array('original'),$infoGalleries[$images[$key]['id']]);
             }
-            foreach($InfoGalleries[$images[$key]['id']]['sizes'] as $size) {
+            foreach($infoGalleries[$images[$key]['id']]['sizes'] as $size) {
                 $images[$key]['meta_value']["use"] = true;
                 $images[$key]['meta_value']['sizes'][$size]["use"] = true;
             }
            
         }
-        
+        unset($image['baseDir']);
         
     }
     return $images;
@@ -229,10 +229,13 @@ function DNUI_checkList($images,$InfoGalleries) {
  * @return array
  */
 function DNUI_delete($imagesToDelete, $options) {
+    
     $updateInServer = $options['updateInServer'];
     $backup = $options["backup"];
     $base = wp_upload_dir();
+    
     $base = $base['basedir'];
+    
     $errors = array();
     $basePlugin = plugin_dir_path(__FILE__) . '../backup/';
     foreach ($imagesToDelete as $key => $imageToDelete) {
@@ -242,9 +245,8 @@ function DNUI_delete($imagesToDelete, $options) {
         $tmp = explode("/", $image["file"]);
         $imageName = array_pop($tmp);
         $folder = implode("/", $tmp);
+        $dirBase = $base . '/' . $folder . '/';
         if ($backup) {
-
-            $dirBase = $base . '/' . $folder . '/';
             $dirBackup = $basePlugin . '/' . $imageToDelete["id"];
             $backupExist = file_exists($dirBackup . '/' . $imageToDelete["id"] . '.backup');
             if (!$backupExist) {
