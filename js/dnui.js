@@ -156,8 +156,10 @@ var DnuiVTableOption=Backbone.View.extend({
       "change .dnui_check" :"updateCheck",
       "change .dnui_select" :"updateSelect",
       "change .dnui_cant":"updateCant",
-      "click .dnui_reset":"reset"  
+      "click .dnui_reset":"reset" ,
+      "click .dnui_ignore":"ignore"
     },updateCheck:function(evt){
+        //alert(evt);
          this.dnuiMOption.set(jQuery(evt.target).data("dnui"),jQuery(evt.target).attr("checked")=== 'checked'?true:false);
     },updateSelect:function(evt){
          this.dnuiMOption.set(jQuery(evt.target).data("dnui"), parseInt(jQuery(evt.target).val()));
@@ -174,6 +176,14 @@ var DnuiVTableOption=Backbone.View.extend({
     },reset:function(evt){
         this.dnuiMOption.set(jQuery(evt.target).data("dnui"),0);
         this.dnuiVUlTabs.db();
+    },ignore:function(evt){
+        var ignore=[];
+        jQuery(evt.currentTarget).find("option:selected").each(function(key,input){
+            console.log(jQuery(input));
+            console.log(jQuery(input).data("ignore"));
+           ignore.push(jQuery(input).data("ignore"));
+        });
+         this.dnuiMOption.set("ignore",ignore);
     }
 });
 
@@ -231,13 +241,14 @@ var DnuiVTableImage = Backbone.View.extend({
     all : function(){
         var evt={};
         var self=this;
-        jQuery('input.dnui_father').each(function(key,input){
+        jQuery('input.dnui_original').each(function(key,input){
 
             if(!jQuery(input).prop("disabled")){
                 jQuery(input).prop("checked", !jQuery(input).prop("checked"));
             }
             evt.target=input;
-            self.father(evt);
+           
+            original(evt);
 
         });
     }
@@ -254,19 +265,25 @@ var DnuiVTbody=Backbone.View.extend({
     tagName:"tbody",
     template: _.template(jQuery("#dnui_tbody").html()),
     render:function(){
-       this.$el.html(this.template({image:this.model}));
+       this.$el.html(this.template({image:this.image,ignore:this.option.get("ignore"),show:this.option.get("show"),showIgnore:this.option.get("showIgnore")}));
        return this;
     },
     events: {
-        "click .dnui_father" : "father"
-    },
-    father :function(evt){
+        "click .dnui_original" : "original"
+    },original :function(evt){
+        original(evt);
+    }
+    
+    
+});
+
+function original(evt){
         
         var id=jQuery(evt.target).data("id");
 
         if(!jQuery(evt.target).prop("disabled")){
             
-           jQuery('input.dnui_sons[data-id="'+id+'"]').each(function(key,input){
+           jQuery('input.dnui_sizes[data-id="'+id+'"]').each(function(key,input){
             console.log(input);
             console.log(jQuery(input).prop("disabled"));
            if(!jQuery(input).prop("disabled")){
@@ -280,7 +297,7 @@ var DnuiVTbody=Backbone.View.extend({
         });
     }else {
 
-         jQuery('input.dnui_sons[data-id="'+id+'"]').each(function(key,input){
+         jQuery('input.dnui_sizes[data-id="'+id+'"]').each(function(key,input){
              if(!jQuery(input).attr("disabled")){
                
                jQuery(input).attr("checked", !jQuery(input).attr("checked"));
@@ -289,9 +306,6 @@ var DnuiVTbody=Backbone.View.extend({
     }
    
     }
-    
-});
-
 
 /**
  * 
@@ -309,6 +323,7 @@ var DnuiVTableButton = Backbone.View.extend({
         "click .dnui_next": "next",
         "click .dnui_before": "before",
         "click .dnui_delete": "deleteSelectd"
+       
     },
     next: function() {
               
@@ -394,6 +409,7 @@ jQuery(document).ready(function() {
      */
    var dnuiVTabsDb= new DnuiVTabsDb();
    var dnuiVTableImage= new DnuiVTableImage();
+   
    dnuiVUlTabs.dnuiVTableImage=dnuiVTableImage;
    var dnuiVTableButton1 = new DnuiVTableButton();
    dnuiVTableButton1.dnuiCImageServer=dnuiCImageServer;
@@ -442,7 +458,9 @@ jQuery(document).ready(function() {
         dnuiVTabsDb.$el.append(dnuiVTableButton2.el);
         dnuiVTableOption.render();
         dnuiCImageServer.forEach(function(image){
-            var dnuiVTbody= new DnuiVTbody({id:image.id, model:image.attributes});
+            var dnuiVTbody= new DnuiVTbody({id:image.id});
+            dnuiVTbody.image=image.attributes;
+            dnuiVTbody.option=dnuiMOption;
             dnuiVTbody.render();
             dnuiVTableImage.$el.append(dnuiVTbody.el);
             

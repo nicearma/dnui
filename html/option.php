@@ -1,5 +1,5 @@
 <script type="text/template" id="dnui_option" >
-
+<p>For any other information about how work this plugin you can go to <a href="http://www.nicearma.com/delete-not-used-image-wordpress-dnui/" >Nicearma DNUI page</a>
 <tbody>
 <tr>
     <td scope="row"><p><?php _e('Quantity of image to search','dnui') ?></p>
@@ -43,28 +43,45 @@
 </tr>
 <tr>
     <td scope="row"><p><?php _e('Make backup','dnui') ?></p>
-<p><small><?php _e('Checked if You want to make some backup of the deleted image, but this will decrease the performance','dnui') ?></small></p></td>
+<p><small><?php _e('Checked if you want  backup  the deleted image, (this will decrease the performance and a very simple logic,<br>'
+        . ' so if you want a very good backup system use another backup plugin)','dnui') ?></small></p></td>
     <td>
         <input class="dnui_check" data-dnui="backup"  <% if(option.backup) { %> checked <% } %> type="checkbox">
     </td>
 </tr>
 <tr>
-    <td scope="row"><?php _e('Cleanup backups after','dnui') ?>(not yet)<sup>Version 1.4</sup></td>
+    <td scope="row"><?php _e('Cleanup backups after','dnui') ?>
+             <p><small><?php _e('If you use the backup system and you dont want to delete every time the backup folder, use the option every day<br>'
+                     . 'The day will be one day after the use of this plugin','dnui') ?></small></p>       
+            </td>
     <td>
-                <select disabled>
-                     <option><?php _e('Manual','dnui') ?></option>
-                     <option><?php _e('Every Day','dnui') ?></option>
-                     <option><?php _e('Every Week','dnui') ?></option>
-
+                <select disabled class="dnui_select"  data-dnui="cron">
+                     <option <%  if(option.cron==0){ %>  selected <% } %> value="0"><?php _e('Manual','dnui') ?></option>
+                     <option  <%  if(option.cron==1){ %>  selected <% } %> value="1"><?php _e('Every Day','dnui') ?></option>
                 </select>
         
     </td>
 </tr>
 <tr>
-    <td scope="row"><?php _e('Ignore sizes','dnui') ?>(not yet)<sup>Version 1.4</sup></td>
+    <td scope="row"><?php _e('Show only image not used','dnui') ?></td>
     <td>
-                <select disabled>
-                     <option></option>
+        <input class="dnui_check" data-dnui="show" type="checkbox" <% if(option.show) { %> checked <% } %> >
+    </td>
+</tr>
+<tr>
+    <td scope="row"><p><?php _e('Ignore sizes','dnui') ?></p>
+             <p><small><?php _e('If you select size from this list, the plugin will not very the image, is like the sizes selected are used,<br>'
+                     . ' (the size selected and the original image can\'t be delete)'
+                     . ' <br>Secret: Use "ctrl" or "shift" :)','dnui') ?></small></p>    
+            </td>
+    <td>
+                <select multiple class="dnui_ignore">
+                         
+                            <?php $sizes= get_intermediate_image_sizes();
+ foreach ($sizes as $size) {
+     echo '<option <% if(_.contains(option.ignore,"'.$size.'")) { %> selected <% } %>  data-ignore="'.$size.'">'.$size.'</option>';
+ } ?>
+                     
                      
                 </select>
         
@@ -72,16 +89,34 @@
 </tr>
 
 <tr>
-    <td scope="row"><?php _e('Make only avaible for admin users','dnui') ?>(not yet)<sup>Version 1.4</sup></td>
+    <td scope="row"><?php _e('Not show images from ignore size','dnui') ?>
+             <p><small><?php _e('Normally all sizes will show, but if you this option is checked you will only see the other sizes not selected in the list (only for visual effect)','dnui') ?></small></p>    
+    
+            </td>
     <td>
-        <input class="dnui_check" data-dnui="admin" type="checkbox" disabled>
+        <input class="dnui_check" data-dnui="showIgnore" type="checkbox" <% if(option.showIgnore) { %> checked <% } %> >
     </td>
+    </tr>
+<tr>
+    <td scope="row"><?php _e('Make only avaible for admin users','dnui') ?></td>
+    <td>
+        <input class="dnui_check" data-dnui="admin" type="checkbox"  <% if(option.admin) { %> checked <% } %>>
+                    
+    </td>
+    
 </tr>
 
 <tr>
-    <td scope="row"><?php _e('Try to find match with gallery','dnui') ?>(not yet)<sup>Version 1.5</sup></td>
+    <td scope="row"><?php _e('Try to find match with gallery','dnui') ?>
+             <p><small><?php _e('Use this option if you have put some times galleries in the post or page,<br>'
+                     . 'this way the plugin will try to find all the galleries and put the image like used (work with the native gallery)<br>'
+                     . 'This option will consume more resources of you server','dnui') ?></small></p>    
+    
+            </td>
     <td>
-        <input class="dnui_check" data-dnui="gallery" type="checkbox" disabled>
+        <input class="dnui_check" data-dnui="galleryCheck" type="checkbox"  <% if(option.galleryCheck) { %> checked <% } %>>
+       
+                    
     </td>
 </tr>
 
