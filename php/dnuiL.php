@@ -10,36 +10,29 @@
  * @return type
  */
 
-function DNUI_checkImageDB($ImageName, $postId) {
+function DNUI_checkImageDB($ImageName, $postId,$without=false) {
     global $wpdb;
+    //FIND in the post parent the reference, this will useful if the image is used at the same time
     $sql = "SELECT id FROM " . $wpdb->prefix . "posts WHERE  post_parent in (SELECT post_parent FROM " . $wpdb->prefix . "posts WHERE id=" . $postId . " ) and post_content LIKE '%/$ImageName%'";
     $wpdb->get_results($sql, "ARRAY_A");
     $result = $wpdb->get_results($sql, "ARRAY_A");
     if (!empty($result)) {
         return $result;
-    } else {
-        $sql = "SELECT id FROM " . $wpdb->prefix . "posts  WHERE post_content LIKE '%/$ImageName%' limit 0,1";
+    }else if($without){
+        $sql = "SELECT id FROM " . $wpdb->prefix . "posts  WHERE post_content is not null and post_content!=''  and post_type not in ('attachment','nav_menu_item','revision') and post_status !='draft' and post_content LIKE '%/$ImageName%' limit 0,1";
+    }else{
+        $sql = "SELECT id FROM " . $wpdb->prefix . "posts  WHERE post_content is not null and post_content!=''  and post_type not in ('attachment','nav_menu_item') and post_content LIKE '%/$ImageName%' limit 0,1";
     }
-    $result = $wpdb->get_results($sql, "ARRAY_A");
-    return $result;
+    
+    return $wpdb->get_results($sql, "ARRAY_A");
+    
 }
 function DNUI_checkImageServer($imageSrc){
    // echo $imageSrc.file_exists($imageSrc)."\n";
    return file_exists($imageSrc);
     
 }
-/**
- * Find where the image is used, only if some one whant to no this information
- * @global type $wpdb
- * @param type $ImageName
- * @return type
- */
-function DNUI_getWhereIsUsed($ImageName) {
-    global $wpdb;
-    $sql = "SELECT id FROM " . $wpdb->prefix . "posts  WHERE post_content LIKE '%/$ImageName%'";
-    $result = $wpdb->get_results($sql, "ARRAY_A");
-    return $result;
-}
+
 
 /**
  * Get all images in the database who have the condition Type of post 'attachment'  and Type of MIME = 'image'. This will give all the sizes to
@@ -50,7 +43,7 @@ function DNUI_getWhereIsUsed($ImageName) {
  * @return type
  */
 
-function DNUI_getImages($i, $max, $order,$checkGallery) {
+function DNUI_getImages($i, $max, $order,$checkGallery,$without) {
     global $wpdb;
 
     $sql = 'SELECT id FROM ' . $wpdb->prefix . 'posts, ' . $wpdb->prefix . "postmeta where post_type='attachment' and post_mime_type like  'image%' and " . $wpdb->prefix . "posts.id=" . $wpdb->prefix . "postmeta.post_id and " . $wpdb->prefix . 'postmeta.meta_key=\'_wp_attachment_metadata\' ';
@@ -73,6 +66,7 @@ function DNUI_getImages($i, $max, $order,$checkGallery) {
             //  var_dump($value);
             $images[$key]["id"] = $value["id"];
             $images[$key]['meta_value'] = wp_get_attachment_metadata($value["id"]);
+            unset($images[$key]['meta_value']['image_meta']);
             //the result of meta_value is serialized 
             $imp = explode("/", $images[$key]['meta_value']["file"]);
             $images[$key]['meta_value']["file"] = array_pop($imp);
@@ -83,13 +77,13 @@ function DNUI_getImages($i, $max, $order,$checkGallery) {
     }
     
     if($checkGallery){
-      $infoGalleries=   DNUI_getInfoImageFormPostsWithGallery();
+      $infoGalleries=   DNUI_getInfoImageFormPostsWithGallery($without);
     }else{
       $infoGalleries=array();
     }
   
 
-    return DNUI_checkList($images,$infoGalleries);
+    return DNUI_checkList($images,$infoGalleries,$without);
 }
 
 /**
@@ -123,9 +117,16 @@ function DNUI_getRowPostMeta($id) {
  * @return type
  */
 
-function DNUI_getInfoImageFormPostsWithGallery() {
+function DNUI_getInfoImageFormPostsWithGallery($without=false) {
     global $wpdb;
-    $sql = "SELECT id FROM " . $wpdb->prefix . "posts  WHERE post_content LIKE '%[gallery%' and post_type='post'; ";
+   
+    if($without){
+        $sql = "SELECT id FROM " . $wpdb->prefix . "posts  WHERE  post_content is not null and post_content!=''  and post_type not in ('attachment','nav_menu_item','revision') and post_status !='draft' AND post_content LIKE '%[gallery%'; ";
+     }else{
+        $sql = "SELECT id FROM " . $wpdb->prefix . "posts  WHERE  post_content is not null and post_content!=''  and post_type not in ('attachment','nav_menu_item') and post_content LIKE '%[gallery%'";
+    }
+    
+    //$sql = "SELECT id FROM " . $wpdb->prefix . "posts  WHERE post_content LIKE '%[gallery%' and post_type='post'; ";
     $result=$wpdb->get_results($sql, "ARRAY_A");
     $info=array();
     foreach ($result as $id) {
@@ -172,11 +173,12 @@ function DNUI_updateImages($value, $id) {
  * @param type $images
  * @return boolean
  */
-function DNUI_checkList(&$images,$infoGalleries) {
-    
+function DNUI_checkList(&$images,$infoGalleries,$without=false) {
+   
     foreach ($images as $key => $image) {
+        //var_dump($image);
+        $idPost = DNUI_checkImageDB($image['meta_value']["file"], $image['id'],$without);
         
-        $idPost = DNUI_checkImageDB($image['meta_value']["file"], $image['id']);
         if (!empty($idPost)) {
             $images[$key]['meta_value']["use"] = true;
             $images[$key]['meta_value']["url"] =get_permalink($idPost[0]['id']);
@@ -188,35 +190,48 @@ function DNUI_checkList(&$images,$infoGalleries) {
         $images[$key]['meta_value']["exists"]=DNUI_checkImageServer($image['baseDir'].'/'.$image['meta_value']["file"]);
         
         foreach ($image['meta_value']['sizes'] as $keyS => $imageS) {
+            //var_dump($imageS);
             clearstatcache();
-            $idPost = DNUI_checkImageDB($imageS["file"], $image['id']);
+            $idPost = DNUI_checkImageDB($imageS["file"], $image['id'],$without);
             if (!empty($idPost)) {
-                $imageS["use"] = true;
-                $imageS["url"] = get_permalink($idPost[0]['id']);
+                $images[$key]['meta_value']['sizes'][$keyS]["use"] = true;
+                $images[$key]['meta_value']['sizes'][$keyS]["url"] = get_permalink($idPost[0]['id']);
             } else {
-                $imageS["use"] = false;
+                $images[$key]['meta_value']['sizes'][$keyS]["use"] = false;
             }
 
-            if ($imageS["use"]) {
+            if ($images[$key]['meta_value']['sizes'][$keyS] ["use"]) {
                 $images[$key]['meta_value']["use"] = true;
             }
-            $imageS["exists"]=DNUI_checkImageServer($image['baseDir'].'/'.$imageS["file"]);
+            
+            $images[$key]['meta_value']['sizes'][$keyS] ["exists"]=DNUI_checkImageServer($image['baseDir'].'/'.$imageS["file"]);
+            
         }
         
+        //var_dump($infoGalleries);
        
         if(array_key_exists($images[$key]['id'], $infoGalleries)) {
-            
-            if(in_array('original', $infoGalleries[$images[$key]['id']])){
-                 $images[$key]['meta_value']["use"] = true;
-                $infoGalleries= array_diff(array('original'),$infoGalleries[$images[$key]['id']]);
-            }
-            foreach($infoGalleries[$images[$key]['id']]['sizes'] as $size) {
+           
+            if(in_array('original', $infoGalleries[$images[$key]['id']]['sizes'])){
                 $images[$key]['meta_value']["use"] = true;
-                $images[$key]['meta_value']['sizes'][$size]["use"] = true;
+              $infoGalleries[$images[$key]['id']]['sizes']=  array_diff($infoGalleries[$images[$key]['id']]['sizes'], array('original'));
+ 
             }
+            
+            
+            
+            foreach($infoGalleries[$images[$key]['id']]['sizes'] as $size) {
+                if(key_exists($size, $images[$key]['meta_value']['sizes'])){
+                   $images[$key]['meta_value']["use"] = true;
+                $images[$key]['meta_value']['sizes'][$size]["use"] = true; 
+                }
+            }
+             
+            unset($infoGalleries[$images[$key]['id']]);
            
         }
-        unset($image['baseDir']);
+        
+        unset($images[$key]['baseDir']);
         
     }
     return $images;
@@ -305,6 +320,8 @@ function DNUI_delete($imagesToDelete, $options) {
     }
     return $errors;
 }
+
+
 /**
  * Copy one image from source to destination, used for the backup
  * @param type $source
@@ -312,7 +329,9 @@ function DNUI_delete($imagesToDelete, $options) {
  */
 function DNUI_copy($source, $dest) {
     if (file_exists($source)) {
-        copy($source, $dest);
+       return copy($source, $dest);
+    }else{
+        return false;
     }
 }
 /**
@@ -369,22 +388,7 @@ function DNUI_cleanup_backup() {
 
     return;
 }
-/**
- * Delete one folder backup
- * @param type $ids
- * @return type
- */
-function DNUI_delete_backup($ids) {
-    $basePlugin = plugin_dir_path(__FILE__) . '../backup/';
-    foreach ($ids as $id) {
-        $backFiles = DNUI_scan_dir($basePlugin . $id["backup"] . '/');
-        foreach ($backFiles as $file) {
-            @unlink($basePlugin . $id["backup"] . '/' . $file);
-        }
-        rmdir($basePlugin . $id["backup"] . '/');
-    }
-    return;
-}
+
 /**
  * Restore the backup given the id
  * @global type $wpdb
@@ -397,7 +401,8 @@ function DNUI_restore_backup($ids) {
     foreach ($ids as $id) {
         $backFiles = DNUI_scan_dir($basePlugin . $id["backup"] . '/', 1);
         $fileImages = preg_grep("/^(?!.*\.backup)/", $backFiles);
-        $fileBackup = $basePlugin . $id["backup"] . '/' . array_pop(preg_grep("/^(.*\.backup)/", $backFiles));
+        $fileBackup =preg_grep("/^(.*\.backup)/", $backFiles);
+        $fileBackup = $basePlugin . $id["backup"] . '/' . array_pop($fileBackup);
         //var_dump($fileBackup);
         $backupInfo = unserialize(file_get_contents($fileBackup));
         foreach ($backupInfo["posts"] as $posts) {
@@ -410,9 +415,36 @@ function DNUI_restore_backup($ids) {
         foreach ($fileImages as $image) {
             rename($basePlugin . $id["backup"] . '/' . $image, $backupInfo["dirBase"] . $image);
         }
-        @unlink($fileBackup);
-        rmdir($basePlugin . $id["backup"] . '/');
+        DNUI_delete_backup($id);
     }
+   
+}
+
+/**
+ * Delete one folder backup
+ * @param type $ids
+ * @return type
+ */
+function DNUI_delete_backups($ids) {
+    $basePlugin = plugin_dir_path(__FILE__) . '../backup/';
+    foreach ($ids as $id) {
+        DNUI_delete_backup($id,$basePlugin);
+      
+    }
+    return;
+}
+
+
+function DNUI_delete_backup($id,$basePlugin=null) {
+    if(empty($basePlugin)){
+        $basePlugin = plugin_dir_path(__FILE__) . '../backup/';
+    }
+    $backFiles = DNUI_scan_dir($basePlugin . $id["backup"] . '/');
+        foreach ($backFiles as $file) {
+            @unlink($basePlugin . $id["backup"] . '/' . $file);
+        }
+        rmdir($basePlugin . $id["backup"] . '/'); 
+    return;
 }
 
 /**

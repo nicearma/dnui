@@ -4,14 +4,12 @@
 <tr>
     <td scope="row"><p><?php _e('Quantity of image to search','dnui') ?></p>
     <p><small><?php _e('How many image you will see/search in the database, if you put a big number,'
-            . '<br> you will have some problem with your site, see the plugin page for more information','dnui') ?></small></p></td>
+            . '<br> you will have some problem with your site, see the plugin page for more information ( Advice use max:100, min:25 )','dnui') ?></small></p></td>
     <td><input class="dnui_cant" data-dnui="cantInPage" type="number" min="1" name="quantity" value="<%= option.cantInPage %>"> </td>
 </tr>
 <tr>
     <td scope="row"><p><?php _e('Order','dnui') ?> </p>
             <p><small><?php _e('First : the oldest will be displayed','dnui') .'<br>'. _e('Last : the newest will be displayed','dnui') ?></small></p></td>
-        
-            
     <td>
         <select class="dnui_select"  data-dnui="order">
             <option <% if(option.order==0){  %>  selected <% } %> value="0">
@@ -22,7 +20,7 @@
             <?php _e('Last','dnui') ?>
             </option>
         </select>
-        </td>
+    </td>
 </tr>
 <tr>
     <td scope="row"><?php _e('Update database if image is not in server (use with precaution)','dnui') ?>
@@ -119,6 +117,20 @@
                     
     </td>
 </tr>
+<tr>
+    <td scope="row"><?php _e('SQL: Don\'t use revision and draft for the search','dnui') ?>
+             <p><small><?php _e('If you want to make a search only in posts and pages published; uncheck this<br>'
+                     . 'If this option is checked the result will be more accurate but the search will be lest performance<br>'
+                     . 'So you have to chose','dnui') ?></small></p>    
+    
+            </td>
+    <td>
+        <input class="dnui_check" data-dnui="without" type="checkbox"  <% if(option.without) { %> checked <% } %>>
+       
+                    
+    </td>
+</tr>
+
 
 </tbody>
 </script>

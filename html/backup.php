@@ -1,4 +1,4 @@
-<script id="dnui_table_backup">
+<script type="text/template" id="dnui_table_backup">
 <thead>
     <tr>
         <th><?php _e('Restore','dnui') ?></th>
@@ -9,7 +9,7 @@
 </script>
 
 
-<script id="dnui_tbody_backup">
+<script type="text/template" id="dnui_tbody_backup">
     <% var src; %>
     <tr>
         <td><input type="checkbox" class="backup" data-id="<%= backup.id %>" /></td>
@@ -37,7 +37,7 @@
 </script>
 
 
-<script id="dnui_button_backup">
+<script type="text/template" id="dnui_button_backup">
    
 <h2>
 <button class="button-primary dnui_restore_backup" type="button"><?php _e('Restore selected','dnui') ?> </button> 

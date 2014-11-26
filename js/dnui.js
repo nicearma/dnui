@@ -1,19 +1,3 @@
-var _underscore_template = _.template;
-
-_.template = function(str, data) {
-    return _underscore_template(
-            str.replace(
-                    /<%\s*include\s*(.*?)\s*%>/g,
-                    function(match, templateId) {
-                        var el = jQuery('#' + templateId);
-                        return el ? el.html() : '';
-                    }
-            ),
-            data
-            );
-};
-
-
 var DnuiVGeneral=Backbone.View.extend({
     el:"div#dnui_general"
 });
@@ -241,14 +225,14 @@ var DnuiVTableImage = Backbone.View.extend({
     all : function(){
         var evt={};
         var self=this;
-        jQuery('input.dnui_original').each(function(key,input){
+        jQuery('input.dnui_original_check').each(function(key,input){
 
             if(!jQuery(input).prop("disabled")){
                 jQuery(input).prop("checked", !jQuery(input).prop("checked"));
             }
             evt.target=input;
-           
-            original(evt);
+          
+          original(evt);
 
         });
     }
@@ -269,9 +253,11 @@ var DnuiVTbody=Backbone.View.extend({
        return this;
     },
     events: {
-        "click .dnui_original" : "original"
+        "click .dnui_original_check" : "original"
     },original :function(evt){
+        
         original(evt);
+
     }
     
     
@@ -284,15 +270,15 @@ function original(evt){
         if(!jQuery(evt.target).prop("disabled")){
             
            jQuery('input.dnui_sizes[data-id="'+id+'"]').each(function(key,input){
-            console.log(input);
-            console.log(jQuery(input).prop("disabled"));
+
            if(!jQuery(input).prop("disabled")){
-              
-               jQuery(input).prop("disabled",true);
+             
+               jQuery(input).prop("disabled",!jQuery(input).prop("disabled"));
                jQuery(input).prop("checked",false);
            }else{
-
-                jQuery(input).removeProp("disabled");
+              
+              jQuery(input).removeProp("disabled");
+                jQuery(input).prop("checked",false);
            }
         });
     }else {
@@ -305,7 +291,7 @@ function original(evt){
          });
     }
    
-    }
+ }
 
 /**
  * 
