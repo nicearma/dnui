@@ -1,38 +1,51 @@
 === DNUI Delete not used image===
 Contributors: nicearma
-Donate link: http://www.nicearma.com/
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DX8UCXHB6RMD4&lc=US&item_name=DNUI%20donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: image, cleanup, images, delete, image not used, image unused, delete unused image, delete not used image, cleanup image
-Requires at least: 4.0
-Tested up to: 4.0
-Stable tag: 1.5
+Requires at least: 4.4
+Tested up to: 4.4
+Stable tag: 2.0
 
-Search/Delete all not used images from the database and make space in your server and clean up the database from all not unused images
+Search/Delete all not used images from the database and make space in your server and cleanup the database from all unused images
  
 == Description ==
 
-This plugin will help you to find all image in the database that are not being used/unused and give you the oportunity to clean up the database and space.
+DNUI (<b>D</b>elete <b>N</b>ot <b>U</b>sed <b>I</b>mage) will search images from the database and try to find if all images are used in one Post and Page, if one reference is found,  the plugin will tell you that the image is used.
 
-You will only delete not used/unused image (based in the logic of a blog site, continue to read please), so dont worry about delete image used (if you use the DNUI backup option!!!!).
+The version 2.0 is one big remake of this plugin, all the code changed, now the code work by Rest Service and use AngularJS (not more the BackboneJS)
 
-*Never use this plugin the first time for delete all not used image, so be careful because some plugin and theme can use images that this plugin will thing is not used*
+The update from the 1.x to the 2.0 is automatic, the only problem is that you will lost the backup folder and all backups made from the version 1.x
 
-If you have any feedback, recommendation, comments leave me a comment in the blog or here !
-
-The search code work this way, we have the rule that, one image have to be referred in minimun one post/page, so if the image is not referred you will see it not used.
-
-If you have problem with other plugin, you can ask me to adapt the code for work with the plugin.
-
-More information you can find it here http://www.nicearma.com/delete-not-used-image-wordpress-dnui/
-
-** Recommendations **
-
-* Make some BACKUP of your database and the  uploads folder, because for the moment the plugin will delete the information in the datbase and your server,they are irreversible, so if something goes wrong is better have a backup.
-* Performs a lots of tests before use in post in production, try to use blogs with the same characteristics, since I have not tested for compatibility with other plugin, so you can see if will work fine (see more in the https://wordpress.org/plugins/dnui-delete-not-used-image-wordpress/faq/).
-* Download this plugin only from wordpress.org.
+The plugin was fully test it with WordPress 4.3/4.4.1 and PHP 5.4/5.6
 
 == Changelog ==
 
-Version 1.5
+= Version 2.0 =
+
+* Change all the PHP code
+* Change all the Javascript code (now with AngularJS)
+* Added warning
+
+= Version 1.5.4 =
+
+* Not limit in the quantity of image to search
+
+= Version 1.5.3 =
+
+* Fix JS ignore size if there nothing in sizes and hidden orignal problem
+
+
+= Version 1.5.2 =
+
+* SQL performance
+* FIX JS select all 
+* FIX crazy problem with sizes
+
+= Version 1.5.1 =
+
+* Fix: Uncaught SyntaxError: Unexpected token < 
+
+= Version 1.5 =
 
 * Add compatibility with gallery (wordpress native gallery)
 * Fix of Bug has_cap
@@ -73,6 +86,38 @@ The hard way :
 
 == Frequently Asked Questions ==
 
+
+
+= Why i have to do Backup? =
+
+This plugin will delete images and information's in your server and the database, so you have to do one BACKUP every time you want
+to use this plugin.
+
+= Is the backup system from the DNUI plugin enough? =
+
+Yes and no, if you have the backup option active, the plugin will try to do one backup of the image you are try to delete, but this is not the main purpose of the DNUI plugin, so is not bull proof <br/>
+In the WordPress.org plugin page you can find a lots of Backup Plugin, so the will have better code for make Backup's
+
+= Is really not used / unused? =
+
+Yes and not, the not used label, tell you that the imageName.imageType (toto.jpg) is not found in any Post or Page
+So if you have another plugin, for example 'E-commerce X' that use the toto.jpg in one HTML code or SHORTCODE, the
+DNUI plugin can't work find any reference, so you will have one false 'not used' label
+
+
+= How to fix the false 'not used' label? =
+
+This question can be hard to answer <br>
+I build this plugin for help you to fix this problem, you have somes options:
+
+1.  Use the Ignore Size Option, you can select one or more options (use Ctrl+Click) to ignore the size's
+2.  You can dev your own ChekkerImage[Plugin].php code, and add this to CheckersDNUI (you can send me the code and i will put this in the Free version)
+3.  Ask me to do it this plugin compatible with the X Plugin (Only for Pro version)
+
+
+= Where i can found the version pro? =
+I'm working on it
+
 = Why after upgrade the plugin, doesn't work =
 
 This is a bug that i don't know have to resolver, the problem is that i change some value from the database, and in the update this value is not added to the database, but the solution is easy: 
@@ -87,11 +132,12 @@ So is better that you have some return point if something go wrong
 
 1. Add one post.
 2. Upload n images to this post.
-3. Add diferent size and see if the plugin DNUI is taking the good origina/sizes used or not.
-4. See if other plugin is using other sized that the plugin DNUI is thiking that aren't used.
-5. Delete some not used image and see if the post/theme/page/other plugin is working(showing) like have to do.
-6. Try to adapt the DNUI option for make the plugin work fine with all plugin (TIP: USE THE IGNORE SIZE)
+3. Add diferent size and see if the plugin DNUI is taking the good original/sizes used or not.
+4. See if other plugin is using other sizes that the plugin DNUI is thiking that aren't used and adapt the ignore size to this part.
+5. Delete some not used image and see if the post/theme/page/other plugin is working|showing like he have to do.
+6. Try to adapt the DNUI option for make the plugin work fine with all plugin(TIP: USE THE IGNORE SIZE)
 7. Make your own crazy test (changing the DNUI option) for see what happen.
+8. Begin the delete part with the backup option checked (But is better if you use other backup plugin just in case)
 
 *This will take you 15 min but you will see if all is OK or not*
 

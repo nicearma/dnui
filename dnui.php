@@ -1,247 +1,165 @@
 <?php
 /*
   Plugin Name: DNUI (Delete not used images)
-  Version: 1.5
+  Version: 2.0
   Plugin URI: http://www.nicearma.com/delete-not-used-image-wordpress-dnui/
   Author: Nicearma
   Author URI: http://www.nicearma.com/
   Text Domain: dnui
-  Description: This plugin will delete all not used images file, the plugin search all image, not referred by any post and page of wordpress
+  Description: This plugin will delete all not used images file, the plugin search all image, not referred by any post of wordpress
  */
 
 /*
-  Copyright (c) 2014 http://www.nicearma.com
+  Copyright (c) 2016 http://www.nicearma.com
   Released under the GPL license
   http://www.gnu.org/licenses/gpl.txt
  */
 
-include_once 'php/dnuiL.php';
+add_action('admin_init', 'DNUI_admin_js');
 
-add_action('admin_init', 'DNUI_js');
-add_action('wp_enqueue_scripts', 'DNUI_js');
-add_action('admin_menu', 'DNUI_option_menu');
+add_action('admin_menu', 'DNUI_admin_menu');
 
-function DNUI_option_menu() {
-    $dnuiOption = unserialize(get_option("dnui_options"));
-    add_options_page('DNUI option', 'DNUI', 'activate_plugins', basename(__FILE__), 'DNUI');
-    
-}
 
-function DNUI_js() {
+function DNUI_admin_js()
+{
     wp_register_style('dnui-css', plugins_url('css/dnui.css', __FILE__));
-    //wp_register_script('dnui-js-views', plugins_url('js/dnui_views.js', __FILE__), array('backbone', 'jquery', 'jquery-ui-tabs'));
-    wp_register_script('dnui-js', plugins_url('js/dnui.js', __FILE__), array('backbone', 'jquery', 'jquery-ui-tabs'));
+
+    //angular dependency
+    wp_register_script('dnui-angular', plugins_url('js/external/angular.min.js', __FILE__), array('jquery', 'underscore'));
+    wp_register_script('dnui-angular-resource', plugins_url('js/external/angular-resource.min.js', __FILE__), array('dnui-angular'));
+    wp_register_script('dnui-angular-animate', plugins_url('js/external/angular-animate.min.js', __FILE__), array('dnui-angular'));
+
+    //extra dependency
+    wp_register_script('dnui-bootstrap-tabs', plugins_url('js/external/bootstrap-tabs.min.js', __FILE__), array('dnui-angular'));
+    wp_register_script('dnui-angular-ui', plugins_url('js/external/angular-ui.js', __FILE__), array('dnui-angular', 'dnui-bootstrap-tabs'));
+
+    //resources
+    wp_register_script('dnui-options-resource', plugins_url('js/resource/options-resource.js', __FILE__), array('dnui-angular-resource'));
+    wp_register_script('dnui-images-resource', plugins_url('js/resource/images-resource.js', __FILE__), array('dnui-angular-resource'));
+    wp_register_script('dnui-backup-resource', plugins_url('js/resource/backup-resource.js', __FILE__), array('dnui-angular-resource'));
+
+    //controller
+    wp_register_script('dnui-dnui-ctrl', plugins_url('js/ctrl/dnui-ctrl.js', __FILE__), array('dnui-angular'));
+    wp_register_script('dnui-options-ctrl', plugins_url('js/ctrl/options-ctrl.js', __FILE__), array('dnui-options-resource'));
+    wp_register_script('dnui-images-ctrl', plugins_url('js/ctrl/images-ctrl.js', __FILE__), array('dnui-images-resource'));
+    wp_register_script('dnui-backup-ctrl', plugins_url('js/ctrl/backup-ctrl.js', __FILE__), array('dnui-backup-resource'));
+
+    //dnui principal JS
+    wp_register_script('dnui-js', plugins_url('js/dnui.js', __FILE__), array('dnui-angular', 'dnui-angular-animate', 'dnui-bootstrap-tabs', 'dnui-angular-ui'));
 }
 
-function DNUI() {
-    include_once 'html/backup.php';
-    include_once 'html/option.php';
-    include_once 'html/tableDb.php';
 
-    add_thickbox();
+function DNUI_admin_menu()
+{
+
+    /* Add our plugin submenu and administration screen */
+    $page_hook_suffix = add_submenu_page('tools.php', // The parent page of this submenu
+        __('DNUI Delete not used image', 'dnui'), // The submenu title
+        __('DNUI Delete not used image', 'dnui'), // The screen title
+        'activate_plugins', // The capability required for access to this submenu
+        'dnui', // The slug to use in the URL of the screen
+        'DNUI_display_menu' // The function to call to display the screen
+    );
+
+    /*
+      * Use the retrieved $page_hook_suffix to hook the function that links our script.
+      * This hook invokes the function only on our plugin administration screen,
+      * see: http://codex.wordpress.org/Administration_Menus#Page_Hook_Suffix
+      */
+    add_action('admin_print_scripts-' . $page_hook_suffix, 'DNUI_admin_scripts');
+
+}
+
+function DNUI_admin_scripts()
+{
+
     wp_enqueue_style('dnui-css');
+
+    /* Link our already registered script to a page */
     wp_enqueue_script('dnui-js');
+
+    //include resources
+    wp_enqueue_script('dnui-options-resource');
+    wp_enqueue_script('dnui-images-resource');
+    wp_enqueue_script('dnui-backup-resource');
+
+    //include controllers
+    wp_enqueue_script('dnui-dnui-ctrl');
+    wp_enqueue_script('dnui-options-ctrl');
+    wp_enqueue_script('dnui-images-ctrl');
+    wp_enqueue_script('dnui-backup-ctrl');
+}
+
+/* Display our administration screen */
+function DNUI_display_menu()
+{
     ?>
 
-    <p><?php _e('DNUI - Delete not used/unused image') ?></p>
+    <div ng-app="dnuiPlugin">
 
-    <div id="dnui_general">
-        <ul id="dnui_tabs_button">
-            <li><a class="dnui_db" href="#dnui_tabs_db"><?php _e('Scan DATABASE') ?></a></li>
-            <!--<li><a href="#dnui_tabs_folder"><?php _e('Scan FOLDER <sup>version 1.7</sup>') ?></a></li>-->
-            <li><a class="dnui_bp" href="#dnui_tabs_backup"><?php _e('Backup') ?></a></li>
-            <li><a class="dnui_op" href="#dnui_tabs_option"><?php _e('Option') ?></a></li>
-        </ul>
-        <div class="tabDetails">
-            <div id="dnui_tabs_db">
-                <h1>DNUI search unused/used image in database</h1>
-            </div>
-            <!--  <div id="dnui_tabs_folder">
-                   <h1>DNUI search/scan folder upload</h1>
-              </div>-->
-            <div id="dnui_tabs_backup">
-                <h1>DNUI backup</h1>
-            </div>
-            <div id="dnui_tabs_option">
-                <h1>DNUI option</h1>
-            </div>
+        <div ng-controller="DnuiCtrl">
+
+            <uib-tabset>
+
+                <uib-tab  heading="<?php _e('Warning', 'dnui') ?>">
+                    <h1>
+                        <?php _e('WARNING ABOUT THIS PLUGIN', 'dnui') ?>
+                    </h1>
+                    <?php include_once 'html/warning.php'; ?>
+                </uib-tab>
+
+                <uib-tab select='tabImages()' heading="<?php _e('Images', 'dnui') ?>">
+                    <h1>
+                        <?php _e('DNUI search unused/used image in database', 'dnui') ?>
+                    </h1>
+                    <?php include_once 'html/images.php'; ?>
+                </uib-tab>
+
+                <uib-tab select='tabBackups()' heading="<?php _e('Backups', 'dnui') ?>">
+                    <h1>
+                        <?php _e('DNUI backup', 'dnui') ?>
+                    </h1>
+                    <?php include_once 'html/backup.php'; ?>
+
+                </uib-tab>
+
+                <uib-tab select='tabOptions()' heading="<?php _e('Options', 'dnui') ?>">
+                    <h1>
+                        <?php _e('DNUI options', 'dnui') ?>
+                    </h1>
+                    <?php include_once 'html/options.php'; ?>
+                </uib-tab>
+            </uib-tabset>
         </div>
-
-
     </div>
-    <?php
-  
+
+<?php
+
 }
 
-add_action('wp_ajax_dnui_all', 'DNUI_ajax_image');
+//
+//function DNUI_activate() {
+//    BackupRest::makeBackupFolder();
+//}
+//
+//
+//
+//register_activation_hook( __FILE__, 'DNUI_activate' );
 
-function DNUI_ajax_image() {
-    
-    $dnuiOption;
-    if(!empty($_POST["option"])){
-       $dnuiOption = $_POST["option"]; 
-    }else{
-        $dnuiOption = unserialize(get_option("dnui_options"));
-    }
-    
-    $validator = array_filter(DNUI_validator($dnuiOption));
-    
-    if (empty($validator)) {
-        
-        $out = DNUI_getImages($dnuiOption["page"], $dnuiOption["cantInPage"], $dnuiOption["order"], $dnuiOption['galleryCheck']);
-        $out = json_encode($out);
-        DNUI_add_option($dnuiOption);
-    } else {
-        
-        $out = json_encode($validator);
-    }
-    echo $out;
 
-    die();
-}
+include_once 'php/model/OptionsDNUI.php';
+include_once 'php/model/DatabaseDNUI.php';
+include_once 'php/model/ImageDNUI.php';
 
-function DNUI_add_option($options) {
-    $validator = array_filter(DNUI_validator($options));
+include_once 'php/converters/ConvertOptions.php';
+include_once 'php/converters/ConvertWordpressToDNUI.php';
 
-    if (empty($validator)) {
-        if ($options['cron'] == 0) {
-            wp_clear_scheduled_hook('dnui_delete_daily');
-        } else if ($options['cron'] == 1) {
-            wp_clear_scheduled_hook('dnui_delete_daily');
-            wp_schedule_event(time() + 1, 'daily', 'dnui_delete_backup_daily');
-        }
-        $options = serialize($options);
-        update_option("dnui_options", $options);
-    }
-}
+include_once 'php/rest/OptionsRest.php';
+include_once 'php/rest/ImageRest.php';
+include_once 'php/rest/BackupRest.php';
 
-add_action('dnui_delete_backup_daily', 'DNUI_ajax_cleanup_backup');
+include_once 'php/checkers/CheckerImageAbstract.php';
+include_once 'php/checkers/CheckerImagePost.php';
+include_once 'php/checkers/CheckersDNUI.php';
 
-add_action('wp_ajax_dnui_get_option', 'DNUI_get_option');
-
-function DNUI_get_option() {
-    //var_dump(unserialize(get_option("dnui_options")));
-    echo json_encode(unserialize(get_option("dnui_options")));
-    die();
-}
-
-function DNUI_transform_bool(&$var) {
-    if ($var == 'true') {
-        $var = true;
-    } else {
-        $var = false;
-    }
-}
-
-function DNUI_validator(&$options) {
-    $validator = array();
-    DNUI_transform_bool($options["updateInServer"]);
-    DNUI_transform_bool($options["backup"]);
-    DNUI_transform_bool($options["show"]);
-    DNUI_transform_bool($options["admin"]);
-    DNUI_transform_bool($options["showIgnore"]);
-    DNUI_transform_bool($options["galleryCheck"]);
-
-     if (!(is_numeric($options["cron"]))) {
-        array_push($validator, "order is not good");
-    } else {
-        if (($options["cron"] == 0 || $options["cron"] == 1)) {
-            $options["cron"] = intval($options["cron"]);
-        }
-    }
-
-    if (!(is_numeric($options["order"]))) {
-        array_push($validator, "order is not good");
-    } else {
-        if (($options["order"] == 0 || $options["order"] == 1)) {
-            $options["order"] = intval($options["order"]);
-        }
-    }
-    if (!(is_numeric($options["page"]) && $options["page"] >= 0)) {
-        array_push($validator, "page is not good");
-    } else {
-        $options["page"] = intval($options["page"]);
-    }
-    if (!(is_numeric($options["cantInPage"]) && $options["cantInPage"] >= 0)) {
-        array_push($validator, "cantInPage is not good");
-    } else {
-        $options["cantInPage"] = intval($options["cantInPage"]);
-        if ($options["cantInPage"] > 100) {
-            $options["cantInPage"] = 100;
-        }
-    }
-   
-    return $validator;
-}
-
-add_action('wp_ajax_dnui_delete', 'DNUI_ajax_delete');
-
-function DNUI_ajax_delete() {
-
-    if (!empty($_POST["imageToDelete"])) {
-        $result = array_filter(DNUI_delete($_POST["imageToDelete"], unserialize(get_option("dnui_options"))));
-        if (empty($out)) {
-            $out["isOk"] = true;
-        } else {
-            $out["isOk"] = false;
-            $out["msg"] = $result;
-        }
-        echo json_encode($out);
-    }
-    die();
-}
-
-add_action('wp_ajax_dnui_get_dirs', 'DNUI_ajax_get_dirs');
-
-function DNUI_ajax_get_dirs() {
-    $base = wp_upload_dir();
-    $base = $base['basedir'];
-    echo json_encode(DNUI_get_all_dir_or_files($base, 0));
-    die();
-}
-
-function DNUI_install() {
-
-    $option = array('page' => 0,
-        'cantInPage' => 25,
-        'updateInServer' => true,
-        'order' => 0,
-        'show' => false,
-        'showIgnore' => false,
-        'admin' => false,
-        'galleryCheck' => false,
-        'cron'=>0,
-        'ignore' => array());
-    DNUI_add_option($option);
-}
-
-add_action('wp_ajax_dnui_get_backup', 'DNUI_ajax_get_backup');
-
-function DNUI_ajax_get_backup() {
-    echo json_encode(DNUI_get_backup());
-    die();
-}
-
-add_action('wp_ajax_dnui_restore_backup', 'DNUI_ajax_restore_backup');
-
-function DNUI_ajax_restore_backup() {
-
-    echo json_encode(DNUI_restore_backup($_POST["restore"]));
-    die();
-}
-
-add_action('wp_ajax_dnui_delete_backup', 'DNUI_ajax_delete_backup');
-
-function DNUI_ajax_delete_backup() {
-    echo json_encode(DNUI_delete_backup($_POST["delet"]));
-    die();
-}
-
-add_action('wp_ajax_dnui_cleanup_backup', 'DNUI_ajax_cleanup_backup');
-
-function DNUI_ajax_cleanup_backup() {
-    echo json_encode(DNUI_cleanup_backup());
-    die();
-}
-
-register_activation_hook(__FILE__, 'DNUI_install');
+include_once 'php/helpers/HelperDNUI.php';
