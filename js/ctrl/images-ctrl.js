@@ -33,11 +33,11 @@ angular.module('dnuiPlugin')
 
                 ImagesResource.readByOptions(numberPage).$promise.then(function (images) {
 
-                    if (images.length == 0 &&  $scope.options.numberPage  > 1) {
+                    if (images.length == 0 && $scope.options.numberPage > 1) {
                         ImagesResource.count().$promise.then(function (count) {
                             $scope.totalImages = count['0'];
                         });
-                        $scope.options.numberPage =  $scope.options.numberPage  - 1;
+                        $scope.options.numberPage = $scope.options.numberPage - 1;
                         return;
                     }
 
@@ -63,14 +63,10 @@ angular.module('dnuiPlugin')
 
                                 if ($scope.options.galleryCheck) {
 
-                                    if (!_.isUndefined($scope.galleriesSizes[image['id']])) {
+                                    if (!_.isUndefined($scope.galleriesSizes[image['id']]) && !_.isUndefined($scope.galleriesSizes[image['id']]['sizes'])) {
 
-                                        if (!_.isUndefined($scope.galleriesSizes[image['id']]['sizes'])) {
-                                            if ($scope.galleriesSizes[image['id']]['sizes'].indexOf(sizeName) > -1) {
-                                                status.used = 1;
-                                            }
-                                        } else {
-                                            status.used = 1; //warning, i put this like used because this is not normal, have to be original or thumbnail
+                                        if ($scope.galleriesSizes[image['id']]['sizes'].indexOf(sizeName) > -1) {
+                                            status.used = 1;
                                         }
 
                                     }
@@ -87,6 +83,23 @@ angular.module('dnuiPlugin')
                                 }
 
                             });
+
+                            //try to fix thumbnail or size used in gallery but not found in image
+                            if ($scope.options.galleryCheck) {
+
+                                if (!_.isUndefined($scope.galleriesSizes[image['id']]) && !_.isUndefined($scope.galleriesSizes[image['id']]['sizes'])) {
+
+                                    angular.forEach($scope.galleriesSizes[image['id']]['sizes'], function (sizeName) {
+                                        if (_.isUndefined(image.imageSizes[sizeName])) {
+                                            image.status.used = true;
+                                        }
+                                    });
+
+
+                                }
+                            }
+
+
 
                         });
 
