@@ -2,10 +2,19 @@
     every Post and Page if one image have one reference in this one,
     if any reference is found, the plugin will tell you that the image is not used.
 </p>
+
+
 <h3>Why i have to do Backup?</h3>
 <p>
     This plugin will delete images and information's in your server and the database, so you have to do one BACKUP every time you want
     to use this plugin.
+
+</p>
+<p ng-if="options.backup==-1">
+    <b style="color: #FFFF00">Fetching status backup system</b>
+</p>
+<p ng-if="!options.backup">
+    <b style="color: #FF0000">Warning the backup system is deactivated, see the option page</b>
 </p>
 <h3>Is the backup system from the DNUI plugin enough?</h3>
 <p>

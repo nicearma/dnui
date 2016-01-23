@@ -5,6 +5,8 @@ angular.module('dnuiPlugin')
     .controller('DnuiCtrl', ['$scope', '$rootScope',
         function ($scope, $rootScope) {
 
+            $scope.options= {backup:-1};
+
             $scope.tabImages=function(){
                 $rootScope.$broadcast('tabImages', $scope.options);
             };
@@ -16,6 +18,13 @@ angular.module('dnuiPlugin')
             $scope.tabOptions=function(){
                 $rootScope.$broadcast('tabOptions', $scope.options);
             };
+
+
+            $rootScope.$on('options', function (event, options) {
+
+                $scope.options = options;
+
+            });
 
         }
     ]);

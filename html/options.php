@@ -25,7 +25,7 @@
 
             </td>
             <td>
-                <input type="checkbox"
+                <input ng-disabled="true" type="checkbox"
                        ng-model="options.updateInServer" />
             </td>
         </tr>
@@ -139,26 +139,25 @@
         <tr>
             <td scope="row">
                 <p>
-                    Check if image is used in gallery (version 2.1)
+                    Check if image is used in gallery
                 </p>
                 <p>
                     <small>
-                       If you want to check images in gallery use this option (this will decrease the performance if checked)
+                       If you want to check images in gallery use this option (this will decrease the performance if checked and is call only one time, if you add one gallery, you have to refresh this plugin)
                     </small>
                 </p>
 
             </td>
 
             <td>
-                <input ng-disabled="true" type="checkbox"
-                       ng-model="options.galleryCheck"/>
+                <input type="checkbox"  ng-model="options.galleryCheck"/>
             </td>
 
         </tr>
         <tr>
             <td scope="row">
                 <p>
-                    Check in draft (version 2.1)
+                    Check in draft
                 </p>
                 <p>
                     <small>
@@ -169,8 +168,7 @@
             </td>
 
             <td>
-                <input ng-disabled="true" type="checkbox"
-                       ng-model="options.draftCheck"/>
+                <input type="checkbox" ng-model="options.draftCheck"/>
             </td>
 
         </tr>

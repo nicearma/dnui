@@ -1,14 +1,56 @@
 <?php
 
-$imageRest = new ImageRest();
+add_action('wp_ajax_dnui_count_image', 'dnui_count_image');
+
+function dnui_count_image()
+{
+    $imageRest = new ImageRest();
+    $imageRest->countImage();
+}
+
+add_action('wp_ajax_dnui_get_all_by_options_image', 'dnui_get_all_by_options_image');
+
+function dnui_get_all_by_options_image()
+{
+    $imageRest = new ImageRest();
+    $imageRest->readByOptions();
+}
 
 
-add_action('wp_ajax_dnui_count_image', array($imageRest, 'countImage'));
+add_action('wp_ajax_dnui_get_galleries_image', 'dnui_get_galleries_image');
 
-add_action('wp_ajax_dnui_get_all_by_options_image', array($imageRest, 'readByOptions'));
-add_action('wp_ajax_dnui_verify_status_by_id_image', array($imageRest, 'verifyStatusById'));
-add_action('wp_ajax_dnui_get_sizes', array($imageRest, 'GetSizes'));
-add_action('wp_ajax_dnui_delete_by_id_and_size_image', array($imageRest, 'deleteByIdAndSize'));
+function dnui_get_galleries_image()
+{
+    $imageRest = new ImageRest();
+    $imageRest->readGalleries();
+}
+
+
+add_action('wp_ajax_dnui_verify_status_by_id_image', 'dnui_verify_status_by_id_image');
+
+function dnui_verify_status_by_id_image()
+{
+    $imageRest = new ImageRest();
+    $imageRest->verifyStatusById();
+}
+
+
+add_action('wp_ajax_dnui_get_sizes', 'dnui_get_sizes');
+
+function dnui_get_sizes()
+{
+    $imageRest = new ImageRest();
+    $imageRest->getSizes();
+}
+
+
+add_action('wp_ajax_dnui_delete_by_id_and_size_image', 'dnui_delete_by_id_and_size_image');
+
+function dnui_delete_by_id_and_size_image()
+{
+    $imageRest = new ImageRest();
+    $imageRest->deleteByIdAndSize();
+}
 
 /**
  * Description of Image
@@ -20,10 +62,6 @@ class ImageRest
 
     private $databaseDNUI;
     private $optionsDNUI;
-
-
-    //this will be call for verify all image, "function call" http://php.net/manual/en/function.call-user-func-array.php
-    private $verificator = array();
 
     function __construct()
     {
@@ -41,22 +79,34 @@ class ImageRest
 
     public function countImage()
     {
-        echo json_encode(array('0'=>$this->databaseDNUI->countImages()[0]['count(*)']));
-         wp_die();
+        $count = $this->databaseDNUI->countImages();
+        echo json_encode(array('0' => $count[0]['count(*)']));
+        wp_die();
     }
 
 
     public function readByOptions()
     {
-        if(!empty($_GET['numberPage'])){
-            $this->optionsDNUI->setNumberPage( $_GET['numberPage']);
+        if (!empty($_GET['numberPage'])) {
+            $this->optionsDNUI->setNumberPage($_GET['numberPage']);
         }
 
         $imagesIds = $this->databaseDNUI->getImages($this->optionsDNUI->getNumberPage(), $this->optionsDNUI->getImageShowInPage(), $this->optionsDNUI->getOrder());
         $images = ConvertWordpressToDNUI::convertIdsToImagesDNUI($imagesIds);
         echo json_encode($images);
-         wp_die();
+        wp_die();
+    }
 
+    public function readGalleries()
+    {
+        $result = ConvertWordpressToDNUI::convertIdToGalleriesSizes($this->databaseDNUI->getGalleries($this->optionsDNUI));
+        if (!empty($result)) {
+            echo json_encode($result);
+        } else {
+            echo '{}';
+        }
+
+        wp_die();
     }
 
     public function verifyStatusById()
@@ -79,7 +129,7 @@ class ImageRest
         }
 
         echo json_encode($status);
-         wp_die();
+        wp_die();
 
 
     }
@@ -87,19 +137,32 @@ class ImageRest
 
     public function getSizes()
     {
-
-        echo json_encode(get_intermediate_image_sizes());
-         wp_die();
+        $nameSizes = get_intermediate_image_sizes();
+        array_push($nameSizes, 'original');
+        echo json_encode($nameSizes);
+        wp_die();
     }
 
     public function deleteByIdAndSize()
     {
-        $imageId = $_GET['id'];
-        $sizeName = $_GET['sizeName'];
-        $imageDNUI = ConvertWordpressToDNUI::convertIdToImageDNUI($imageId);
+        $json = json_decode(file_get_contents('php://input'), true);
 
-        echo json_encode($this->databaseDNUI->delete($imageDNUI, $sizeName, $this->optionsDNUI));
-         wp_die();
+        $imageId = $json['id'];
+        if (!is_numeric($imageId)) {
+            //nothing to do, this case is not possible but for security reason
+            return;
+        }
+
+        $sizeNames = $json['sizeNames'];
+
+        if (!is_array($sizeNames)) {
+            //nothing to do, this case is not possible but for security reason
+            return;
+        }
+
+        $imageDNUI = ConvertWordpressToDNUI::convertIdToImageDNUI($imageId);
+        echo json_encode($this->databaseDNUI->delete($imageDNUI, $sizeNames, $this->optionsDNUI));
+        wp_die();
     }
 
 

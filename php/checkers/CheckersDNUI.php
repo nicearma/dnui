@@ -5,11 +5,13 @@
 class CheckersDNUI
 {
 
-    private $checkers = [];
+    private $checkers = array();
 
     function __construct($databaseDNUI)
     {
-        new CheckerImagePost($databaseDNUI,$this);
+        new CheckerImagePostAndPageBestLuck($databaseDNUI,$this);
+        new CheckerImagePostAndPostDraft($databaseDNUI,$this);
+        new CheckerImagePostAndPageAll($databaseDNUI,$this);
     }
 
         public function addChecker($checker)

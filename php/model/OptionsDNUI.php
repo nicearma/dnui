@@ -7,18 +7,18 @@
  */
 class OptionsDNUI  implements JsonSerializable {
 
-    private $version="2.0";
-    private $updateInServer=true;
-    private $backup=true;
-    private $showUsedImage=false;
-    private $admin=true;
-    private $ignoreSizes=[];
-    private $showIgnoreSizes=true;
-    private $galleryCheck=true;
-    private $draftCheck=true;
-    private $numberPage=1;
-    private $imageShowInPage=50;
-    private $order=0;
+    public $version="2.0";
+    public $updateInServer=true;
+    public $backup=true;
+    public $showUsedImage=false;
+    public $admin=true;
+    public $ignoreSizes=array();
+    public $showIgnoreSizes=true;
+    public $galleryCheck=true;
+    public $draftCheck=true;
+    public $numberPage=1;
+    public $imageShowInPage=50;
+    public $order=0;
 
     /**
      * @return string

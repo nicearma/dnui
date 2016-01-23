@@ -8,13 +8,13 @@
 class ImageDNUI implements JsonSerializable
 {
 
-    private $id; //the same id of the database
-    private $name;
-    private $sizeName;
-    private $resolution;
-    private $status;
-    private $srcOriginalImage; //the origina src
-    private $imageSizes; //the list of imageSize, see the ImageSize
+    public $id; //the same id of the database
+    public $name;
+    public $sizeName;
+    public $resolution;
+    public $status;
+    public $srcOriginalImage; //the origina src
+    public $imageSizes; //the list of imageSize, see the ImageSize
 
     function __construct($id, $name, $sizeName, $srcOriginalImage, $resolution)
     {
@@ -24,7 +24,7 @@ class ImageDNUI implements JsonSerializable
         $this->srcOriginalImage = $srcOriginalImage;
         $this->resolution = $resolution;
         $this->status = new StatusDNUI();
-        $this->imageSizes = [];
+        $this->imageSizes = array();
 
     }
 
@@ -155,12 +155,12 @@ class ImageDNUI implements JsonSerializable
 class ImageSizeDNUI implements JsonSerializable
 {
 
-    private $name;
-    private $sizeName;
-    private $resolution;
-    private $status;
-    private $srcSizeImage; //image src
-    private $info; //other info
+    public $name;
+    public $sizeName;
+    public $resolution;
+    public $status;
+    public $srcSizeImage; //image src
+
 
     function __construct($name, $sizeName, $resolution, $srcSizeImage)
     {
@@ -251,22 +251,6 @@ class ImageSizeDNUI implements JsonSerializable
         $this->srcSizeImage = $srcSizeImage;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getInfo()
-    {
-        return $this->info;
-    }
-
-    /**
-     * @param mixed $info
-     */
-    public function setInfo($info)
-    {
-        $this->info = $info;
-    }
-
     public function jsonSerialize()
     {
         return get_object_vars($this);
@@ -279,7 +263,8 @@ class StatusDNUI implements JsonSerializable
 {
 
 
-    /* -3 => Error
+    /* -5 => Backup error
+    * -3 => Error
      * -2 => UNKNOWN
      * -1 => Asking...
      * 0 => Unused
@@ -287,18 +272,22 @@ class StatusDNUI implements JsonSerializable
      * 2 => Deleted
      * 3 => Erasing
      * 4 => Making backup
+     * 5 => backup made
      */
-    private $used = -2;
+    public $used = -2;
 
 
     /*
+     * -5 => Backup error
     * -2 => UNKNOWN
     * -1 => Asking...
     *  0 => Not in server
     *  1 => In server
      * 4 => Making backup
+     * 5 => backup made
+     *
     */
-    private $inServer = -2;
+    public $inServer = -2;
 
     /**
      * @return int

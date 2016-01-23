@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: DNUI (Delete not used images)
-  Version: 2.0
+  Version: 2.2.1
   Plugin URI: http://www.nicearma.com/delete-not-used-image-wordpress-dnui/
   Author: Nicearma
   Author URI: http://www.nicearma.com/
@@ -146,6 +146,7 @@ function DNUI_display_menu()
 //
 //register_activation_hook( __FILE__, 'DNUI_activate' );
 
+include_once 'php/php5_3/JsonSerializable.php';
 
 include_once 'php/model/OptionsDNUI.php';
 include_once 'php/model/DatabaseDNUI.php';
@@ -159,7 +160,9 @@ include_once 'php/rest/ImageRest.php';
 include_once 'php/rest/BackupRest.php';
 
 include_once 'php/checkers/CheckerImageAbstract.php';
-include_once 'php/checkers/CheckerImagePost.php';
+include_once 'php/checkers/CheckerImagePostAndPageBestLuck.php';
+include_once 'php/checkers/CheckerImagePostAndPageAll.php';
+include_once 'php/checkers/CheckerImagePostAndPageDraft.php';
 include_once 'php/checkers/CheckersDNUI.php';
 
 include_once 'php/helpers/HelperDNUI.php';

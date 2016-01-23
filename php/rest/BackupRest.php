@@ -1,15 +1,64 @@
 <?php
 
-$backupRest = new BackupRest();
+add_action('wp_ajax_dnui_get_all_backup', 'dnui_get_all_backup');
 
-add_action('wp_ajax_dnui_get_all_backup', array($backupRest, 'readAll'));
-add_action('wp_ajax_dnui_delete_all_backup', array($backupRest, 'deleteAll'));
-add_action('wp_ajax_dnui_delete_by_id_backup', array($backupRest, 'deleteById'));
-add_action('wp_ajax_dnui_make_backup', array($backupRest, 'make'));
-add_action('wp_ajax_dnui_restore_backup', array($backupRest, 'restoreBackup'));
-add_action('wp_ajax_dnui_make_backup_folder_backup', array($backupRest, 'makeBackupFolder'));
-add_action('wp_ajax_dnui_exists_backup_folder_backup', array($backupRest, 'existsBackupFolder'));
+function dnui_get_all_backup()
+{
+    $backupRest = new BackupRest();
+    $backupRest->readAll();
+}
 
+add_action('wp_ajax_dnui_delete_all_backup', 'dnui_delete_all_backup');
+
+function  dnui_delete_all_backup()
+{
+    $backupRest = new BackupRest();
+    $backupRest->deleteAll();
+}
+
+add_action('wp_ajax_dnui_delete_by_id_backup', 'dnui_delete_by_id_backup');
+
+function dnui_delete_by_id_backup()
+{
+    $backupRest = new BackupRest();
+    $backupRest->deleteById();
+}
+
+
+add_action('wp_ajax_dnui_make_backup', 'dnui_make_backup');
+
+function dnui_make_backup()
+{
+    $backupRest = new BackupRest();
+    $backupRest->make();
+}
+
+
+add_action('wp_ajax_dnui_restore_backup', 'dnui_restore_backup');
+
+function dnui_restore_backup()
+{
+    $backupRest = new BackupRest();
+    $backupRest->restoreBackup();
+}
+
+
+add_action('wp_ajax_dnui_make_backup_folder_backup', 'dnui_make_backup_folder_backup');
+
+function dnui_make_backup_folder_backup()
+{
+    $backupRest = new BackupRest();
+    $backupRest->makeBackupFolder();
+}
+
+
+add_action('wp_ajax_dnui_exists_backup_folder_backup', 'dnui_exists_backup_folder_backup');
+
+function dnui_exists_backup_folder_backup()
+{
+    $backupRest = new BackupRest();
+    $backupRest->existsBackupFolder();
+}
 
 
 /**
@@ -34,8 +83,8 @@ class BackupRest
 
     public function readAll()
     {
-        echo json_encode(HelperDNUI::scanDir(BackupRest::backupDir()));
-         wp_die();
+        echo json_encode(HelperDNUI::scanDir(BackupRest::backupDir()), JSON_FORCE_OBJECT);
+        wp_die();
     }
 
     public function deleteAll()
@@ -48,32 +97,54 @@ class BackupRest
 
     public function deleteById()
     {
-        $backupId = $_GET['id'];
-        $statusBackup = new StatusBackupDNUI();
-        $backupDir=BackupRest::backupDir();
-        $backupIdPath=$backupDir . '/' . $backupId.'/' ;
-        $backFiles = HelperDNUI::scanDir($backupIdPath, 1);
-        foreach($backFiles as $file){
-            @unlink($backupIdPath.$file);
+        $json = json_decode(file_get_contents('php://input'), true);
+
+        $backupId = $json['id'];
+        if (!is_numeric($backupId)) {
+            //nothing to do, this case is not possible but for security reason
+            return;
         }
 
-        @rmdir ($backupIdPath);
+        $statusBackup = new StatusBackupDNUI();
+        $backupDir = BackupRest::backupDir();
+        $backupIdPath = $backupDir . '/' . $backupId . '/';
+        $backFiles = HelperDNUI::scanDir($backupIdPath, 1);
+        foreach ($backFiles as $file) {
+            @unlink($backupIdPath . $file);
+        }
+
+        @rmdir($backupIdPath);
         clearstatcache();
-        if(file_exists($backupIdPath)){
+        if (file_exists($backupIdPath)) {
             $statusBackup->setInServer(-4); //can not be deteleted
-        }else{
+        } else {
             $statusBackup->setInServer(3);
         }
         echo json_encode($statusBackup);
-         wp_die();
+        wp_die();
     }
 
     public function make()
     {
-        $status = new StatusDNUI();
-        //TODO: add message -> error is not writible etc, use status object
-        $imageId = $_GET['id'];
-        $sizeName = $_GET['sizeName'];
+
+        $json = json_decode(file_get_contents('php://input'), true);
+
+        $imageId = $json['id'];
+
+        if (!is_numeric($imageId)) {
+            //nothing to do, this case is not possible but for security reason
+            return;
+        }
+
+        $sizeNames = $json['sizeNames'];
+
+        if (!is_array($sizeNames)) {
+            //nothing to do, this case is not possible but for security reason
+            return;
+        }
+
+        $statusBySizes = array();
+
         $imageDNUI = ConvertWordpressToDNUI::convertIdToImageDNUI($imageId);
 
         $backupDir = BackupRest::backupDir();
@@ -99,44 +170,63 @@ class BackupRest
                 file_put_contents($tmpBackupFileImage, serialize($backupInfo));
             }
 
-            if ($sizeName == 'original') {
-                $originalPath=$basedir . '/' . $imageDNUI->getSrcOriginalImage();
-                $imageTempBackupPath = $tmpBackupDirImage . $imageDNUI->getName();
-                if (file_exists($originalPath)) {
-                    copy($originalPath, $imageTempBackupPath);
-                }
+            foreach ($sizeNames as $sizeName) {
 
-                foreach ($imageDNUI->getImageSizes() as $imageSize) {
-                    $originalPath=$basedir . '/' .$imageSize->getSrcSizeImage();
-                    $imageTempBackupPath = $tmpBackupDirImage . $imageSize->getName();
+                if ($sizeName == 'original') {
+                    $originalPath = $basedir . '/' . $imageDNUI->getSrcOriginalImage();
+                    $imageTempBackupPath = $tmpBackupDirImage . $imageDNUI->getName();
                     if (file_exists($originalPath)) {
                         copy($originalPath, $imageTempBackupPath);
                     }
 
+                    foreach ($imageDNUI->getImageSizes() as $imageSize) {
+                        $originalPath = $basedir . '/' . $imageSize->getSrcSizeImage();
+                        $imageTempBackupPath = $tmpBackupDirImage . $imageSize->getName();
+                        if (file_exists($originalPath)) {
+                            copy($originalPath, $imageTempBackupPath);
+                        }
+
+                    }
+                } else {
+                    $imageSizes = $imageDNUI->getImageSizes();
+                    $originalPath = $basedir . '/' . $imageSizes[$sizeName]->getSrcSizeImage();
+                    $imageTempBackupPath = $tmpBackupDirImage . $imageSizes[$sizeName]->getName();
+                    if (file_exists($originalPath)) {
+                        copy($originalPath, $imageTempBackupPath);
+                    }
                 }
-            } else {
-                $originalPath=$basedir . '/' . $imageDNUI->getImageSizes()[$sizeName]->getSrcSizeImage();
-                $imageTempBackupPath = $tmpBackupDirImage . $imageDNUI->getImageSizes()[$sizeName]->getName();
-                if (file_exists($originalPath)) {
-                    copy($originalPath, $imageTempBackupPath);
-                }
+                $statusBySizes[$sizeName] = new StatusDNUI();
+                $statusBySizes[$sizeName]->setUsed(5); //5-> backup made
+                $statusBySizes[$sizeName]->setInServer(5); //in backup folder
             }
 
-            $status->setUsed(4); //4-> backup made
-            $status->setInServer(4); //in backup folder
         } else {
-            $status->setInServer(-4); //error folder backup, is not writible
-            $status->setUsed(-4); //error folder backup, is not writible
+            foreach ($sizeNames as $sizeName) {
+                $statusBySizes[$sizeName] = new StatusDNUI();
+                $statusBySizes[$sizeName]->setUsed(-5); //-5-> backup error
+                $statusBySizes[$sizeName]->setInServer(-5); //in backup folder error
+
+            }
+
         }
 
-        echo json_encode($status);
-         wp_die();
+        echo json_encode($statusBySizes);
+        wp_die();
     }
 
     public function restoreBackup()
     {
+
+        $json = json_decode(file_get_contents('php://input'), true);
+        $backupId = $json['id'];
+
+        if (!is_numeric($backupId)) {
+            //nothing to do, this case is not possible but for security reason
+            return;
+        }
+
         $statusBackup = new StatusBackupDNUI();
-        $backupId = $_GET['id'];
+
         $backupDir = BackupRest::backupDir();
         $backFiles = HelperDNUI::scanDir($backupDir . '/' . $backupId . '/', 1);
         $fileImages = preg_grep("/^(?!.*\\.backup)/", $backFiles);
@@ -155,9 +245,9 @@ class BackupRest
         }
 
         foreach ($fileImages as $image) {
-            if(!file_exists($basedir.'/'. $backupInfo["uploadDir"].'/' . $image)){
-                if(file_exists($backupDir.'/'.$backupId . '/' . $image)){
-                    rename($backupDir.'/'.$backupId . '/' . $image, $basedir.'/'. $backupInfo["uploadDir"].'/' . $image);
+            if (!file_exists($basedir . '/' . $backupInfo["uploadDir"] . '/' . $image)) {
+                if (file_exists($backupDir . '/' . $backupId . '/' . $image)) {
+                    rename($backupDir . '/' . $backupId . '/' . $image, $basedir . '/' . $backupInfo["uploadDir"] . '/' . $image);
                 }
             }
 
@@ -165,7 +255,7 @@ class BackupRest
 
         $statusBackup->setInServer(2); //2 -> in the upload folder
         echo json_encode($statusBackup);
-         wp_die();
+        wp_die();
     }
 
 
@@ -177,12 +267,12 @@ class BackupRest
             mkdir($backupDir, 0755, true);
             if (!file_exists($backupDir)) {
                 $statusBackup->setInServer(-3); //-3 -> can not be created
-            }else{
+            } else {
                 $statusBackup->setInServer(1); // 1 -> exists
             }
         }
         echo json_encode($statusBackup);
-         wp_die();
+        wp_die();
     }
 
     public static function  existsBackupFolder()
@@ -192,11 +282,11 @@ class BackupRest
 
         if (file_exists($backupDir)) {
             $statusBackup->setInServer(1); // 1 -> exists
-        }else{
+        } else {
             $statusBackup->setInServer(0); // 0 -> not exists
         }
         echo json_encode($statusBackup);
-         wp_die();
+        wp_die();
     }
 
     public static function backupDir()
@@ -210,8 +300,8 @@ class BackupRest
 }
 
 
-
-class StatusBackupDNUI implements JsonSerializable{
+class StatusBackupDNUI implements JsonSerializable
+{
 
 
     /*
@@ -226,7 +316,7 @@ class StatusBackupDNUI implements JsonSerializable{
      *  5 => Deleting...
      *
      */
-    private $inServer=-2;
+    public $inServer = -2;
 
 
     /**
@@ -244,9 +334,6 @@ class StatusBackupDNUI implements JsonSerializable{
     {
         $this->inServer = $inServer;
     }
-
-
-
 
 
     public function jsonSerialize()

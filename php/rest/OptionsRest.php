@@ -1,11 +1,17 @@
 <?php
 
+add_action('wp_ajax_dnui_get_options', 'dnui_get_options');
 
+function dnui_get_options(){
+    $optionsRest = new OptionsRest();
+    $optionsRest->read();
+}
+add_action('wp_ajax_dnui_update_options', 'dnui_update_options');
 
-$optionsRest = new OptionsRest();
-
-add_action('wp_ajax_dnui_get_options', array($optionsRest, 'read'));
-add_action('wp_ajax_dnui_update_options', array($optionsRest, 'update'));
+function dnui_update_options(){
+    $optionsRest = new OptionsRest();
+    $optionsRest->update();
+}
 
 /**
  * Description of Option

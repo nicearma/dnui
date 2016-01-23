@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DX8UC
 Tags: image, cleanup, images, delete, image not used, image unused, delete unused image, delete not used image, cleanup image
 Requires at least: 4.4
 Tested up to: 4.4
-Stable tag: 2.0
+Stable tag: 2.2.1
 
 Search/Delete all not used images from the database and make space in your server and cleanup the database from all unused images
  
@@ -16,9 +16,28 @@ The version 2.0 is one big remake of this plugin, all the code changed, now the 
 
 The update from the 1.x to the 2.0 is automatic, the only problem is that you will lost the backup folder and all backups made from the version 1.x
 
-The plugin was fully test it with WordPress 4.3/4.4.1 and PHP 5.4/5.6
+The plugin was fully test it with WordPress 4.3/4.4.1 and PHP 5.3/5.4/5.6
 
 == Changelog ==
+
+= Version 2.2.1 =
+
+* Fix empty array gallery and backup
+
+= Version 2.2 =
+
+* Add original to ignore list
+
+= Version 2.1 =
+
+* Add draft/revision check
+* Add gallery check (made with javascript)
+* Add wait to the deleteAll button
+* Changes in the Javascript (better performance the first call)
+
+= Version 2.0.1 =
+
+* PHP 5.3.x compatibility
 
 = Version 2.0 =
 

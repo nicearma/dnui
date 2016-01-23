@@ -20,23 +20,20 @@ angular.module('dnuiPlugin').factory('BackupResource',
                     deleteById: {
                         method: 'POST',
                         params: {
-                            action: 'dnui_delete_by_id_backup',
-                            id: '@id'
+                            action: 'dnui_delete_by_id_backup'
                         }
                     },
                     make: {
-                        method: 'GET',
+                        method: 'POST',
                         params: {
-                            action: 'dnui_make_backup',
-                            id: '@id',
-                            sizeName: '@sizeName'
+                            action: 'dnui_make_backup'
+
                         }
                     },
                     restore: {
                         method: 'POST',
                         params: {
-                            action: 'dnui_restore_backup',
-                            id: '@id'
+                            action: 'dnui_restore_backup'
                         }
                     },
                     makeBackupFolder: {
