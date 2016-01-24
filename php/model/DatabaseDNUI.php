@@ -79,6 +79,7 @@ class DatabaseDNUI
         foreach ($sizeNames as $sizeName) {
 
             $statusBySizes[$sizeName]=new StatusDNUI();
+
             if ($sizeName == "original") {
                 wp_delete_attachment($imageDNUI->getId());
                 $statusBySizes['original']=new StatusDNUI();

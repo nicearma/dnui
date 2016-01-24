@@ -47,7 +47,7 @@
 
             </td>
             <td>
-                <input type="checkbox"
+                <input ng-disabled="disabledBackupOption" type="checkbox"
                        ng-model="options.backup" />
             </td>
         </tr>

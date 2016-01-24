@@ -11,6 +11,8 @@ angular.module('dnuiPlugin')
             OptionsResource.get().$promise.then(function (options) {
                 $scope.options = options;
 
+
+
                 $scope.$watchCollection('options', function (newCollection, oldCollection, scope) {
 
                     //first call
@@ -33,6 +35,17 @@ angular.module('dnuiPlugin')
 
                 });
 
+                BackupResource.existsBackupFolder().$promise.then(function (statusBackup) {
+                        $scope.statusBackup = statusBackup;
+
+                        if (statusBackup.inServer < 1) {
+                            $scope.disabledBackupOption=true;
+                            $scope.options.backup = false;
+                        }else{
+                            $scope.disabledBackupOption=false;
+                        }
+                    }
+                );
 
                 $rootScope.$broadcast('options', $scope.options);
 
@@ -44,12 +57,7 @@ angular.module('dnuiPlugin')
                 $scope.options.numberPage = 0;
             };
 
-            BackupResource.existsBackupFolder().$promise.then(function (statusBackup) {
-                $scope.statusBackup = statusBackup;
-                if (statusBackup.inServer < 1) {
-                    $scope.options.backup = false;
-                }
-            });
+
 
             $scope.makeBackupFolder = function () {
                 BackupResource.makeBackupFolder().$promise.then(function (statusBackup) {
@@ -57,8 +65,9 @@ angular.module('dnuiPlugin')
                     if (statusBackup.inServer < 1) {
 
                         $scope.options.backup = false;
+
                     } else {
-                        //TODO
+                        $scope.disabledBackupOption=false;
                     }
                 });
             };

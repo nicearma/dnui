@@ -20,9 +20,15 @@ The plugin was fully test it with WordPress 4.3/4.4.1 and PHP 5.3/5.4/5.6
 
 == Changelog ==
 
+= Version 2.2.2 =
+
+*Fix backup active but folder not created
+
 = Version 2.2.1 =
 
 * Fix empty array gallery and backup
+* Fix sync of delete sizes (deleteAll button)
+* Fix several others bugs (dead last page)
 
 = Version 2.2 =
 
