@@ -83,14 +83,14 @@ class BackupRest
 
     public function readAll()
     {
-        echo json_encode(HelperDNUI::scanDir(BackupRest::backupDir()), JSON_FORCE_OBJECT);
+        echo json_encode(HelperDNUI::scanDir(HelperDNUI::backupDir()), JSON_FORCE_OBJECT);
         wp_die();
     }
 
     public function deleteAll()
     {
         //TODO: complete this option
-        @rmdir(BackupRest::backupDir());
+        @rmdir(HelperDNUI::backupDir());
         clearstatcache();
         BackupRest::makeBackupFolder();
     }
@@ -106,7 +106,7 @@ class BackupRest
         }
 
         $statusBackup = new StatusBackupDNUI();
-        $backupDir = BackupRest::backupDir();
+        $backupDir = HelperDNUI::backupDir();
         $backupIdPath = $backupDir . '/' . $backupId . '/';
         $backFiles = HelperDNUI::scanDir($backupIdPath, 1);
         foreach ($backFiles as $file) {
@@ -147,7 +147,7 @@ class BackupRest
 
         $imageDNUI = ConvertWordpressToDNUI::convertIdToImageDNUI($imageId);
 
-        $backupDir = BackupRest::backupDir();
+        $backupDir = HelperDNUI::backupDir();
         $uploadDir = wp_upload_dir();
         $basedir = $uploadDir['basedir'];
 
@@ -227,7 +227,7 @@ class BackupRest
 
         $statusBackup = new StatusBackupDNUI();
 
-        $backupDir = BackupRest::backupDir();
+        $backupDir = HelperDNUI::backupDir();
         $backFiles = HelperDNUI::scanDir($backupDir . '/' . $backupId . '/', 1);
         $fileImages = preg_grep("/^(?!.*\\.backup)/", $backFiles);
         $fileBackup = preg_grep("/^(.*\\.backup)/", $backFiles);
@@ -262,7 +262,7 @@ class BackupRest
     public static function  makeBackupFolder()
     {
         $statusBackup = new StatusBackupDNUI();
-        $backupDir = BackupRest::backupDir();
+        $backupDir = HelperDNUI::backupDir();
         if (!file_exists($backupDir)) {
             mkdir($backupDir, 0755, true);
             if (!file_exists($backupDir)) {
@@ -278,9 +278,8 @@ class BackupRest
     public static function  existsBackupFolder()
     {
         $statusBackup = new StatusBackupDNUI();
-        $backupDir = BackupRest::backupDir();
 
-        if (file_exists($backupDir)) {
+        if (HelperDNUI::backupFolderExist()) {
             $statusBackup->setInServer(1); // 1 -> exists
         } else {
             $statusBackup->setInServer(0); // 0 -> not exists
@@ -289,13 +288,6 @@ class BackupRest
         wp_die();
     }
 
-    public static function backupDir()
-    {
-        $uploadDir = wp_upload_dir();
-        $basedir = $uploadDir['basedir'];
-        $backupDir = $basedir . '/' . 'dnui_backups';
-        return $backupDir;
-    }
 
 }
 
@@ -314,7 +306,8 @@ class StatusBackupDNUI implements JsonSerializable
      *  3 => backup id folder have been deleted
      *  4 => Restoring...
      *  5 => Deleting...
-     *
+     *  6 => Restored and deleted
+     *  7 => Restored and deleting...
      */
     public $inServer = -2;
 

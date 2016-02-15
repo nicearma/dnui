@@ -33,6 +33,13 @@ angular.module('dnuiPlugin').factory('ImagesResource',
                             action: 'dnui_get_galleries_image'
                         }
                     },
+                    shortcodes: {
+                        method: 'GET',
+                        params: {
+                            action: 'dnui_get_shortcodes_image'
+                        },
+                        isArray: true
+                    },
                     verifyUsedById: {
                         method: 'GET',
                         params: {

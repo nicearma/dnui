@@ -5,7 +5,8 @@ angular
         'ngResource',
         'ngAnimate',
         'ui.bootstrap.pagination',
-        'ui.bootstrap.tabs'
+        'ui.bootstrap.tabs',
+        'ui.bootstrap.modal'
     ]);
     /*.factory('$exceptionHandler', ['$rootScope', function ($rootScope) {
 

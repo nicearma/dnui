@@ -2,8 +2,8 @@
 
 
 angular.module('dnuiPlugin')
-    .controller('DnuiCtrl', ['$scope', '$rootScope',
-        function ($scope, $rootScope) {
+    .controller('DnuiCtrl', ['$scope', '$rootScope','$uibModal',
+        function ($scope, $rootScope,$uibModal) {
 
             $scope.options= {backup:-1};
 

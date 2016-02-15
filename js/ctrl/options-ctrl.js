@@ -19,18 +19,11 @@ angular.module('dnuiPlugin')
                     if (inutilCallOptions) {
                         inutilCallOptions = false;
                     } else {
-                        OptionsResource.update($scope.options);
-                    }
 
-                });
+                            OptionsResource.update($scope.options);
+                            $rootScope.$broadcast('refreshImages', $scope.options);
 
-                $scope.$watch('options.numberPage', function () {
 
-                    //first call
-                    if (inutilCallNumberPage) {
-                        inutilCallNumberPage = false;
-                    } else {
-                        $rootScope.$broadcast('pageChange', $scope.options.numberPage);
                     }
 
                 });
@@ -39,10 +32,10 @@ angular.module('dnuiPlugin')
                         $scope.statusBackup = statusBackup;
 
                         if (statusBackup.inServer < 1) {
-                            $scope.disabledBackupOption=true;
+                            $scope.disabledBackupOption = true;
                             $scope.options.backup = false;
-                        }else{
-                            $scope.disabledBackupOption=false;
+                        } else {
+                            $scope.disabledBackupOption = false;
                         }
                     }
                 );
@@ -51,12 +44,15 @@ angular.module('dnuiPlugin')
 
             });
 
-            $scope.sizes = OptionsResource.getSizes();
+            OptionsResource.getSizes().$promise.then(function (sizes) {
+                $scope.sizes = sizes;
+
+            });
 
             $scope.resetNumberPage = function () {
                 $scope.options.numberPage = 0;
+                $rootScope.$broadcast('refreshImage', $scope.options.numberPage);
             };
-
 
 
             $scope.makeBackupFolder = function () {
@@ -67,10 +63,24 @@ angular.module('dnuiPlugin')
                         $scope.options.backup = false;
 
                     } else {
-                        $scope.disabledBackupOption=false;
+                        $scope.disabledBackupOption = false;
                     }
                 });
             };
 
+
         }
-    ]);
+    ]).directive('convertToNumber', function () {
+        return {
+            require: 'ngModel',
+            link: function (scope, element, attrs, ngModel) {
+                ngModel.$parsers.push(function (val) {
+                    return parseInt(val, 10);
+                });
+                ngModel.$formatters.push(function (val) {
+                    return '' + val;
+                });
+            }
+        };
+    });
+;

@@ -42,11 +42,24 @@ class HelperDNUI {
         return array();
     }
 
-    static function file_exist($src){
+    public static function fileExist($src){
         $uploadDir = wp_upload_dir();
         if( file_exists($uploadDir['basedir'].'/'.$src)){
             return 1;
         }
         return 0;
     }
+
+	public static function backupFolderExist(){
+		return file_exists(HelperDNUI::backupDir());
+	}
+
+ public static function backupDir()
+    {
+        $uploadDir = wp_upload_dir();
+        $basedir = $uploadDir['basedir'];
+        $backupDir = $basedir . '/' . 'dnui_backups';
+        return $backupDir;
+    }
+
 }

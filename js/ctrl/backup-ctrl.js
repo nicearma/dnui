@@ -2,18 +2,18 @@
 
 
 angular.module('dnuiPlugin')
-    .controller('BackupCtrl', ['$scope', '$rootScope', 'BackupResource',
-        function ($scope, $rootScope, BackupResource) {
+    .controller('BackupCtrl', ['$scope', '$rootScope','$uibModal', 'BackupResource',
+        function ($scope, $rootScope,$uibModal, BackupResource) {
 
-            $scope.callServerStatus=2;
+            $scope.callServerStatus = 2;
 
             $scope.backups = [];
 
             $rootScope.$on('tabBackups', function () {
                 $scope.backups = [];
-                $scope.callServerStatus=1;
-                BackupResource.get().$promise.then(function (backupIds) {
+                $scope.callServerStatus = 1;
 
+                BackupResource.get().$promise.then(function (backupIds) {
 
 
                     angular.forEach(backupIds, function (backupId, key, obj) {
@@ -24,22 +24,26 @@ angular.module('dnuiPlugin')
 
                     });
 
-                    $scope.callServerStatus=2;
+                    $scope.callServerStatus = 2;
 
                 });
+
             });
 
 
             $scope.restore = function (backup) {
 
-                $rootScope.$broadcast('backup', {});
+                $rootScope.$broadcast('refreshImage', {});
 
                 if (backup.status.inServer == 1) {
+
                     backup.status.inServer = 4;
+
                     BackupResource.restore({id: backup.id}).$promise.then(function (status) {
                         if (status.inServer == 2) {
+                            status.inServer=7;
                             backup.status = status;
-                            $scope.deleteById( backup);
+                            $scope.deleteById(backup,true);
                         } else {
                             //TODO error
                         }
@@ -49,24 +53,25 @@ angular.module('dnuiPlugin')
 
             };
 
-            $scope.deleteAll = function () {
 
-                $rootScope.$broadcast('backup', {});
+            $scope.deleteById = function (backup,backupMade) {
 
-                angular.forEach($scope.backups, function (backup) {
-                    $scope.deleteById(backup);
-                });
+                $rootScope.$broadcast('refreshImage', {});
+                if (backup.status.inServer == 1 || backup.status.inServer == 2 || backup.status.inServer ==7) {
+                    if(backup.status.inServer !=7){
+                        backup.status.inServer = 5;
+                    }
 
-            };
 
-            $scope.deleteById = function (backup) {
-
-                $rootScope.$broadcast('backup', {});
-                if (backup.status.inServer == 1 || backup.status.inServer == 2) {
-                    backup.status.inServer = 5;
                     BackupResource.deleteById({id: backup.id}).$promise.then(function (status) {
+
                         if (status.inServer == 3) {
+
+                            if(!_.isUndefined(backupMade)){
+                                 status.inServer=6;
+                            }
                             backup.status = status;
+
                         } else {
                             //TODO: error
                         }

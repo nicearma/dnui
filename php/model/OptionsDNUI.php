@@ -7,18 +7,40 @@
  */
 class OptionsDNUI  implements JsonSerializable {
 
-    public $version="2.0";
-    public $updateInServer=true;
-    public $backup=true;
-    public $showUsedImage=false;
-    public $admin=true;
-    public $ignoreSizes=array();
-    public $showIgnoreSizes=true;
-    public $galleryCheck=true;
-    public $draftCheck=true;
-    public $numberPage=1;
-    public $imageShowInPage=50;
-    public $order=0;
+    public $version;
+    public $updateInServer;
+    public $backup;
+    public $showUsedImage;
+    public $admin;
+    public $ignoreSizes;
+    public $showIgnoreSizes;
+    public $galleryCheck;
+    public $shortCodeCheck;
+    public $draftCheck;
+    public $numberPage;
+    public $imageShowInPage;
+    public $order;
+
+    function __construct()
+    {
+    $this->version="2.0";
+    $this->updateInServer=true;
+    //default active if the backup folder exist
+    $this->backup=HelperDNUI::backupFolderExist();
+    $this->showUsedImage=false;
+    $this->admin=true;
+    $this->ignoreSizes=array();
+    $this->showIgnoreSizes=true;
+    $this->galleryCheck=true;
+    $this->shortCodeCheck=true;
+    $this->draftCheck=true;
+    $this->numberPage=1;
+    $this->imageShowInPage=50;
+    $this->order=0;
+
+    }
+
+
 
     /**
      * @return string
@@ -164,6 +186,24 @@ class OptionsDNUI  implements JsonSerializable {
             $this->galleryCheck  = $galleryCheck;
         }
 
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isShortCodeCheck()
+    {
+        return $this->shortCodeCheck;
+    }
+
+    /**
+     * @param boolean $shortCodeCheck
+     */
+    public function setShortCodeCheck($shortCodeCheck)
+    {
+        if(is_bool($shortCodeCheck)){
+            $this->shortCodeCheck  = $shortCodeCheck;
+        }
     }
 
     /**

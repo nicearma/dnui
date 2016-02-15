@@ -25,6 +25,14 @@ function dnui_get_galleries_image()
     $imageRest->readGalleries();
 }
 
+add_action('wp_ajax_dnui_get_shortcodes_image', 'dnui_get_shortcodes_image');
+
+function dnui_get_shortcodes_image()
+{
+    $imageRest = new ImageRest();
+    $imageRest->readShortCodes();
+}
+
 
 add_action('wp_ajax_dnui_verify_status_by_id_image', 'dnui_verify_status_by_id_image');
 
@@ -66,7 +74,6 @@ class ImageRest
     function __construct()
     {
         $this->databaseDNUI = new DatabaseDNUI();
-        //TODO: change this for get option
         $this->optionsDNUI = OptionsRest::readOptions();
 
     }
@@ -109,6 +116,14 @@ class ImageRest
         wp_die();
     }
 
+
+    public function readShortCodes()
+    {
+        $result = ConvertWordpressToDNUI::convertIdToHTMLShortCodes($this->databaseDNUI->getShortCode($this->optionsDNUI));
+        echo json_encode($result);
+        wp_die();
+    }
+
     public function verifyStatusById()
     {
         $status = array();
@@ -118,13 +133,13 @@ class ImageRest
         $checkers = new CheckersDNUI($this->databaseDNUI);
         $statusDNUI = new StatusDNUI();
         $statusDNUI->setUsed($checkers->verify($imageDNUI->getId(), $imageDNUI->getName(), $this->optionsDNUI));
-        $statusDNUI->setInServer(HelperDNUI::file_exist($imageDNUI->getSrcOriginalImage()));
+        $statusDNUI->setInServer(HelperDNUI::fileExist($imageDNUI->getSrcOriginalImage()));
         $status[$imageDNUI->getId()][$imageDNUI->getSizeName()] = $statusDNUI;
 
         foreach ($imageDNUI->getImageSizes() as $imageSize) {
             $statusDNUI = new StatusDNUI();
             $statusDNUI->setUsed($checkers->verify($imageDNUI->getId(), $imageSize->getName(), $this->optionsDNUI));
-            $statusDNUI->setInServer(HelperDNUI::file_exist($imageSize->getSrcSizeImage()));
+            $statusDNUI->setInServer(HelperDNUI::fileExist($imageSize->getSrcSizeImage()));
             $status[$imageDNUI->getId()][$imageSize->getSizeName()] = $statusDNUI;
         }
 

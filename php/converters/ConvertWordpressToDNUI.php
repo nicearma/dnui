@@ -128,4 +128,41 @@ class ConvertWordpressToDNUI
         return $info;
     }
 
+    public static function convertIdToHTMLShortCodes($postIds)
+    {
+        //https://codex.wordpress.org/Function_Reference/get_shortcode_regex
+
+        $pattern = get_shortcode_regex();
+        $htlmShortCode = array();
+        $special = array("\n", "\t");
+        foreach ($postIds as $postId) {
+            $post = get_post($postId['id']);
+
+
+            if (preg_match_all('/' . $pattern . '/s', $post->post_content, $matches)
+                && array_key_exists(2, $matches)
+            ) {
+                unset($post);
+
+                    $htlm= '';
+
+                foreach ($matches[0] as $shortCode) {
+
+                    $htlm .= do_shortcode($shortCode);
+                }
+
+                if(!empty($htlm)){
+                    $htlm=str_replace($special, "",$htlm);
+                    $htlmShortCode[]= $htlm;
+                }
+
+
+            }
+
+
+        }
+        return $htlmShortCode;
+
+    }
+
 }

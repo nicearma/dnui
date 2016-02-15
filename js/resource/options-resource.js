@@ -22,8 +22,15 @@ angular.module('dnuiPlugin').factory('OptionsResource',
                         params: {
                             action: 'dnui_get_sizes'
                         },
-                        isArray:true
+                        isArray: true
+                    },
+                    restore: {
+                        method: 'POST',
+                        params: {
+                            action: 'dnui_restore_options'
+                        }
                     }
+
                 }
             );
         }

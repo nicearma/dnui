@@ -4,13 +4,15 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DX8UC
 Tags: image, cleanup, images, delete, image not used, image unused, delete unused image, delete not used image, cleanup image
 Requires at least: 4.4
 Tested up to: 4.4
-Stable tag: 2.2.1
+Stable tag: 2.3
 
 Search/Delete all not used images from the database and make space in your server and cleanup the database from all unused images
  
 == Description ==
 
-DNUI (<b>D</b>elete <b>N</b>ot <b>U</b>sed <b>I</b>mage) will search images from the database and try to find if all images are used in one Post and Page, if one reference is found,  the plugin will tell you that the image is used.
+DNUI (<b>D</b>elete <b>N</b>ot <b>U</b>sed <b>I</b>mage) will search images from the database and try to find it on every Post and Page if one image has one reference in this either post or page native to WordPress or  if any reference is found, the plugin will tell you that the image is used.
+
+From the version 2.3 the plugin will search the image all shortcodes
 
 The version 2.0 is one big remake of this plugin, all the code changed, now the code work by Rest Service and use AngularJS (not more the BackboneJS)
 
@@ -18,7 +20,23 @@ The update from the 1.x to the 2.0 is automatic, the only problem is that you wi
 
 The plugin was fully test it with WordPress 4.3/4.4.1 and PHP 5.3/5.4/5.6
 
+This plugin use:
+
+* AngularJS 1.4.X core, resource and animate
+* Angular UI [only modal and tabs]
+* Bootstrap [only modal and tabs]
+
 == Changelog ==
+
+= Version 2.2.3 =
+
+* Search in shortcodes
+* Added better english
+* Now can be translated.
+* Reset options
+* Sync all Async call
+* Added information about the pro version
+* Bugs fixed
 
 = Version 2.2.2 =
 

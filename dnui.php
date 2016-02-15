@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: DNUI (Delete not used images)
-  Version: 2.2.2
+  Version: 2.3
   Plugin URI: http://www.nicearma.com/delete-not-used-image-wordpress-dnui/
   Author: Nicearma
   Author URI: http://www.nicearma.com/
@@ -19,7 +19,6 @@ add_action('admin_init', 'DNUI_admin_js');
 
 add_action('admin_menu', 'DNUI_admin_menu');
 
-
 function DNUI_admin_js()
 {
     wp_register_style('dnui-css', plugins_url('css/dnui.css', __FILE__));
@@ -31,7 +30,9 @@ function DNUI_admin_js()
 
     //extra dependency
     wp_register_script('dnui-bootstrap-tabs', plugins_url('js/external/bootstrap-tabs.min.js', __FILE__), array('dnui-angular'));
-    wp_register_script('dnui-angular-ui', plugins_url('js/external/angular-ui.js', __FILE__), array('dnui-angular', 'dnui-bootstrap-tabs'));
+    wp_register_script('dnui-bootstrap-modal', plugins_url('js/external/bootstrap-modal.min.js', __FILE__), array('dnui-angular'));
+
+    wp_register_script('dnui-angular-ui', plugins_url('js/external/angular-ui.js', __FILE__), array('dnui-angular', 'dnui-bootstrap-tabs', 'dnui-bootstrap-modal'));
 
     //resources
     wp_register_script('dnui-options-resource', plugins_url('js/resource/options-resource.js', __FILE__), array('dnui-angular-resource'));
@@ -145,24 +146,26 @@ function DNUI_display_menu()
 //
 //
 //register_activation_hook( __FILE__, 'DNUI_activate' );
+if (is_admin()) {
 
-include_once 'php/php5_3/JsonSerializable.php';
+    include_once 'php/php5_3/JsonSerializable.php';
+    include_once 'php/helpers/HelperDNUI.php';
 
-include_once 'php/model/OptionsDNUI.php';
-include_once 'php/model/DatabaseDNUI.php';
-include_once 'php/model/ImageDNUI.php';
+    include_once 'php/model/OptionsDNUI.php';
+    include_once 'php/model/DatabaseDNUI.php';
+    include_once 'php/model/ImageDNUI.php';
 
-include_once 'php/converters/ConvertOptions.php';
-include_once 'php/converters/ConvertWordpressToDNUI.php';
+    include_once 'php/converters/ConvertOptions.php';
+    include_once 'php/converters/ConvertWordpressToDNUI.php';
 
-include_once 'php/rest/OptionsRest.php';
-include_once 'php/rest/ImageRest.php';
-include_once 'php/rest/BackupRest.php';
+    include_once 'php/rest/OptionsRest.php';
+    include_once 'php/rest/ImageRest.php';
+    include_once 'php/rest/BackupRest.php';
 
-include_once 'php/checkers/CheckerImageAbstract.php';
-include_once 'php/checkers/CheckerImagePostAndPageBestLuck.php';
-include_once 'php/checkers/CheckerImagePostAndPageAll.php';
-include_once 'php/checkers/CheckerImagePostAndPageDraft.php';
-include_once 'php/checkers/CheckersDNUI.php';
+    include_once 'php/checkers/CheckerImageAbstract.php';
+    include_once 'php/checkers/CheckerImagePostAndPageBestLuck.php';
+    include_once 'php/checkers/CheckerImagePostAndPageAll.php';
+    include_once 'php/checkers/CheckerImagePostAndPageDraft.php';
+    include_once 'php/checkers/CheckersDNUI.php';
 
-include_once 'php/helpers/HelperDNUI.php';
+}

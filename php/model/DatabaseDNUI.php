@@ -78,11 +78,11 @@ class DatabaseDNUI
 
         foreach ($sizeNames as $sizeName) {
 
-            $statusBySizes[$sizeName]=new StatusDNUI();
+            $statusBySizes[$sizeName] = new StatusDNUI();
 
             if ($sizeName == "original") {
                 wp_delete_attachment($imageDNUI->getId());
-                $statusBySizes['original']=new StatusDNUI();
+                $statusBySizes['original'] = new StatusDNUI();
 
                 $statusBySizes['original']->setUsed(2); //2 -> deleted
                 $statusBySizes['original']->setInServer(0);
@@ -136,8 +136,25 @@ class DatabaseDNUI
 
         return $this->db->get_results($sql, "ARRAY_A");
 
+    }
+
+    public function getShortCode($optionsDNUI)
+    {
+
+        if ($optionsDNUI->isDraftCheck()) {
+
+            $sql = "SELECT id FROM " . $this->prefix . "posts  WHERE  post_content is not null and post_content!=''  and post_type not in ('attachment','nav_menu_item')  AND post_content REGEXP  '\\\[(\\\[?)(.*)';";
+
+        } else {
+
+            $sql = "SELECT id FROM " . $this->prefix . "posts  WHERE  post_content is not null and post_content!=''  and post_type not in ('attachment','nav_menu_item','revision') and post_status !='draft'  AND post_content REGEXP  '\\\[(\\\[?)(.*)'; ";
+
+        }
+
+        return $this->db->get_results($sql, "ARRAY_A");
 
     }
+
 
     /**
      * Get the post information (this is use for the backup)
