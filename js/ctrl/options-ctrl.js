@@ -12,7 +12,6 @@ angular.module('dnuiPlugin')
                 $scope.options = options;
 
 
-
                 $scope.$watchCollection('options', function (newCollection, oldCollection, scope) {
 
                     //first call
@@ -21,7 +20,7 @@ angular.module('dnuiPlugin')
                     } else {
 
                             OptionsResource.update($scope.options);
-                            $rootScope.$broadcast('refreshImages', $scope.options);
+                            $rootScope.$broadcast('refreshImage',{});
 
 
                     }
@@ -50,7 +49,7 @@ angular.module('dnuiPlugin')
             });
 
             $scope.resetNumberPage = function () {
-                $scope.options.numberPage = 0;
+                $scope.options.numberPage = 1;
                 $rootScope.$broadcast('refreshImage', $scope.options.numberPage);
             };
 
@@ -68,7 +67,12 @@ angular.module('dnuiPlugin')
                 });
             };
 
+            $scope.restore = function () {
 
+                $scope.options = OptionsResource.restore();
+                $rootScope.$broadcast('restore',{});
+                 $rootScope.$broadcast('options', $scope.options);
+            };
         }
     ]).directive('convertToNumber', function () {
         return {

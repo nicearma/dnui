@@ -3,9 +3,10 @@
 /**
  * Description of Option
  *
- * @author Nicolas
+ * @author nicearma
  */
-class OptionsDNUI  implements JsonSerializable {
+class OptionsDNUI implements JsonSerializable
+{
 
     public $version;
     public $updateInServer;
@@ -16,6 +17,8 @@ class OptionsDNUI  implements JsonSerializable {
     public $showIgnoreSizes;
     public $galleryCheck;
     public $shortCodeCheck;
+    public $excerptCheck;
+    public $postMetaCheck;
     public $draftCheck;
     public $numberPage;
     public $imageShowInPage;
@@ -23,23 +26,24 @@ class OptionsDNUI  implements JsonSerializable {
 
     function __construct()
     {
-    $this->version="2.0";
-    $this->updateInServer=true;
-    //default active if the backup folder exist
-    $this->backup=HelperDNUI::backupFolderExist();
-    $this->showUsedImage=false;
-    $this->admin=true;
-    $this->ignoreSizes=array();
-    $this->showIgnoreSizes=true;
-    $this->galleryCheck=true;
-    $this->shortCodeCheck=true;
-    $this->draftCheck=true;
-    $this->numberPage=1;
-    $this->imageShowInPage=50;
-    $this->order=0;
+        $this->version = "2.0";
+        $this->updateInServer = true;
+        //default active if the backup folder exist
+        $this->backup = HelperDNUI::backupFolderExist();
+        $this->showUsedImage = false;
+        $this->admin = true;
+        $this->ignoreSizes = array();
+        $this->showIgnoreSizes = true;
+        $this->galleryCheck = true;
+        $this->shortCodeCheck = true;
+        $this->excerptCheck = true;
+        $this->postMetaCheck = true;
+        $this->draftCheck = true;
+        $this->numberPage = 1;
+        $this->imageShowInPage = 50;
+        $this->order = 0;
 
     }
-
 
 
     /**
@@ -71,7 +75,7 @@ class OptionsDNUI  implements JsonSerializable {
      */
     public function setUpdateInServer($updateInServer)
     {
-        if(is_bool($updateInServer)){
+        if (is_bool($updateInServer)) {
             $this->updateInServer = $updateInServer;
         }
 
@@ -90,7 +94,7 @@ class OptionsDNUI  implements JsonSerializable {
      */
     public function setBackup($backup)
     {
-        if(is_bool($backup)){
+        if (is_bool($backup)) {
             $this->backup = $backup;
         }
 
@@ -109,7 +113,7 @@ class OptionsDNUI  implements JsonSerializable {
      */
     public function setShowUsedImage($showUsedImage)
     {
-        if(is_bool($showUsedImage)){
+        if (is_bool($showUsedImage)) {
             $this->showUsedImage = $showUsedImage;
         }
     }
@@ -127,7 +131,7 @@ class OptionsDNUI  implements JsonSerializable {
      */
     public function setAdmin($admin)
     {
-        if(is_bool($admin)){
+        if (is_bool($admin)) {
             $this->admin = $admin;
         }
 
@@ -163,7 +167,7 @@ class OptionsDNUI  implements JsonSerializable {
      */
     public function setShowIgnoreSizes($showIgnoreSizes)
     {
-        if(is_bool($showIgnoreSizes)){
+        if (is_bool($showIgnoreSizes)) {
             $this->showIgnoreSizes = $showIgnoreSizes;
         }
 
@@ -182,8 +186,8 @@ class OptionsDNUI  implements JsonSerializable {
      */
     public function setGalleryCheck($galleryCheck)
     {
-        if(is_bool($galleryCheck)){
-            $this->galleryCheck  = $galleryCheck;
+        if (is_bool($galleryCheck)) {
+            $this->galleryCheck = $galleryCheck;
         }
 
     }
@@ -201,9 +205,47 @@ class OptionsDNUI  implements JsonSerializable {
      */
     public function setShortCodeCheck($shortCodeCheck)
     {
-        if(is_bool($shortCodeCheck)){
-            $this->shortCodeCheck  = $shortCodeCheck;
+        if (is_bool($shortCodeCheck)) {
+            $this->shortCodeCheck = $shortCodeCheck;
         }
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isExcerptCheck()
+    {
+        return $this->excerptCheck;
+    }
+
+    /**
+     * @param boolean $excerptCheck
+     */
+    public function setExcerptCheck($excerptCheck)
+    {
+        if (is_bool($excerptCheck)) {
+            $this->excerptCheck = $excerptCheck;
+        }
+
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPostMetaCheck()
+    {
+        return $this->postMetaCheck;
+    }
+
+    /**
+     * @param boolean $postMetaCheck
+     */
+    public function setPostMetaCheck($postMetaCheck)
+    {
+        if (is_bool($postMetaCheck)) {
+            $this->postMetaCheck = $postMetaCheck;
+        }
+
     }
 
     /**
@@ -219,7 +261,7 @@ class OptionsDNUI  implements JsonSerializable {
      */
     public function setDraftCheck($draftCheck)
     {
-        if(is_bool($draftCheck)){
+        if (is_bool($draftCheck)) {
             $this->draftCheck = $draftCheck;
         }
 
@@ -239,8 +281,8 @@ class OptionsDNUI  implements JsonSerializable {
      */
     public function setNumberPage($numberPage)
     {
-        if(!is_numeric($numberPage)||$numberPage<1){
-            $numberPage=1;
+        if (!is_numeric($numberPage) || $numberPage < 1) {
+            $numberPage = 1;
         }
         $this->numberPage = $numberPage;
     }
@@ -258,8 +300,8 @@ class OptionsDNUI  implements JsonSerializable {
      */
     public function setImageShowInPage($imageShowInPage)
     {
-        if(!is_numeric($imageShowInPage)||$imageShowInPage<1){
-            $imageShowInPage=1;
+        if (!is_numeric($imageShowInPage) || $imageShowInPage < 1) {
+            $imageShowInPage = 1;
         }
         $this->imageShowInPage = $imageShowInPage;
     }
@@ -278,8 +320,8 @@ class OptionsDNUI  implements JsonSerializable {
      */
     public function setOrder($order)
     {
-        if(!is_int($order)){
-            $order=0;
+        if (!is_int($order)) {
+            $order = 0;
         }
         $this->order = $order;
     }

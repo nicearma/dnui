@@ -1,11 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Nicolas
- * Date: 11/01/2016
- * Time: 10:23
+ *
+ * @author nicearma
  */
-
 class CheckerImagePostAndPageBestLuck extends CheckerImageAbstract{
 
 

@@ -1,15 +1,8 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of ConvertWordpressToDNUI
  *
- * @author Nicolas
+ * @author nicearma
  */
 class ConvertWordpressToDNUI
 {
@@ -128,7 +121,7 @@ class ConvertWordpressToDNUI
         return $info;
     }
 
-    public static function convertIdToHTMLShortCodes($postIds)
+    public static function convertIdToHTMLShortCodes($postIds, $row = 'post_content')
     {
         //https://codex.wordpress.org/Function_Reference/get_shortcode_regex
 
@@ -138,22 +131,29 @@ class ConvertWordpressToDNUI
         foreach ($postIds as $postId) {
             $post = get_post($postId['id']);
 
+            if ($row == 'post_content') {
+                $text = $post->post_content;
 
-            if (preg_match_all('/' . $pattern . '/s', $post->post_content, $matches)
+            } else if ($row == 'post_excerpt') {
+                $text = $post->post_excerpt;
+            } else {
+                $text = '';
+            }
+            if (preg_match_all('/' . $pattern . '/s', $text, $matches)
                 && array_key_exists(2, $matches)
             ) {
                 unset($post);
 
-                    $htlm= '';
+                $htlm = '';
 
                 foreach ($matches[0] as $shortCode) {
 
                     $htlm .= do_shortcode($shortCode);
                 }
 
-                if(!empty($htlm)){
-                    $htlm=str_replace($special, "",$htlm);
-                    $htlmShortCode[]= $htlm;
+                if (!empty($htlm)) {
+                    $htlm = str_replace($special, "", $htlm);
+                    $htlmShortCode[] = $htlm;
                 }
 
 

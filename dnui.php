@@ -1,11 +1,12 @@
 <?php
 /*
-  Plugin Name: DNUI (Delete not used images)
-  Version: 2.3
+  Plugin Name: DNUI (Delete not used images) PRO
+  Version: 1.0
   Plugin URI: http://www.nicearma.com/delete-not-used-image-wordpress-dnui/
   Author: Nicearma
   Author URI: http://www.nicearma.com/
   Text Domain: dnui
+  Domain Path: /languages
   Description: This plugin will delete all not used images file, the plugin search all image, not referred by any post of wordpress
  */
 
@@ -19,7 +20,7 @@ add_action('admin_init', 'DNUI_admin_js');
 
 add_action('admin_menu', 'DNUI_admin_menu');
 
-function DNUI_admin_js()
+function DNUI_PRO_admin_js()
 {
     wp_register_style('dnui-css', plugins_url('css/dnui.css', __FILE__));
 
@@ -163,9 +164,11 @@ if (is_admin()) {
     include_once 'php/rest/BackupRest.php';
 
     include_once 'php/checkers/CheckerImageAbstract.php';
-    include_once 'php/checkers/CheckerImagePostAndPageBestLuck.php';
+    include_once 'php/checkers/CheckerImageExcerptAll.php';
+    include_once 'php/checkers/CheckerImageExcerptBestLuck.php';
     include_once 'php/checkers/CheckerImagePostAndPageAll.php';
-    include_once 'php/checkers/CheckerImagePostAndPageDraft.php';
+    include_once 'php/checkers/CheckerImagePostAndPageBestLuck.php';
+    include_once 'php/checkers/CheckerImagePostMeta.php';
     include_once 'php/checkers/CheckersDNUI.php';
 
 }

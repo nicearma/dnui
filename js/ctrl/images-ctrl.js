@@ -15,7 +15,7 @@ angular.module('dnuiPlugin')
              */
             $scope.callServerStatus = 0;
 
-            var getImages = function (numberPage) {
+            var getImages = function (numberPage, deleteAllCall) {
                 $scope.callServerStatus = 1;
                 //refreshing so change to false
                 refreshImages = false;
@@ -33,117 +33,128 @@ angular.module('dnuiPlugin')
                 var syncCall = [];
                 //call to server
                 ImagesResource.readByOptions(numberPage).$promise.then(function (images) {
-                    //nothing was found, but if i'm not at the first page, i will try to go back, until i found something or i'm in the first page
-                    if (images.length == 0 && $scope.options.numberPage > 1) {
-                        //recount image, this can be happen if the last page was deleted
-                        ImagesResource.count().$promise.then(function (count) {
-                            $scope.totalImages = count['0'];
-                        });
-                        //back one page
-                        $scope.options.numberPage = $scope.options.numberPage - 1;
-                        return;
-                    }
+                        //nothing was found, but if i'm not at the first page, i will try to go back, until i found something or i'm in the first page
+                        if (images.length == 0 && $scope.options.numberPage > 1) {
+                            //recount image, this can be happen if the last page was deleted
+                            ImagesResource.count().$promise.then(function (count) {
+                                $scope.totalImages = count['0'];
+                            });
+                            //back one page
+                            $scope.options.numberPage = $scope.options.numberPage - 1;
+                            return;
+                        }
 
 
-                    $scope.images = images;
-                    //help with the status of call server, this will update after all call are made
-                    $scope.callServerStatus = 2;
-                    $scope.deleteAllButton = 2; //waiting all image status
+                        $scope.images = images;
+                        //help with the status of call server, this will update after all call are made
+                        $scope.callServerStatus = 2;
+                        $scope.deleteAllButton = 2; //waiting all image status
 
-                    //begin of the verification logic
-                    angular.forEach($scope.images, function (image, key) {
+                        //begin of the verification logic
+                        angular.forEach($scope.images, function (image, key) {
 
-                        //original image status = checking 
-                        image.status.used = -1;
-                        image.status.inServer = -1;
-                        //sizes image status = checking
-                        angular.forEach(image.imageSizes, function (imageSize) {
-                            imageSize.status.used = -1;
-                            imageSize.status.inServer = -1;
-                        });
+                            //original image status = checking
+                            image.status.used = -1;
+                            image.status.inServer = -1;
+                            //sizes image status = checking
+                            angular.forEach(image.imageSizes, function (imageSize) {
+                                imageSize.status.used = -1;
+                                imageSize.status.inServer = -1;
+                            });
 
-                        //all ansync call of verify status added to the sync help array
-                        //all image going to be verified
-                        syncCall.push(ImagesResource.verifyUsedById({id: image['id']}).$promise.then(function (statusSizes) {
+                            //all ansync call of verify status added to the sync help array
+                            //all image going to be verified
+                            syncCall.push(ImagesResource.verifyUsedById({id: image['id']}).$promise.then(function (statusSizes) {
 
-                            //try to fix thumbnail or size used in gallery but not found in image
-                            if ($scope.options.galleryCheck) {
+                                    //try to fix thumbnail or size used in gallery but not found in image
+                                    if ($scope.options.galleryCheck) {
 
-                                if (!_.isUndefined($scope.galleriesSizes[image['id']]) && !_.isUndefined($scope.galleriesSizes[image['id']]['sizes'])) {
+                                        if (!_.isUndefined($scope.galleriesSizes[image['id']]) && !_.isUndefined($scope.galleriesSizes[image['id']]['sizes'])) {
 
-                                    angular.forEach($scope.galleriesSizes[image['id']]['sizes'], function (sizeName) {
-                                        //if one sizeName not exit, i can not let delete the original image, normally this status will be complete with the tag logic
-                                        if (_.isUndefined(image.imageSizes[sizeName])) {
-                                            image.status.used = 1;
+                                            angular.forEach($scope.galleriesSizes[image['id']]['sizes'], function (sizeName) {
+                                                //if one sizeName not exit, i can not let delete the original image, normally this status will be complete with the tag logic
+                                                if (_.isUndefined(image.imageSizes[sizeName])) {
+                                                    image.status.used = 1;
+                                                }
+                                            });
+
+
                                         }
+                                    }
+
+
+                                    //the statusSizes is by ID and contain the status from one size name, include the original size
+                                    _.each(statusSizes[image['id']], function (status, sizeName) {
+                                        //again the logic for the gallery check, but this time will be direct
+                                        if ($scope.options.galleryCheck) {
+
+                                            if (!_.isUndefined($scope.galleriesSizes[image['id']]) && !_.isUndefined($scope.galleriesSizes[image['id']]['sizes']) && status.used != 1) {
+
+                                                if ($scope.galleriesSizes[image['id']]['sizes'].indexOf(sizeName) > -1) {
+                                                    status.used = 1;
+                                                }
+                                            }
+                                        }
+
+                                        if ($scope.options.wooCommerceCheck) {
+                                            if (status.used != 1 && !_.isUndefined($scope.wooCommerce[image['id']]) && $scope.wooCommerce[image['id']].indexOf(sizeName) > -1) {
+                                                status.used = 1;
+                                            }
+                                        }
+
+
+                                        //original image
+                                        if (sizeName === 'original') {
+
+                                            //the shortcode logic is active and the status is not used, verify if the image is used in any tag
+                                            if ($scope.options.shortCodeCheck && status.used != 1) {
+                                                //go every tag, if something is one is found, i will go out of the for
+                                                for (var key in $scope.htmlShortcodes) {
+                                                    if ($scope.htmlShortcodes[key].indexOf(image.name) > -1) {
+
+                                                        status.used = 1;
+                                                        break;
+                                                    }
+                                                }
+
+                                            }
+                                            //update the status of the original image
+                                            image['status'] = status;
+
+                                        } else {
+                                            //found the imageSize from the image.imageSizes
+                                            var imageSize = _.findWhere(image.imageSizes, {sizeName: sizeName});
+
+                                            //the same search in from tag
+                                            if ($scope.options.shortCodeCheck && status.used != 1) {
+                                                for (var key in $scope.htmlShortcodes) {
+                                                    if ($scope.htmlShortcodes[key].indexOf(imageSize.name) > -1) {
+                                                        status.used = 1;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            imageSize['status'] = status;
+                                        }
+
+
                                     });
 
 
-                                }
-                            }
-
-                            //the statusSizes is by ID and contain the status from one size name, include the original size
-                            _.each(statusSizes[image['id']], function (status, sizeName) {
-                                //again the logic for the gallery check, but this time will be direct
-                                if ($scope.options.galleryCheck) {
-
-                                    if (!_.isUndefined($scope.galleriesSizes[image['id']]) && !_.isUndefined($scope.galleriesSizes[image['id']]['sizes']) && status.used != 1) {
-
-                                        if ($scope.galleriesSizes[image['id']]['sizes'].indexOf(sizeName) > -1) {
-                                            status.used = 1;
-                                        }
-
-                                    }
-                                }
-
-                                //original image
-                                if (sizeName === 'original') {
-                                    //the shortcode logic is active and the status is not used, verify if the image is used in any tag
-                                    if ($scope.options.shortCodeCheck && status.used != 1) {
-                                        //go every tag, if something is one is found, i will go out of the for
-                                        for (var key in $scope.htmlShortcodes) {
-                                            if ($scope.htmlShortcodes[key].indexOf(image.name) > -1) {
-
-                                                status.used = 1;
-                                                break;
-                                            }
-                                        }
-
-                                    }
-                                    //update the status of the original image
-                                    image['status'] = status;
-
-                                } else {
-                                    //found the imageSize from the image.imageSizes
-                                    var imageSize = _.findWhere(image.imageSizes, {sizeName: sizeName});
-
-                                    //the same search in from tag
-                                    if ($scope.options.shortCodeCheck && status.used != 1) {
-                                        for (var key in $scope.htmlShortcodes) {
-                                            if ($scope.htmlShortcodes[key].indexOf(imageSize.name) > -1) {
-                                                status.used = 1;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    imageSize['status'] = status;
-                                }
+                                })
+                            )
+                            ;
 
 
-                            });
-
-
-                        }));
-
-
-                    });
-                    //after all sync call are finish do this
-                    $q.all(syncCall).then(function () {
+                        });
+                        //after all sync call are finish do this
+                        $q.all(syncCall).then(function () {
 
                             $scope.deleteAllButton = 1; //delete all button
 
-                    });
-                });
+                        });
+                    }
+                );
             };
 
             //if options is send from the optionsCtrl
@@ -155,10 +166,9 @@ angular.module('dnuiPlugin')
 
 
             });
-            //tab image is call
-            $rootScope.$on('tabImages', function () {
 
-                var syncCall=[];
+            var getChecks=function (numberPage){
+                var syncCall = [];
 
                 //i have to refresh the image tab
                 if (refreshImages) {
@@ -170,25 +180,23 @@ angular.module('dnuiPlugin')
                     //gallery active
                     if ($scope.options.galleryCheck) {
                         //do it only one time, this call is expensive, maybe put this in options
-                        if (_.isUndefined($scope.galleriesSizes)) {
-
+                        if (_.isUndefined($scope.galleriesSizes) || $scope.options.reloadCheck) {
 
 
                             $scope.callServerStatus = 1;
                             //call the server for get the galleries information
                             syncCall.push(ImagesResource.galleries().$promise.then(function (galleriesSizes) {
 
+                                delete galleriesSizes.$promise;
+                                delete galleriesSizes.$resolved;
                                 $scope.galleriesSizes = galleriesSizes;
-
-
-
 
                             }));
                         }
 
                     }
 
-                    if (_.isUndefined($scope.htmlShortcodes)) {
+                    if (_.isUndefined($scope.htmlShortcodes) || $scope.options.reloadCheck) {
 
                         if ($scope.options.shortCodeCheck) {
                             syncCall.push(ImagesResource.shortcodes().$promise.then(function (htmlShortcodes) {
@@ -200,27 +208,47 @@ angular.module('dnuiPlugin')
                         }
                     }
 
-                    if(syncCall.length>0){
+
+
+                    if (syncCall.length > 0) {
                         $q.all(syncCall).then(function () {
-                            getImages();
+                            getImages(numberPage);
                         });
-                    }else {
-                        getImages();
+                    } else {
+                        getImages(numberPage);
                     }
 
                 }
+            }
+
+
+
+
+            //tab image is call
+            $rootScope.$on('tabImages', function () {
+
+                getChecks();
+                
             });
 
             //call if the numberPage change
             $scope.changeNumberPage = function () {
-
-                getImages($scope.options.numberPage);
+                refreshImages = true;
+               getChecks($scope.options.numberPage);
             };
 
             //refresh the image tab went is call
             $rootScope.$on('refreshImage', function () {
                 refreshImages = true;
+            });
 
+            //restore
+            $rootScope.$on('restore', function () {
+                //fix bug restore...
+                ImagesResource.count().$promise.then(function (count) {
+                    $scope.totalImages = count['0'];
+                });
+              
             });
 
             //not delete original image if one size is used
@@ -409,9 +437,9 @@ angular.module('dnuiPlugin')
 
                         });
 
-                        $q.all(syncCall).then(function () {
+                           $q.all(syncCall).then(function () {
                             //TODO: reactivate button
-                        });
+                           });
                     } else {
                         $scope.deleteAllButton = 1;
                     }
@@ -422,13 +450,12 @@ angular.module('dnuiPlugin')
 
 
             };
-            //::::::::only for the paid version::::::::::::::
-            //help to see if all the page have again images
 
 
 
         }
-    ]).controller('deleteAllImageCtrl', function ($scope, $uibModalInstance, $interval) {
+    ]).
+    controller('deleteAllImageCtrl', function ($scope, $uibModalInstance, $interval) {
 
         $scope.time = 5;
 

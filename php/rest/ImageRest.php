@@ -63,7 +63,7 @@ function dnui_delete_by_id_and_size_image()
 /**
  * Description of Image
  *
- * @author Nicolas
+ * @author nicearma
  */
 class ImageRest
 {
@@ -116,14 +116,22 @@ class ImageRest
         wp_die();
     }
 
-
     public function readShortCodes()
     {
-        $result = ConvertWordpressToDNUI::convertIdToHTMLShortCodes($this->databaseDNUI->getShortCode($this->optionsDNUI));
+	
+        $resultContent = ConvertWordpressToDNUI::convertIdToHTMLShortCodes($this->databaseDNUI->getShortCodeContent($this->optionsDNUI));
+        $resultExcerpt = array();
+
+        if($this->optionsDNUI->isExcerptCheck()){
+            $resultExcerpt = ConvertWordpressToDNUI::convertIdToHTMLShortCodes($this->databaseDNUI->getShortCodeExcerpt($this->optionsDNUI),'excerpt');
+        }
+
+        $result= array_merge($resultContent,$resultExcerpt);
+       
         echo json_encode($result);
         wp_die();
     }
-
+    
     public function verifyStatusById()
     {
         $status = array();

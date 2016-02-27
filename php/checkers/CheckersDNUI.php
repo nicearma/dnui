@@ -1,7 +1,8 @@
 <?php
-
-
-
+/**
+ *
+ * @author nicearma
+ */
 class CheckersDNUI
 {
 
@@ -10,8 +11,10 @@ class CheckersDNUI
     function __construct($databaseDNUI)
     {
         new CheckerImagePostAndPageBestLuck($databaseDNUI,$this);
-        new CheckerImagePostAndPostDraft($databaseDNUI,$this);
+        new CheckerImageExcerptBestLuck($databaseDNUI,$this);
+        new CheckerImagePostMeta($databaseDNUI,$this);
         new CheckerImagePostAndPageAll($databaseDNUI,$this);
+        new CheckerImageExcerptAll($databaseDNUI,$this);
     }
 
         public function addChecker($checker)

@@ -1,5 +1,8 @@
 <?php
-
+/**
+ *
+ * @author nicearma
+ */
 class ConvertOptions
 {
 
@@ -49,12 +52,17 @@ class ConvertOptions
         $optionsDNUI->setBackup($optionJson->backup);
         $optionsDNUI->setShowUsedImage($optionJson->showUsedImage);
         $optionsDNUI->setAdmin($optionJson->admin);
+
         if (is_array($optionJson->ignoreSizes)) {
             $optionsDNUI->setIgnoreSizes($optionJson->ignoreSizes);
         }
+
         $optionsDNUI->setShowIgnoreSizes($optionJson->showIgnoreSizes);
+
         $optionsDNUI->setGalleryCheck($optionJson->galleryCheck);
         $optionsDNUI->setShortCodeCheck($optionJson->galleryCheck);
+        $optionsDNUI->setExcerptCheck($optionJson->excerptCheck);
+        $optionsDNUI->setPostMetaCheck($optionJson->postMetaCheck);
         $optionsDNUI->setDraftCheck($optionJson->draftCheck);
         $optionsDNUI->setNumberPage($optionJson->numberPage);
         $optionsDNUI->setImageShowInPage($optionJson->imageShowInPage);

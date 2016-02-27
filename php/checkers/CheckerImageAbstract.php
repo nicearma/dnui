@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+ *
+ * @author nicearma
+ */
 abstract class CheckerImageAbstract {
 
     protected $databaseDNUI;

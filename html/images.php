@@ -30,7 +30,7 @@
             <tbody ng-repeat="image in images">
             <tr ng-hide="!options.showUsedImage&&image.status.used==1" class="dnui_original">
 
-                <td>{{image.name}}</td>
+                <td>{{image.name}}</span></td>
                 </td>
                 <td>({{image.id}}) {{image.sizeName}}
                     <span ng-if="options.ignoreSizes.indexOf(image.sizeName)>-1">&#9888;</span></td>
@@ -66,11 +66,10 @@
 
             <tr ng-repeat="imageSize in image.imageSizes"
                 ng-hide="!options.showUsedImage&&imageSize.status.used==1 || ( !options.showIgnoreSizes && options.ignoreSizes.indexOf(imageSize.sizeName)>-1)">
-                <td>{{imageSize.name}}
-                    </td>
-                </td>
+                <td>{{imageSize.name}}</td>
                 <td>({{image.id}}) {{imageSize.sizeName}}
-                    <span ng-if="options.ignoreSizes.indexOf(imageSize.sizeName)>-1">&#9888;</span></td>
+                    <span ng-if="options.ignoreSizes.indexOf(imageSize.sizeName)>-1">&#9888;</span>
+                </td>
                 <td>{{imageSize.resolution}}</td>
                 <td>{{imageSize.srcSizeImage}}</td>
                 <td>
@@ -97,8 +96,8 @@
                 </td>
                 <td>
                     <button ng-if="imageSize.status.used==0 && !(options.ignoreSizes.indexOf(imageSize.sizeName)>-1))"
-                            class="button action" style="color: #c50000"
-                            ng-click="delete(image.id,imageSize.sizeName,image)">Delete
+                        class="button action" style="color: #c50000"
+                        ng-click="delete(image.id,imageSize.sizeName,image)">Delete
                     </button>
                 </td>
             </tr>
@@ -123,7 +122,8 @@
 
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()"> <?php _e('Yes delete all', 'dnui') ?></button>
+            <button class="btn btn-primary" type="button"
+                    ng-click="ok()"> <?php _e('Yes delete all', 'dnui') ?></button>
             <button class="btn btn-warning" type="button" ng-click="cancel()"><?php _e('Cancel', 'dnui') ?></button>
         </div>
     </script>

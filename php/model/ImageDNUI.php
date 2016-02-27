@@ -3,7 +3,7 @@
 /**
  * Description of ImageDNUI
  *
- * @author Nicearma
+ * @author nicearma
  */
 class ImageDNUI implements JsonSerializable
 {

@@ -3,7 +3,7 @@
 /**
  * All about database and SQL to search image
  *
- * @author Nicearma
+ * @author nicearma
  */
 class DatabaseDNUI
 {
@@ -138,7 +138,24 @@ class DatabaseDNUI
 
     }
 
-    public function getShortCode($optionsDNUI)
+    public function getShortCodeContent($optionsDNUI)
+    {
+
+        if ($optionsDNUI->isDraftCheck()) {
+
+            $sql = "SELECT id FROM " . $this->prefix . "posts  WHERE  post_content is not null and post_content!=''  and post_type not in ('attachment','nav_menu_item')  AND post_content REGEXP  '\\\[(\\\[?)(.*)';";
+
+        } else {
+
+            $sql = "SELECT id FROM " . $this->prefix . "posts  WHERE  post_content is not null and post_content!=''  and post_type not in ('attachment','nav_menu_item','revision') and post_status !='draft'  AND post_content REGEXP  '\\\[(\\\[?)(.*)'; ";
+
+        }
+
+        return $this->db->get_results($sql, "ARRAY_A");
+
+    }
+
+    public function getShortCodeExcerpt($optionsDNUI)
     {
 
         if ($optionsDNUI->isDraftCheck()) {

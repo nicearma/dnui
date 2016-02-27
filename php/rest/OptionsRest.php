@@ -29,7 +29,7 @@ function dnui_restore_options()
 /**
  * Description of Option
  *
- * @author Nicolas
+ * @author nicearma
  */
 class OptionsRest
 {

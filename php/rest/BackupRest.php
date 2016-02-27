@@ -64,7 +64,7 @@ function dnui_exists_backup_folder_backup()
 /**
  * Description of Backup
  *
- * @author Nicolas
+ * @author nicearma
  */
 class BackupRest
 {
@@ -291,7 +291,10 @@ class BackupRest
 
 }
 
-
+/**
+ *
+ * @author nicearma
+ */
 class StatusBackupDNUI implements JsonSerializable
 {
 
