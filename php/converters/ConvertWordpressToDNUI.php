@@ -121,7 +121,7 @@ class ConvertWordpressToDNUI
         return $info;
     }
 
-    public static function convertIdToHTMLShortCodes($postIds, $row = 'post_content')
+    public static function convertIdToHTMLShortCodes($postIds, $row = 'content')
     {
         //https://codex.wordpress.org/Function_Reference/get_shortcode_regex
 
@@ -131,10 +131,10 @@ class ConvertWordpressToDNUI
         foreach ($postIds as $postId) {
             $post = get_post($postId['id']);
 
-            if ($row == 'post_content') {
+            if ($row == 'content') {
                 $text = $post->post_content;
 
-            } else if ($row == 'post_excerpt') {
+            } else if ($row == 'excerpt') {
                 $text = $post->post_excerpt;
             } else {
                 $text = '';

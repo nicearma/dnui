@@ -4,7 +4,7 @@
  *
  * @author nicearma
  */
-class CheckerImageExcerptAll extends CheckerImageAbstract
+class CheckerImageExcerptAllDNUI extends CheckerImageAbstractDNUI
 {
 
     function checkImage($id, $src, $optionDNUI)

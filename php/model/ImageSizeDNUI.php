@@ -1,48 +1,23 @@
 <?php
 
-/**
- * Description of ImageDNUI
- *
- * @author nicearma
- */
-class ImageDNUI implements JsonSerializable
+
+class ImageSizeDNUI implements JsonSerializable
 {
 
-    public $id; //the same id of the database
     public $name;
     public $sizeName;
     public $resolution;
     public $status;
-    public $srcOriginalImage; //the origina src
-    public $imageSizes; //the list of imageSize, see the ImageSize
+    public $srcSizeImage; //image src
 
-    function __construct($id, $name, $sizeName, $srcOriginalImage, $resolution)
+
+    function __construct($name, $sizeName, $resolution, $srcSizeImage)
     {
-        $this->id = $id;
         $this->name = $name;
         $this->sizeName = $sizeName;
-        $this->srcOriginalImage = $srcOriginalImage;
         $this->resolution = $resolution;
         $this->status = new StatusDNUI();
-        $this->imageSizes = array();
-
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
+        $this->srcSizeImage = $srcSizeImage;
     }
 
     /**
@@ -77,7 +52,6 @@ class ImageDNUI implements JsonSerializable
         $this->sizeName = $sizeName;
     }
 
-
     /**
      * @return mixed
      */
@@ -110,37 +84,20 @@ class ImageDNUI implements JsonSerializable
         $this->status = $status;
     }
 
-
     /**
      * @return mixed
      */
-    public function getSrcOriginalImage()
+    public function getSrcSizeImage()
     {
-        return $this->srcOriginalImage;
+        return $this->srcSizeImage;
     }
 
     /**
-     * @param mixed $srcOriginalImage
+     * @param mixed $srcSizeImage
      */
-    public function setSrcOriginalImage($srcOriginalImage)
+    public function setSrcSizeImage($srcSizeImage)
     {
-        $this->srcOriginalImage = $srcOriginalImage;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImageSizes()
-    {
-        return $this->imageSizes;
-    }
-
-    /**
-     * @param mixed $imageSize
-     */
-    public function addImageSize($imageSize)
-    {
-        $this->imageSizes[$imageSize->getSizeName()] = $imageSize;
+        $this->srcSizeImage = $srcSizeImage;
     }
 
     public function jsonSerialize()
@@ -148,8 +105,4 @@ class ImageDNUI implements JsonSerializable
         return get_object_vars($this);
     }
 
-
 }
-
-
-

@@ -1,7 +1,7 @@
 <?php
 /*
-  Plugin Name: DNUI (Delete not used images) PRO
-  Version: 1.0
+  Plugin Name: DNUI (Delete not used images)
+  Version: 2.4
   Plugin URI: http://www.nicearma.com/delete-not-used-image-wordpress-dnui/
   Author: Nicearma
   Author URI: http://www.nicearma.com/
@@ -20,7 +20,7 @@ add_action('admin_init', 'DNUI_admin_js');
 
 add_action('admin_menu', 'DNUI_admin_menu');
 
-function DNUI_PRO_admin_js()
+function DNUI_admin_js()
 {
     wp_register_style('dnui-css', plugins_url('css/dnui.css', __FILE__));
 
@@ -150,25 +150,78 @@ function DNUI_display_menu()
 if (is_admin()) {
 
     include_once 'php/php5_3/JsonSerializable.php';
-    include_once 'php/helpers/HelperDNUI.php';
 
-    include_once 'php/model/OptionsDNUI.php';
-    include_once 'php/model/DatabaseDNUI.php';
-    include_once 'php/model/ImageDNUI.php';
+    if (!class_exists('HelperDNUI')) {
+        include_once 'php/helpers/HelperDNUI.php';
+    }
 
-    include_once 'php/converters/ConvertOptions.php';
-    include_once 'php/converters/ConvertWordpressToDNUI.php';
+    if (!class_exists('ImageSizeDNUI')) {
+        include_once 'php/model/ImageSizeDNUI.php';
+    }
+    if (!class_exists('StatusDNUI')) {
+        include_once 'php/model/StatusDNUI.php';
+    }
+    if (!class_exists('StatusBackupDNUI')) {
+        include_once 'php/model/StatusBackupDNUI.php';
+    }
+    if (!class_exists('OptionsDNUI')) {
+        include_once 'php/model/OptionsDNUI.php';
+    }
+    if (!class_exists('DatabaseDNUI')) {
+        include_once 'php/model/DatabaseDNUI.php';
+    }
+    if (!class_exists('ImageDNUI')) {
+        include_once 'php/model/ImageDNUI.php';
+    }
 
-    include_once 'php/rest/OptionsRest.php';
-    include_once 'php/rest/ImageRest.php';
-    include_once 'php/rest/BackupRest.php';
 
-    include_once 'php/checkers/CheckerImageAbstract.php';
-    include_once 'php/checkers/CheckerImageExcerptAll.php';
-    include_once 'php/checkers/CheckerImageExcerptBestLuck.php';
-    include_once 'php/checkers/CheckerImagePostAndPageAll.php';
-    include_once 'php/checkers/CheckerImagePostAndPageBestLuck.php';
-    include_once 'php/checkers/CheckerImagePostMeta.php';
-    include_once 'php/checkers/CheckersDNUI.php';
+    if (!class_exists('ConvertOptionsDNUI')) {
+        include_once 'php/converters/ConvertOptionsDNUI.php';
+    }
+    if (!class_exists('ConvertWordpressToDNUI')) {
+        include_once 'php/converters/ConvertWordpressToDNUI.php';
+    }
+
+
+    if (!class_exists('OptionsRestDNUI')) {
+        include_once 'php/rest/OptionsRestDNUI.php';
+    }
+    if (!class_exists('ImageRestDNUI')) {
+        include_once 'php/rest/ImageRestDNUI.php';
+    }
+    if (!class_exists('BackupRestDNUI')) {
+        include_once 'php/rest/BackupRestDNUI.php';
+    }
+
+
+    if (!class_exists('CheckerImageAbstractDNUI')) {
+        include_once 'php/checkers/CheckerImageAbstractDNUI.php';
+    }
+    if (!class_exists('CheckerImageExcerptAllDNUI')) {
+        include_once 'php/checkers/CheckerImageExcerptAllDNUI.php';
+    }
+    if (!class_exists('CheckerImageExcerptBestLuckDNUI')) {
+        include_once 'php/checkers/CheckerImageExcerptBestLuckDNUI.php';
+    }
+    if (!class_exists('CheckerImagePostAndPageAllDNUI')) {
+        include_once 'php/checkers/CheckerImagePostAndPageAllDNUI.php';
+    }
+    if (!class_exists('CheckerImagePostAndPageBestLuckDNUI')) {
+        include_once 'php/checkers/CheckerImagePostAndPageBestLuckDNUI.php';
+    }
+    if (!class_exists('CheckerImagePostMetaDNUI')) {
+        include_once 'php/checkers/CheckerImagePostMetaDNUI.php';
+    }
+    if (!class_exists('CheckerImagePostMetaDNUIPRO')) {
+        include_once 'php/checkers/CheckerImagePostMetaDNUI.php';
+    }
+    if (!class_exists('CheckersDNUI')) {
+        include_once 'php/checkers/CheckersDNUI.php';
+    }
+
+    if (!class_exists('ConfRestDNUI')) {
+        include_once 'php/rest/ConfRestDNUI.php';
+    }
+
 
 }

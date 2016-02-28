@@ -1,43 +1,19 @@
 <?php
 
 
-add_action('wp_ajax_dnui_get_options', 'dnui_get_options');
-
-function dnui_get_options()
-{
-    $optionsRest = new OptionsRest();
-    $optionsRest->read();
-}
-
-add_action('wp_ajax_dnui_update_options', 'dnui_update_options');
-
-function dnui_update_options()
-{
-    $optionsRest = new OptionsRest();
-    $optionsRest->update();
-}
-
-add_action('wp_ajax_dnui_restore_options', 'dnui_restore_options');
-
-function dnui_restore_options()
-{
-    $optionsRest = new OptionsRest();
-    $optionsRest->restore();
-}
-
 
 /**
  * Description of Option
  *
  * @author nicearma
  */
-class OptionsRest
+class OptionsRestDNUI
 {
 
 
     public function read()
     {
-        $optionsDNUI = OptionsRest::readOptions();
+        $optionsDNUI = OptionsRestDNUI::readOptions();
         echo json_encode($optionsDNUI);
         wp_die();
     }
@@ -45,7 +21,7 @@ class OptionsRest
     public function update()
     {
         $optionsJson = json_decode(file_get_contents('php://input'));
-        $optionsDNUI = ConvertOptions::convertOptionJsonToOptionDNUI($optionsJson);
+        $optionsDNUI = ConvertOptionsDNUI::convertOptionJsonToOptionDNUI($optionsJson);
         update_option('dnui_options', serialize($optionsDNUI));
         wp_die();
     }
@@ -58,7 +34,7 @@ class OptionsRest
             $optionsDNUI = new OptionsDNUI();
         } else {
             $optionsDNUI = unserialize($optionsDNUI);
-            $optionsDNUI = ConvertOptions::convertOldTONew($optionsDNUI);
+            $optionsDNUI = ConvertOptionsDNUI::convertOldTONew($optionsDNUI);
         }
         return $optionsDNUI;
     }

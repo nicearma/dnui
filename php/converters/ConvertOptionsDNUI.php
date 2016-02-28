@@ -3,7 +3,7 @@
  *
  * @author nicearma
  */
-class ConvertOptions
+class ConvertOptionsDNUI
 {
 
 
@@ -12,7 +12,7 @@ class ConvertOptions
 
         if (is_array($optionsOld) && array_key_exists('version', $optionsOld)) {
             if ($optionsOld['version'] == '1.5.2') {
-                $optionsDNUI = ConvertOptions::convert1_5to2_0($optionsOld);
+                $optionsDNUI = ConvertOptionsDNUI::convert1_5to2_0($optionsOld);
             } else {
                 $optionsDNUI = new OptionsDNUI();
             }

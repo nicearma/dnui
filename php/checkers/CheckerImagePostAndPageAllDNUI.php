@@ -3,7 +3,7 @@
  *
  * @author nicearma
  */
-class CheckerImagePostAndPageAll extends CheckerImageAbstract
+class CheckerImagePostAndPageAllDNUI extends CheckerImageAbstractDNUI
 {
 
     function checkImage($id, $src, $optionDNUI)

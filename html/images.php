@@ -95,7 +95,7 @@
                           style="color: #0000FF"><?php _e('Backup...', 'dnui') ?></span>
                 </td>
                 <td>
-                    <button ng-if="imageSize.status.used==0 && !(options.ignoreSizes.indexOf(imageSize.sizeName)>-1))"
+                    <button ng-if="imageSize.status.used==0 && !(options.ignoreSizes.indexOf(imageSize.sizeName)>-1)"
                         class="button action" style="color: #c50000"
                         ng-click="delete(image.id,imageSize.sizeName,image)">Delete
                     </button>

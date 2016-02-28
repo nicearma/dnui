@@ -3,8 +3,8 @@
 </p>
 <h3><?php _e("Where i can foud DNUI PRO", 'dnui'); ?></h3>
 <p>
-    <a href="https://apps.nicearma.com">DNUI PRO version, this version have some useful features:</a>
-<ul>
+    <a href="https://apps.nicearma.com/product/dnui-delete-not-used-image-pro/">DNUI PRO version, this version have some useful features:</a>
+<ol>
     <li><strong>Compatibility with WooCommerce</strong> (the main WooCommerce plugin, not other extends plugins)</li>
     <li>Ignore images by clicking in the image name</li>
     <li>Ignore size by clicking in the size name and include this size name to the ignore size list if this size does
@@ -13,7 +13,7 @@
     <li><strong>Delete all automatic button</strong>, this will go page by page and delete all images not used</li>
     <li>Restore all backup</li>
     <li>Delete all backup</li>
-</ul>
+</ol>
 </p>
 <h3><?php _e("How to support this plugin", 'dnui'); ?></h3>
 <p>You can give a good or bad review at <a href="https://wordpress.org/support/view/plugin-reviews/dnui-delete-not-used-image-wordpress">DNUI reviews</a> or buy the DNUI PRO version</p>

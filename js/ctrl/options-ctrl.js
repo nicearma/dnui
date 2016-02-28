@@ -71,7 +71,7 @@ angular.module('dnuiPlugin')
 
                 $scope.options = OptionsResource.restore();
                 $rootScope.$broadcast('restore',{});
-                 $rootScope.$broadcast('options', $scope.options);
+                $rootScope.$broadcast('options', $scope.options);
             };
         }
     ]).directive('convertToNumber', function () {

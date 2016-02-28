@@ -15,7 +15,7 @@ angular.module('dnuiPlugin')
              */
             $scope.callServerStatus = 0;
 
-            var getImages = function (numberPage, deleteAllCall) {
+            var getImages = function (numberPage) {
                 $scope.callServerStatus = 1;
                 //refreshing so change to false
                 refreshImages = false;
@@ -96,16 +96,8 @@ angular.module('dnuiPlugin')
                                             }
                                         }
 
-                                        if ($scope.options.wooCommerceCheck) {
-                                            if (status.used != 1 && !_.isUndefined($scope.wooCommerce[image['id']]) && $scope.wooCommerce[image['id']].indexOf(sizeName) > -1) {
-                                                status.used = 1;
-                                            }
-                                        }
-
-
                                         //original image
                                         if (sizeName === 'original') {
-
                                             //the shortcode logic is active and the status is not used, verify if the image is used in any tag
                                             if ($scope.options.shortCodeCheck && status.used != 1) {
                                                 //go every tag, if something is one is found, i will go out of the for
@@ -180,7 +172,7 @@ angular.module('dnuiPlugin')
                     //gallery active
                     if ($scope.options.galleryCheck) {
                         //do it only one time, this call is expensive, maybe put this in options
-                        if (_.isUndefined($scope.galleriesSizes) || $scope.options.reloadCheck) {
+                        if (_.isUndefined($scope.galleriesSizes)) {
 
 
                             $scope.callServerStatus = 1;
@@ -196,7 +188,7 @@ angular.module('dnuiPlugin')
 
                     }
 
-                    if (_.isUndefined($scope.htmlShortcodes) || $scope.options.reloadCheck) {
+                    if (_.isUndefined($scope.htmlShortcodes)) {
 
                         if ($scope.options.shortCodeCheck) {
                             syncCall.push(ImagesResource.shortcodes().$promise.then(function (htmlShortcodes) {
@@ -415,10 +407,7 @@ angular.module('dnuiPlugin')
                                     //searching all image than can be deleted
                                     if ($scope.options.ignoreSizes.indexOf(image.imageSizes[key].sizeName) == -1
                                         && image.imageSizes[key].status.used == 0
-                                        && (
-                                        $scope.options.ignoreImages[image.id] == undefined
-                                        || $scope.options.ignoreImages[image.id].indexOf(image.imageSizes[key].sizeName) == -1
-                                        )
+
                                     ) {
                                         sizeNames.push(image.imageSizes[key].sizeName);
                                     }

@@ -10,11 +10,11 @@ class CheckersDNUI
 
     function __construct($databaseDNUI)
     {
-        new CheckerImagePostAndPageBestLuck($databaseDNUI,$this);
-        new CheckerImageExcerptBestLuck($databaseDNUI,$this);
-        new CheckerImagePostMeta($databaseDNUI,$this);
-        new CheckerImagePostAndPageAll($databaseDNUI,$this);
-        new CheckerImageExcerptAll($databaseDNUI,$this);
+        new CheckerImagePostAndPageBestLuckDNUI($databaseDNUI,$this);
+        new CheckerImageExcerptBestLuckDNUI($databaseDNUI,$this);
+        new CheckerImagePostMetaDNUI($databaseDNUI,$this);
+        new CheckerImagePostAndPageAllDNUI($databaseDNUI,$this);
+        new CheckerImageExcerptAllDNUI($databaseDNUI,$this);
     }
 
         public function addChecker($checker)

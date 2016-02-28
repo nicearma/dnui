@@ -1,72 +1,12 @@
 <?php
 
-add_action('wp_ajax_dnui_get_all_backup', 'dnui_get_all_backup');
-
-function dnui_get_all_backup()
-{
-    $backupRest = new BackupRest();
-    $backupRest->readAll();
-}
-
-add_action('wp_ajax_dnui_delete_all_backup', 'dnui_delete_all_backup');
-
-function  dnui_delete_all_backup()
-{
-    $backupRest = new BackupRest();
-    $backupRest->deleteAll();
-}
-
-add_action('wp_ajax_dnui_delete_by_id_backup', 'dnui_delete_by_id_backup');
-
-function dnui_delete_by_id_backup()
-{
-    $backupRest = new BackupRest();
-    $backupRest->deleteById();
-}
-
-
-add_action('wp_ajax_dnui_make_backup', 'dnui_make_backup');
-
-function dnui_make_backup()
-{
-    $backupRest = new BackupRest();
-    $backupRest->make();
-}
-
-
-add_action('wp_ajax_dnui_restore_backup', 'dnui_restore_backup');
-
-function dnui_restore_backup()
-{
-    $backupRest = new BackupRest();
-    $backupRest->restoreBackup();
-}
-
-
-add_action('wp_ajax_dnui_make_backup_folder_backup', 'dnui_make_backup_folder_backup');
-
-function dnui_make_backup_folder_backup()
-{
-    $backupRest = new BackupRest();
-    $backupRest->makeBackupFolder();
-}
-
-
-add_action('wp_ajax_dnui_exists_backup_folder_backup', 'dnui_exists_backup_folder_backup');
-
-function dnui_exists_backup_folder_backup()
-{
-    $backupRest = new BackupRest();
-    $backupRest->existsBackupFolder();
-}
-
 
 /**
  * Description of Backup
  *
  * @author nicearma
  */
-class BackupRest
+class BackupRestDNUI
 {
 
     private $databaseDNUI;
@@ -77,7 +17,7 @@ class BackupRest
     {
 
         $this->databaseDNUI = new DatabaseDNUI();
-        $this->optionsDNUI = OptionsRest::readOptions();
+        $this->optionsDNUI = OptionsRestDNUI::readOptions();
 
     }
 
@@ -92,7 +32,7 @@ class BackupRest
         //TODO: complete this option
         @rmdir(HelperDNUI::backupDir());
         clearstatcache();
-        BackupRest::makeBackupFolder();
+        BackupRestDNUI::makeBackupFolder();
     }
 
     public function deleteById()
@@ -290,52 +230,4 @@ class BackupRest
 
 
 }
-
-/**
- *
- * @author nicearma
- */
-class StatusBackupDNUI implements JsonSerializable
-{
-
-
-    /*
-     * -4 backup id folder can not be delete
-     * -3 => can not be delete backup folder
-     * -2 => status unknow
-     *  0 => backup folder not exists
-     *  1 => backup folder exist
-     *  2 => moved to upload folder (restore option)
-     *  3 => backup id folder have been deleted
-     *  4 => Restoring...
-     *  5 => Deleting...
-     *  6 => Restored and deleted
-     *  7 => Restored and deleting...
-     */
-    public $inServer = -2;
-
-
-    /**
-     * @return int
-     */
-    public function getInServer()
-    {
-        return $this->inServer;
-    }
-
-    /**
-     * @param int $inServer
-     */
-    public function setInServer($inServer)
-    {
-        $this->inServer = $inServer;
-    }
-
-
-    public function jsonSerialize()
-    {
-        return get_object_vars($this);
-    }
-}
-
 

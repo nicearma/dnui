@@ -4,7 +4,7 @@
  *
  * @author nicearma
  */
-abstract class CheckerImageAbstract {
+abstract class CheckerImageAbstractDNUI {
 
     protected $databaseDNUI;
     protected $checkersDNUI;

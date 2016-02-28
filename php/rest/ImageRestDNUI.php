@@ -1,71 +1,12 @@
 <?php
 
-add_action('wp_ajax_dnui_count_image', 'dnui_count_image');
-
-function dnui_count_image()
-{
-    $imageRest = new ImageRest();
-    $imageRest->countImage();
-}
-
-add_action('wp_ajax_dnui_get_all_by_options_image', 'dnui_get_all_by_options_image');
-
-function dnui_get_all_by_options_image()
-{
-    $imageRest = new ImageRest();
-    $imageRest->readByOptions();
-}
-
-
-add_action('wp_ajax_dnui_get_galleries_image', 'dnui_get_galleries_image');
-
-function dnui_get_galleries_image()
-{
-    $imageRest = new ImageRest();
-    $imageRest->readGalleries();
-}
-
-add_action('wp_ajax_dnui_get_shortcodes_image', 'dnui_get_shortcodes_image');
-
-function dnui_get_shortcodes_image()
-{
-    $imageRest = new ImageRest();
-    $imageRest->readShortCodes();
-}
-
-
-add_action('wp_ajax_dnui_verify_status_by_id_image', 'dnui_verify_status_by_id_image');
-
-function dnui_verify_status_by_id_image()
-{
-    $imageRest = new ImageRest();
-    $imageRest->verifyStatusById();
-}
-
-
-add_action('wp_ajax_dnui_get_sizes', 'dnui_get_sizes');
-
-function dnui_get_sizes()
-{
-    $imageRest = new ImageRest();
-    $imageRest->getSizes();
-}
-
-
-add_action('wp_ajax_dnui_delete_by_id_and_size_image', 'dnui_delete_by_id_and_size_image');
-
-function dnui_delete_by_id_and_size_image()
-{
-    $imageRest = new ImageRest();
-    $imageRest->deleteByIdAndSize();
-}
 
 /**
  * Description of Image
  *
  * @author nicearma
  */
-class ImageRest
+class ImageRestDNUI
 {
 
     private $databaseDNUI;
@@ -74,7 +15,7 @@ class ImageRest
     function __construct()
     {
         $this->databaseDNUI = new DatabaseDNUI();
-        $this->optionsDNUI = OptionsRest::readOptions();
+        $this->optionsDNUI = OptionsRestDNUI::readOptions();
 
     }
 

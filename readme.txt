@@ -24,6 +24,15 @@ This plugin use:
 * Angular UI [only modal and tabs]
 * Bootstrap [only modal and tabs]
 
+This version can search if the image is used at:
+* Excerpt (reference image or shortcode)
+* Publish Post/Page (reference image or shortcode)
+* Draft/Revesion Post/Page (reference image or shortcode)
+* Shortcodes (include gallery)
+
+
+You can found the <a href="https://apps.nicearma.com/product/dnui-delete-not-used-image-pro/">DNUI PRO VERSION</a> if you need more useful features, like compatibility with WooCommerce
+
 == Changelog ==
 
 = Version 2.4 =
@@ -33,6 +42,7 @@ This plugin use:
 * Search in meta value
 * Change the option view
 * Fix serveral bug (the restore button)
+* Change codes
 
 = Version 2.3 =
 
@@ -131,7 +141,6 @@ The hard way :
 == Frequently Asked Questions ==
 
 
-
 = Why i have to do Backup? =
 
 This plugin will delete images and information's in your server and the database, so you have to do one BACKUP every time you want
@@ -160,32 +169,24 @@ I build this plugin for help you to fix this problem, you have somes options:
 
 
 = Where i can found the version pro? =
-I'm working on it
+You can found it at https://apps.nicearma.com
 
 = Why after upgrade the plugin, doesn't work =
 
 This is a bug that i don't know have to resolver, the problem is that i change some value from the database, and in the update this value is not added to the database, but the solution is easy: 
 *Deactivate and active it the plugin again*
 
-= Why you have to make a backup  =
-
-You have to make sure that the logic is the good for you, i desing this plugin for the wordpress of base(a blog site), not some super blog-ecommerce-forum-something.
-So is better that you have some return point if something go wrong
 
 = How to test the plugin in my page =
 
 1. Add one post.
 2. Upload n images to this post.
-3. Add diferent size and see if the plugin DNUI is taking the good original/sizes used or not.
-4. See if other plugin is using other sizes that the plugin DNUI is thiking that aren't used and adapt the ignore size to this part.
+3. Add different sizes and see if the plugin DNUI is taking the good original/sizes used or not.
+4. See if other plugin is using other sizes that the plugin DNUI is thinking that aren't used and adapt the ignore size list.
 5. Delete some not used image and see if the post/theme/page/other plugin is working|showing like he have to do.
 6. Try to adapt the DNUI option for make the plugin work fine with all plugin(TIP: USE THE IGNORE SIZE)
 7. Make your own crazy test (changing the DNUI option) for see what happen.
 8. Begin the delete part with the backup option checked (But is better if you use other backup plugin just in case)
 
 *This will take you 15 min but you will see if all is OK or not*
-
-= The backup folder is empty, but i checked the backup option =
-
-Please set right permission of the backup folder to write (you can find a lots information about this in the internet)
 
