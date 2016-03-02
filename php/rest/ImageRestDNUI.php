@@ -69,7 +69,7 @@ class ImageRestDNUI
 
         $result= array_merge($resultContent,$resultExcerpt);
        
-        echo json_encode($result);
+        echo json_encode($result, JSON_OBJECT_AS_ARRAY);
         wp_die();
     }
     

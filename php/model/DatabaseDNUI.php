@@ -160,11 +160,11 @@ class DatabaseDNUI
 
         if ($optionsDNUI->isDraftCheck()) {
 
-            $sql = "SELECT id FROM " . $this->prefix . "posts  WHERE  post_content is not null and post_content!=''  and post_type not in ('attachment','nav_menu_item')  AND post_content REGEXP  '\\\[(\\\[?)(.*)';";
+            $sql = "SELECT id FROM " . $this->prefix . "posts  WHERE  post_excerpt is not null and post_excerpt!=''  and post_type not in ('attachment','nav_menu_item')  AND post_excerpt REGEXP  '\\\[(\\\[?)(.*)';";
 
         } else {
 
-            $sql = "SELECT id FROM " . $this->prefix . "posts  WHERE  post_content is not null and post_content!=''  and post_type not in ('attachment','nav_menu_item','revision') and post_status !='draft'  AND post_content REGEXP  '\\\[(\\\[?)(.*)'; ";
+            $sql = "SELECT id FROM " . $this->prefix . "posts  WHERE  post_excerpt is not null and post_excerpt!=''  and post_type not in ('attachment','nav_menu_item','revision') and post_status !='draft'  AND post_excerpt REGEXP  '\\\[(\\\[?)(.*)'; ";
 
         }
 
