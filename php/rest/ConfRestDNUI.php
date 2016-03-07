@@ -147,3 +147,10 @@ function dnui_restore_options()
     $optionsRest = new OptionsRestDNUI();
     $optionsRest->restore();
 }
+add_action('wp_ajax_dnui_pro_have_wc_options', 'dnui_pro_have_wc_options');
+
+function dnui_pro_have_wc_options()
+{
+    $optionsRest = new OptionsRestDNUIPRO();
+    $optionsRest->haveWooCommerce();
+}

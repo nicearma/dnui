@@ -11,6 +11,10 @@ class OptionsRestDNUI
 {
 
 
+ 	function __construct()
+    {
+        set_error_handler(array('ErrorHandlerDNUIPRO', 'errorHandler'));
+    }
     public function read()
     {
         $optionsDNUI = OptionsRestDNUI::readOptions();
@@ -48,5 +52,10 @@ class OptionsRestDNUI
         wp_die();
     }
 
+	public function haveWooCommerce(){
+        $haveWC=array("active"=>in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) );
+        echo json_encode($haveWC);
+        wp_die();
+    }
 
 }

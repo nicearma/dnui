@@ -19,7 +19,7 @@
                 <td class="manage-column column-title"><?php _e('In server', 'dnui') ?></td>
                 <td class="manage-column column-title"><?php _e('Status', 'dnui') ?></td>
                 <th class="manage-column column-title">
-                    <button class="button action" style="color: #c50000" ng-if="deleteAllButton==1"
+                    <button class="btn btn-default" ng-if="deleteAllButton==1"
                             ng-click="deleteAll()">Delete all
                     </button>
                     <span ng-if="deleteAllButton==2" ng-click="deleteAll()"><?php _e('Waiting...', 'dnui') ?> </span>
@@ -58,8 +58,8 @@
                 <td>
                     <button
                         ng-if="image.status.used==0 && options.ignoreSizes.length==0 && unusedImageSizesForOriginal(image)"
-                        class="button action"
-                        style="color: #c50000" ng-click="delete(image.id,image.sizeName,image)">Delete
+                        class="btn btn-danger"
+                        ng-click="delete(image.id,image.sizeName,image)">Delete
                     </button>
                 </td>
             </tr>
@@ -95,8 +95,9 @@
                           style="color: #0000FF"><?php _e('Backup...', 'dnui') ?></span>
                 </td>
                 <td>
-                    <button ng-if="imageSize.status.used==0 && !(options.ignoreSizes.indexOf(imageSize.sizeName)>-1)"
-                        class="button action" style="color: #c50000"
+                    <button 
+						ng-if="imageSize.status.used==0 && !(options.ignoreSizes.indexOf(imageSize.sizeName)>-1)"
+                        class="btn btn-danger"
                         ng-click="delete(image.id,imageSize.sizeName,image)">Delete
                     </button>
                 </td>
@@ -109,7 +110,7 @@
         <div style="center">
             <uib-pagination total-items="totalImages" ng-model="options.numberPage" ng-change="changeNumberPage()"
                             items-per-page="options.imageShowInPage" class="pagination" boundary-link-numbers="true"
-                            rotate="false"></uib-pagination>
+                            rotate="false" max-size="options.maxSize"></uib-pagination>
         </div>
     </div>
 

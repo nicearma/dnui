@@ -415,10 +415,13 @@ angular.module('dnuiPlugin')
 
                                 //nothing to do
                                 if (sizeNames.length == 0) {
-
-                                } else {
+                                    
+                                } else if($scope.options.backup) {
+                                     syncCall.push(makeBackupAndDelete(image.id, sizeNames, image));
+                                   
+                                }else{
                                     //skip the validation and go to delete function
-                                    syncCall.push(makeBackupAndDelete(image.id, sizeNames, image));
+                                    syncCall.push(deleteFunction(image.id, sizeNames, image));
                                 }
 
 

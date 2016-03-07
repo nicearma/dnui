@@ -127,6 +127,42 @@
             </td>
 
         </tr>
+		<tr>
+            <td scope="row">
+                <p>
+                    <?php _e("Pagination max size", 'dnui'); ?>
+                    <small>
+                        <?php _e("This will limit the pagination size", 'dnui'); ?>
+                    </small>
+                </p>
+
+            </td>
+
+            <td>
+               <input type="number" ng-model="options.maxSize" />
+
+            </td>
+
+        </tr>
+         <tr>
+            <td scope="row">
+                <p>
+                    <?php _e("Debug", 'dnui'); ?>
+                    <small>
+                        <?php _e("Use this only if think the plugin is not workning fine", 'dnui'); ?>
+                        <br/>
+                        <b> <?php _e("If you use this option for normal use, you will have performance issues", 'dnui'); ?></b>
+                    </small>
+                </p>
+
+            </td>
+
+            <td>
+               <input type="checkbox" ng-model="options.debug" />
+
+            </td>
+
+        </tr>
         <tr>
             <td scope="row">
                 <p>
@@ -254,11 +290,15 @@
 
                 <p>
                     <small>
-                        <?php _e("Theme or plugin can use the post meta table to save information, the plugin will search here, but only will work if the image is in clear 
+                        <?php _e("Theme or plugin can use the post meta table to save information, the plugin will search here, but only will work if the image is in clear" , 'dnui');
+                        ?>
                             <br/>
-                            (Ex: The plugin WooCommerce save products donwloabled with a direct ref like: toto.jpg, but the gallery image of the product will be save like (1,2,3...), each number is used to make reference to the image 1, image 2, image 3, etc..., so the plugin will show that the toto.jpg is used, but the image 1, image 2, image 3 will be showed like not used*
+                            <?php _e("(Ex: The plugin WooCommerce save products donwloabled with a direct ref like: toto.jpg, but the gallery image of the product will be save like (1,2,3...), each number is used to make reference to the image 1, image 2, image 3, etc..., so the plugin will show that the toto.jpg is used, but the image 1, image 2, image 3 will be showed like not used*" , 'dnui');
+                            ?>
                              <br/>
-                               <b>Don't worry, if you have DNUI PRO and checked the WooCommerce option, the plugin will found out that the image 1, image 2, image are used</b>", 'dnui'); ?>
+                             <b>
+                               <?php _e("Don't worry, if you have DNUI PRO and checked the WooCommerce option, the plugin will found out that the image 1, image 2, image are used", 'dnui'); ?>
+                                </b>
                     </small>
                 </p>
 

@@ -67,6 +67,8 @@ class ConvertOptionsDNUI
         $optionsDNUI->setNumberPage($optionJson->numberPage);
         $optionsDNUI->setImageShowInPage($optionJson->imageShowInPage);
         $optionsDNUI->setOrder($optionJson->order);
+ 		$optionsDNUI->setMaxSize($optionJson->maxSize);
+        $optionsDNUI->setDebug($optionJson->debug);
 
         return $optionsDNUI;
 

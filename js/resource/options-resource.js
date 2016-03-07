@@ -29,6 +29,12 @@ angular.module('dnuiPlugin').factory('OptionsResource',
                         params: {
                             action: 'dnui_restore_options'
                         }
+                    },
+                    haveWC:{
+                        method:'GET',
+                        params: {
+                            action: 'dnui_pro_have_wc_options'
+                        }
                     }
 
                 }

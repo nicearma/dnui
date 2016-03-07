@@ -26,14 +26,12 @@ function DNUI_admin_js()
 
     //angular dependency
     wp_register_script('dnui-angular', plugins_url('js/external/angular.min.js', __FILE__), array('jquery', 'underscore'));
-    wp_register_script('dnui-angular-resource', plugins_url('js/external/angular-resource.min.js', __FILE__), array('dnui-angular'));
-    wp_register_script('dnui-angular-animate', plugins_url('js/external/angular-animate.min.js', __FILE__), array('dnui-angular'));
+    wp_register_script('dnui-angular-resource', plugins_url('js/external/angular-resource.min.js', __FILE__), array('dnui-pro-angular'));
+    wp_register_script('dnui-angular-animate', plugins_url('js/external/angular-animate.min.js', __FILE__), array('dnui-pro-angular'));
 
-    //extra dependency
-    wp_register_script('dnui-bootstrap-tabs', plugins_url('js/external/bootstrap-tabs.min.js', __FILE__), array('dnui-angular'));
-    wp_register_script('dnui-bootstrap-modal', plugins_url('js/external/bootstrap-modal.min.js', __FILE__), array('dnui-angular'));
+    wp_register_script('dnui-bootstrap', plugins_url('js/external/bootstrap.min.js', __FILE__), array('dnui-pro-angular'));
 
-    wp_register_script('dnui-angular-ui', plugins_url('js/external/angular-ui.js', __FILE__), array('dnui-angular', 'dnui-bootstrap-tabs', 'dnui-bootstrap-modal'));
+    wp_register_script('dnui-angular-ui', plugins_url('js/external/ui-bootstrap-tpls-1.2.2.min.js', __FILE__), array('dnui-pro-angular', 'dnui-pro-bootstrap'));
 
     //resources
     wp_register_script('dnui-options-resource', plugins_url('js/resource/options-resource.js', __FILE__), array('dnui-angular-resource'));
@@ -45,9 +43,11 @@ function DNUI_admin_js()
     wp_register_script('dnui-options-ctrl', plugins_url('js/ctrl/options-ctrl.js', __FILE__), array('dnui-options-resource'));
     wp_register_script('dnui-images-ctrl', plugins_url('js/ctrl/images-ctrl.js', __FILE__), array('dnui-images-resource'));
     wp_register_script('dnui-backup-ctrl', plugins_url('js/ctrl/backup-ctrl.js', __FILE__), array('dnui-backup-resource'));
+	wp_register_script('dnui-log-ctrl', plugins_url('js/ctrl/log-ctrl.js', __FILE__), array('dnui-dnui-ctrl'));
+
 
     //dnui principal JS
-    wp_register_script('dnui-js', plugins_url('js/dnui.js', __FILE__), array('dnui-angular', 'dnui-angular-animate', 'dnui-bootstrap-tabs', 'dnui-angular-ui'));
+    wp_register_script('dnui-js', plugins_url('js/dnui.js', __FILE__), array('dnui-angular', 'dnui-angular-animate', 'dnui-bootstrap', 'dnui-angular-ui'));
 }
 
 
@@ -74,7 +74,7 @@ function DNUI_admin_menu()
 
 function DNUI_admin_scripts()
 {
-
+	wp_enqueue_style('dnui-css-bootstrap');
     wp_enqueue_style('dnui-css');
 
     /* Link our already registered script to a page */
@@ -90,6 +90,7 @@ function DNUI_admin_scripts()
     wp_enqueue_script('dnui-options-ctrl');
     wp_enqueue_script('dnui-images-ctrl');
     wp_enqueue_script('dnui-backup-ctrl');
+ 	wp_enqueue_script('dnui-log-ctrl');
 }
 
 /* Display our administration screen */
@@ -131,6 +132,14 @@ function DNUI_display_menu()
                     </h1>
                     <?php include_once 'html/options.php'; ?>
                 </uib-tab>
+
+                <uib-tab select='tabOptions()' heading="<?php _e('Logs', 'dnui') ?>">
+                    <h1>
+                        <?php _e('DNUI Logs', 'dnui') ?>
+                    </h1>
+                    <?php include_once 'html/log.php'; ?>
+                </uib-tab>
+
             </uib-tabset>
         </div>
     </div>
@@ -151,32 +160,39 @@ if (is_admin()) {
 
     include_once 'php/php5_3/JsonSerializable.php';
 
+	if (!class_exists('ErrorHandlerDNUI')) {
+        include_once 'php/model/ErrorHandlerDNUI.php';
+    }
+ 	if (!class_exists('RestResponseDNUI')) {
+        include_once 'php/model/RestResponseDNUI.php';
+    }
+
     if (!class_exists('HelperDNUI')) {
         include_once 'php/helpers/HelperDNUI.php';
     }
 
-    if (!class_exists('ImageSizeDNUI')) {
-        include_once 'php/model/ImageSizeDNUI.php';
+	if (!class_exists('OptionsDNUI')) {
+        include_once 'php/model/OptionsDNUI.php';
+    }
+	if (!class_exists('DatabaseDNUI')) {
+        include_once 'php/model/DatabaseDNUI.php';
+    }
+	if (!class_exists('ImageDNUI')) {
+        include_once 'php/model/ImageDNUI.php';
+    }
+	if (!class_exists('StatusBackupDNUI')) {
+        include_once 'php/model/StatusBackupDNUI.php';
     }
     if (!class_exists('StatusDNUI')) {
         include_once 'php/model/StatusDNUI.php';
     }
-    if (!class_exists('StatusBackupDNUI')) {
-        include_once 'php/model/StatusBackupDNUI.php';
-    }
-    if (!class_exists('OptionsDNUI')) {
-        include_once 'php/model/OptionsDNUI.php';
-    }
-    if (!class_exists('DatabaseDNUI')) {
-        include_once 'php/model/DatabaseDNUI.php';
-    }
-    if (!class_exists('ImageDNUI')) {
-        include_once 'php/model/ImageDNUI.php';
+	if (!class_exists('ImageSizeDNUI')) {
+        include_once 'php/model/ImageSizeDNUI.php';
     }
 
 
-    if (!class_exists('ConvertOptionsDNUI')) {
-        include_once 'php/converters/ConvertOptionsDNUI.php';
+    if (!class_exists('ConvertOptionsDNUIPRO')) {
+        include_once 'php/converters/ConvertOptionsDNUIPRO.php';
     }
     if (!class_exists('ConvertWordpressToDNUI')) {
         include_once 'php/converters/ConvertWordpressToDNUI.php';
@@ -219,9 +235,9 @@ if (is_admin()) {
         include_once 'php/checkers/CheckersDNUI.php';
     }
 
-    if (!class_exists('ConfRestDNUI')) {
+    
         include_once 'php/rest/ConfRestDNUI.php';
-    }
+    
 
 
 }

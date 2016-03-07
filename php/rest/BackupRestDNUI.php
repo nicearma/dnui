@@ -16,9 +16,9 @@ class BackupRestDNUI
     function __construct()
     {
 
-        $this->databaseDNUI = new DatabaseDNUI();
-        $this->optionsDNUI = OptionsRestDNUI::readOptions();
-
+        $this->databaseDNUI = new DatabaseDNUIPRO();
+        $this->optionsDNUI = OptionsRestDNUIPRO::readOptions();
+        set_error_handler(array('ErrorHandlerDNUI', 'errorHandler'));
     }
 
     public function readAll()
