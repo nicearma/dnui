@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DX8UC
 Tags: image, cleanup, images, delete, image not used, image unused, delete unused image, delete not used image, cleanup image
 Requires at least: 4.4
 Tested up to: 4.4
-Stable tag: 2.4
+Stable tag: 2.5
 
 Search/Delete all not used images from the database and make space in your server and cleanup the database from all unused images
  
@@ -34,6 +34,12 @@ This version can search if the image is used at:
 You can found the <a href="https://apps.nicearma.com/product/dnui-delete-not-used-image-pro/">DNUI PRO VERSION</a> if you need more useful features, like compatibility with WooCommerce
 
 == Changelog ==
+
+= Version 2.5 =
+* Fix JS bug delete all (without backup folder)
+* Added log system
+* Other bug fix
+* Change some HTML
 
 = Version 2.4 =
 

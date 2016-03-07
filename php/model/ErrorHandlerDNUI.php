@@ -1,12 +1,12 @@
 <?php
 
-class ErrorHandlerDNUIPRO
+class ErrorHandlerDNUI
 {
 
 
 public static function errorHandler($errno, $errstr, $errfile, $errline)
 {
-   $errorStatus=new RestResponseDNUIPRO();
+   $errorStatus=new RestResponseDNUI();
    $errorStatus->setHttpStatus(400);
    $errorStatus->setData(array('errno'=>$errno,'errstr'=>$errstr,'errfile'=>$errfile,'errline'=>$errline));
    echo json_encode($errorStatus);

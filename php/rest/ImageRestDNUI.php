@@ -18,7 +18,7 @@ class ImageRestDNUI
         $this->databaseDNUI = new DatabaseDNUI();
         $this->optionsDNUI = OptionsRestDNUI::readOptions();
 		$this->checkers=new CheckersDNUI($this->databaseDNUI);
-        set_error_handler(array('ErrorHandlerDNUIPRO', 'errorHandler'));
+        set_error_handler(array('ErrorHandlerDNUI', 'errorHandler'));
     
     }
 

@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: DNUI (Delete not used images)
-  Version: 2.4
+  Version: 2.5
   Plugin URI: http://www.nicearma.com/delete-not-used-image-wordpress-dnui/
   Author: Nicearma
   Author URI: http://www.nicearma.com/
@@ -22,16 +22,18 @@ add_action('admin_menu', 'DNUI_admin_menu');
 
 function DNUI_admin_js()
 {
+    wp_register_style('dnui-css-bootstrap', plugins_url('css/bootstrap.min.css', __FILE__));
+
     wp_register_style('dnui-css', plugins_url('css/dnui.css', __FILE__));
 
     //angular dependency
     wp_register_script('dnui-angular', plugins_url('js/external/angular.min.js', __FILE__), array('jquery', 'underscore'));
-    wp_register_script('dnui-angular-resource', plugins_url('js/external/angular-resource.min.js', __FILE__), array('dnui-pro-angular'));
-    wp_register_script('dnui-angular-animate', plugins_url('js/external/angular-animate.min.js', __FILE__), array('dnui-pro-angular'));
+    wp_register_script('dnui-angular-resource', plugins_url('js/external/angular-resource.min.js', __FILE__), array('dnui-angular'));
+    wp_register_script('dnui-angular-animate', plugins_url('js/external/angular-animate.min.js', __FILE__), array('dnui-angular'));
 
-    wp_register_script('dnui-bootstrap', plugins_url('js/external/bootstrap.min.js', __FILE__), array('dnui-pro-angular'));
+    wp_register_script('dnui-bootstrap', plugins_url('js/external/bootstrap.min.js', __FILE__), array('dnui-angular'));
 
-    wp_register_script('dnui-angular-ui', plugins_url('js/external/ui-bootstrap-tpls-1.2.2.min.js', __FILE__), array('dnui-pro-angular', 'dnui-pro-bootstrap'));
+    wp_register_script('dnui-angular-ui', plugins_url('js/external/ui-bootstrap-tpls-1.2.2.min.js', __FILE__), array('dnui-angular', 'dnui-bootstrap'));
 
     //resources
     wp_register_script('dnui-options-resource', plugins_url('js/resource/options-resource.js', __FILE__), array('dnui-angular-resource'));
@@ -191,8 +193,8 @@ if (is_admin()) {
     }
 
 
-    if (!class_exists('ConvertOptionsDNUIPRO')) {
-        include_once 'php/converters/ConvertOptionsDNUIPRO.php';
+    if (!class_exists('ConvertOptionsDNUI')) {
+        include_once 'php/converters/ConvertOptionsDNUI.php';
     }
     if (!class_exists('ConvertWordpressToDNUI')) {
         include_once 'php/converters/ConvertWordpressToDNUI.php';
@@ -228,7 +230,7 @@ if (is_admin()) {
     if (!class_exists('CheckerImagePostMetaDNUI')) {
         include_once 'php/checkers/CheckerImagePostMetaDNUI.php';
     }
-    if (!class_exists('CheckerImagePostMetaDNUIPRO')) {
+    if (!class_exists('CheckerImagePostMetaDNUI')) {
         include_once 'php/checkers/CheckerImagePostMetaDNUI.php';
     }
     if (!class_exists('CheckersDNUI')) {

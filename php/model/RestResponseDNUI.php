@@ -1,7 +1,7 @@
 <?php
 
 
-class RestResponseDNUIPRO
+class RestResponseDNUI
 {
 	public $httpStatus;
 	public $data;
