@@ -20,6 +20,7 @@ angular.module('dnuiPlugin')
             $scope.tabOptions=function(){
                 $rootScope.$broadcast('tabOptions', $scope.options);
             };
+            
 			$scope.tabOptions=function() {
                 $rootScope.$broadcast('tabLogs', $scope.options);
             };

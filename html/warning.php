@@ -3,7 +3,7 @@
 </p>
 <h3><?php _e("Where i can foud DNUI PRO", 'dnui'); ?></h3>
 <p>
-    <a href="https://apps.nicearma.com/product/dnui-delete-not-used-image-pro/">DNUI PRO version, this version have some useful features:</a>
+   <b> <a href="https://apps.nicearma.com/product/dnui-delete-not-used-image-pro/">DNUI PRO version have some useful features:</a></b>
 <ol>
     <li><strong>Compatibility with WooCommerce</strong> (the main WooCommerce plugin, not other extends plugins)</li>
     <li>Ignore images by clicking in the image name</li>

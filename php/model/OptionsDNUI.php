@@ -23,6 +23,8 @@ class OptionsDNUI implements JsonSerializable
     public $numberPage;
     public $imageShowInPage;
     public $order;
+    public $maxSize;
+    public $debug;
 
     function __construct()
     {
@@ -42,7 +44,8 @@ class OptionsDNUI implements JsonSerializable
         $this->numberPage = 1;
         $this->imageShowInPage = 50;
         $this->order = 0;
-
+        $this->maxSize=8;
+        $this->debug=false;
     }
 
 
@@ -324,6 +327,43 @@ class OptionsDNUI implements JsonSerializable
             $order = 0;
         }
         $this->order = $order;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getMaxSize()
+    {
+
+        return $this->maxSize;
+    }
+
+    /**
+     * @param int $maxSize
+     */
+    public function setMaxSize($maxSize)
+    {
+        if (!is_int($maxSize)) {
+            $maxSize = 8;
+        }
+        $this->maxSize = $maxSize;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDebug()
+    {
+        return $this->debug;
+    }
+
+    /**
+     * @param boolean $debug
+     */
+    public function setDebug($debug)
+    {
+        return $this->debug=$debug;
     }
 
     public function jsonSerialize()

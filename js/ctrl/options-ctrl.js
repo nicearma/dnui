@@ -2,8 +2,8 @@
 
 
 angular.module('dnuiPlugin')
-    .controller('OptionsCtrl', ['$scope', '$rootScope', 'OptionsResource', 'BackupResource',
-        function ($scope, $rootScope, OptionsResource, BackupResource) {
+    .controller('OptionsCtrl', ['$scope', '$rootScope', 'OptionsResource', 'BackupResource','logFactoroy',
+        function ($scope, $rootScope, OptionsResource, BackupResource,logFactoroy) {
 
             var inutilCallOptions = true;
             var inutilCallNumberPage = true;
@@ -21,7 +21,7 @@ angular.module('dnuiPlugin')
 
                             OptionsResource.update($scope.options);
                             $rootScope.$broadcast('refreshImage',{});
-
+                            logFactoroy.setLog($scope.options.debug);
 
                     }
 
