@@ -5,8 +5,8 @@ angular.module('dnuiPlugin')
     .controller('DnuiCtrl', ['$scope', '$rootScope','OptionsResource',
         function ($scope, $rootScope,OptionsResource) {
 
-            $scope.options= {backup:-1,
-                            wooCommerceCheck:-1};
+            $scope.options= {backup:-1};
+            $scope.wc={active:-1};
             //go to tabImage
  			$scope.wc=OptionsResource.haveWC();
             $scope.tabImages=function(){

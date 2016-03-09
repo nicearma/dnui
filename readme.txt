@@ -1,7 +1,7 @@
 === DNUI Delete not used image===
 Contributors: nicearma
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DX8UCXHB6RMD4&lc=US&item_name=DNUI%20donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
-Tags: image, cleanup, images, delete, image not used, image unused, delete unused image, delete not used image, cleanup image
+Tags: image, clean up, images, delete, image not used, image unused, delete unused image, delete not used image, clean up image, clean image, clean images
 Requires at least: 4.4
 Tested up to: 4.4
 Stable tag: 2.5
@@ -21,8 +21,8 @@ The plugin was fully test it with WordPress 4.3/4.4.1 and PHP 5.3/5.4/5.6
 This plugin use:
 
 * AngularJS 1.4.8 core, resource and animate
-* Angular UI [only modal and tabs]
-* Bootstrap [only modal and tabs]
+* Angular UI 
+* Bootstrap
 
 This version can search if the image is used at:
 * Excerpt (reference image or shortcode)
@@ -38,8 +38,9 @@ You can found the <a href="https://apps.nicearma.com/product/dnui-delete-not-use
 = Version 2.5 =
 * Fix JS bug delete all (without backup folder)
 * Added log system
-* Other bug fix
-* Change some HTML
+* Fix JS bug delete all with original image already deleted
+* HTML changes
+* Normally last 2.x version, until Angular2 come out 
 
 = Version 2.4 =
 
