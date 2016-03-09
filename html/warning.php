@@ -1,9 +1,9 @@
 <p>
     <?php _e("DNUI (<b>D</b>elete <b>N</b>ot <b>U</b>sed <b>I</b>mage) will search images from the database and try to find it on every Post and Page if one image has one reference in this either post or page native to WordPress or  if any reference is found, the plugin will tell you that the image is used.", 'dnui'); ?>
     <br/>
-    <b ng-if="options.backup==0" style="color: #FF0000"><?php _e("Warning the backup system is deactivated, see the option page", 'dnui'); ?></b>
+    <b class="label label-danger" ng-if="options.backup==0" ><?php _e("Warning the backup system is deactivated, see the option page", 'dnui'); ?></b>
     <br/>
-    <b class="danger" ng-if="wc.active==1"><?php _e("Warning you use wooCommerce plugin and you can have false positive, you have two options, you can select all wooCommerce sizes in the ignore size list or download the PRO version", 'dnui'); ?></b>
+    <b class="label label-danger" ng-if="wc.active==1"><?php _e("Warning you use wooCommerce plugin and you can have false positive, you have two options, you can select all wooCommerce sizes in the ignore size list or download the PRO version", 'dnui'); ?></b>
 </p>
 <h3><?php _e("Where i can foud DNUI PRO", 'dnui'); ?></h3>
 <p>
