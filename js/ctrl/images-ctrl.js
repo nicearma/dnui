@@ -249,7 +249,7 @@ angular.module('dnuiPlugin')
                 //special case of original
                 if (image.sizeName === 'original') {
                     //if is used, or the ignoreImage array have one ref, this image is used or ignored
-                    if (image.status.used == 1) {
+                    if (image.status.used == 1 || image.status.used == 2) {
                         return false;
                     }
                     //if one size is used, the origina image have to be ignored

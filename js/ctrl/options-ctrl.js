@@ -10,7 +10,7 @@ angular.module('dnuiPlugin')
 
             OptionsResource.get().$promise.then(function (options) {
                 $scope.options = options;
-
+                logFactoroy.setLog($scope.options.debug);
 
                 $scope.$watchCollection('options', function (newCollection, oldCollection, scope) {
 
