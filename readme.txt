@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DX8UC
 Tags: image, clean up, images, delete, image not used, image unused, delete unused image, delete not used image, clean up image, clean image, clean images
 Requires at least: 4.4
 Tested up to: 4.4
-Stable tag: 2.5
+Stable tag: 2.5.1
 
 Search/Delete all not used images from the database and make space in your server and cleanup the database from all unused images
  

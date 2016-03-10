@@ -33,7 +33,7 @@ angular.module('dnuiPlugin').factory('OptionsResource',
                     haveWC:{
                         method:'GET',
                         params: {
-                            action: 'dnui_pro_have_wc_options'
+                            action: 'dnui_have_wc_options'
                         }
                     }
 
