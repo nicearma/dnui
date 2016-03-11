@@ -3,7 +3,7 @@
     <br/>
     <b class="label label-danger" ng-if="options.backup==0" ><?php _e("Warning the backup system is deactivated, see the option page", 'dnui'); ?></b>
     <br/>
-    <b class="label label-danger" ng-if="wc.active==1"><?php _e("Warning you use wooCommerce plugin and you can have false positive, you have two options, you can select all wooCommerce sizes in the ignore size list or download the PRO version", 'dnui'); ?></b>
+    <b class="label label-danger" ng-if="wc.active==1"><?php _e("Warning you use wooCommerce plugin and you can have false 'not used' label, you have two options, you can select all wooCommerce sizes in the ignore size list or download the PRO version", 'dnui'); ?></b>
 </p>
 <h3><?php _e("Where i can foud DNUI PRO", 'dnui'); ?></h3>
 <p>

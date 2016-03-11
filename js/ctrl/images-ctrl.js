@@ -41,6 +41,7 @@ angular.module('dnuiPlugin')
                             });
                             //back one page
                             $scope.options.numberPage = $scope.options.numberPage - 1;
+                            getImages($scope.options.numberPage);
                             return;
                         }
 

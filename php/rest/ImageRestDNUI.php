@@ -70,9 +70,9 @@ class ImageRestDNUI
             $resultExcerpt = ConvertWordpressToDNUI::convertIdToHTMLShortCodes($this->databaseDNUI->getShortCodeExcerpt($this->optionsDNUI),'excerpt');
         }
 
-        $result= array_merge($resultContent,$resultExcerpt);
+        $result= array_values(array_merge($resultContent,$resultExcerpt));
        
-        echo json_encode($result, JSON_OBJECT_AS_ARRAY);
+        echo json_encode($result);
         wp_die();
     }
     
