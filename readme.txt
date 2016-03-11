@@ -35,6 +35,14 @@ You can found the <a href="https://apps.nicearma.com/product/dnui-delete-not-use
 
 == Changelog ==
 
+= Version 2.5.2 =
+* Fix bug PHP 5.3
+* Fix bug rollback page
+* Added lost lang
+
+= Version 2.5.1 =
+* Fix bad name (incompatibility with the pro version, only necessary if you use the PRO version)
+
 = Version 2.5 =
 * Fix JS bug delete all (without backup folder)
 * Added log system
