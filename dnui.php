@@ -165,10 +165,11 @@ function dnui_load_textdomain() {
 if (is_admin()) {
 
     include_once 'php/php5_3/JsonSerializable.php';
-
+/*
 	if (!class_exists('ErrorHandlerDNUI')) {
         include_once 'php/model/ErrorHandlerDNUI.php';
     }
+*/
  	if (!class_exists('RestResponseDNUI')) {
         include_once 'php/model/RestResponseDNUI.php';
     }

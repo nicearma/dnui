@@ -1,5 +1,6 @@
 <?php
-
+//Change this in the version 3.0, catching error from other plugin :/
+/*
 class ErrorHandlerDNUI
 {
 
@@ -18,3 +19,4 @@ public static function errorHandler($errno, $errstr, $errfile, $errline)
 
 }
 
+*/

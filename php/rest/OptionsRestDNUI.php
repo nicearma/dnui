@@ -13,7 +13,7 @@ class OptionsRestDNUI
 
  	function __construct()
     {
-        set_error_handler(array('ErrorHandlerDNUI', 'errorHandler'));
+        //set_error_handler(array('ErrorHandlerDNUI', 'errorHandler'));
     }
     public function read()
     {
