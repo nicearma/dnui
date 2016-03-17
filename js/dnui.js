@@ -1,7 +1,6 @@
 'use strict';
 //not the best, what to do??
 var logsDNUI=[];
-var errorsDNUI=[];
 var logDNUI={log:false};
 
 angular
@@ -27,12 +26,6 @@ angular
             },
             'getLogs': function () {
                 return logsDNUI;
-            },
-            'addErrors': function (type, message) {
-                errorsDNUI.push({type: type, message: message});
-            },
-            'getErrors': function () {
-                return errorsDNUI;
             }
 
 
@@ -53,14 +46,7 @@ angular
 
             // optional method
             'requestError': function (rejection) {
-                if (logFactoroy.isLog()) {
-                    logFactoroy.addErrors('requestError',rejection);
-
-                }
-                // do something on error
-                if (canRecover(rejection)) {
-                    return responseOrNewPromise
-                }
+                logFactoroy.addLogs('requestError',rejection);
                 return $q.reject(rejection);
             },
 
@@ -81,13 +67,8 @@ angular
 
             // optional method
             'responseError': function (rejection) {
-                if (logFactoroy.isLog()) {
-                    logFactoroy.addErrors('responseError',rejection);
-                }
-                // do something on error
-                if (canRecover(rejection)) {
-                    return responseOrNewPromise
-                }
+                logFactoroy.addLogs('responseError',rejection);
+                
                 return $q.reject(rejection);
             }
         };
@@ -120,7 +101,7 @@ angular
                 var httpStatus= value.httpStatus;
                 delete value.httpStatus;
                 if (httpStatus == 400) {
-                    logFactoroyProvider.$get().addErrors('errorsHttp', value);
+                    logFactoroyProvider.$get().addLogs('errorsHttp', value);
                 }
             }
 
