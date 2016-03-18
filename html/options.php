@@ -1,7 +1,7 @@
 <div id="optionsDNUI" ng-controller="OptionsCtrl">
-    <button ng-if="!options.updateInServer">Save</button>
+    <button ng-if="!options.updateInServer"><?php _e("Save",'dnui'); ?></button>
 
-    <h3>General</h3>
+    <h3><?php _e("General",'dnui'); ?></h3>
     <table class="wp-list-table widefat fixed">
         <tbody>
 
@@ -187,7 +187,10 @@
         </tbody>
     </table>
 
-    <h3>Show</h3>
+    <h3>_
+        <?php _e("Show",'dnui'); ?> 
+        
+    </h3>
     <table class="wp-list-table widefat fixed">
         <tbody>
 
@@ -254,7 +257,12 @@
         </tr>
         </tbody>
     </table>
-    <h3>Check</h3>
+    <h3>
+        <?php _e("Check",'dnui'); ?>
+        <small>
+            <?php _e("All this checks can decrease performance", 'dnui'); ?>
+        </small>
+    </h3>
     <table class="wp-list-table widefat fixed">
         <tbody>
         <tr>
@@ -267,7 +275,9 @@
 
                 <p>
                     <small>
-                        <?php _e("Theme or plugin can use the short description to show images, check this option to search image in excerpt (short description). and if you check the shorcode logic, the shortcode will be search to", 'dnui'); ?>
+                        <?php _e("Theme or plugin can use the short description to show images",'dnui'); ?>
+                        <br/>
+                        <?php _e("Search image in excerpt (short description).", 'dnui'); ?>
                         <br/>
                         <?php _e("If you check the shorcode logic, shortcodes will be search to", 'dnui'); ?>
                     </small>
@@ -290,7 +300,9 @@
 
                 <p>
                     <small>
-                        <?php _e("Theme or plugin can use the post meta table to save information, the plugin will search here, but only will work if the image is in clear" , 'dnui');
+                        <?php _e("Theme or plugin can use the post meta table to save information",'dnui'); ?>
+                        <br/>
+                        <?php _e("Search image in post meta, (this only will work if the image is in clear)" , 'dnui');
                         ?>
                             <br/>
                             <?php _e("(Ex: The plugin WooCommerce save products donwloabled with a direct ref like: toto.jpg, but the gallery image of the product will be save like (1,2,3...), each number is used to make reference to the image 1, image 2, image 3, etc..., so the plugin will show that the toto.jpg is used, but the image 1, image 2, image 3 will be showed like not used*" , 'dnui');
@@ -312,12 +324,12 @@
         <tr>
             <td scope="row">
                 <p>
-                    <?php _e("Check if image is used in gallery", 'dnui'); ?>
+                    <?php _e("Check in gallery", 'dnui'); ?>
                 </p>
 
                 <p>
                     <small>
-                        <?php _e("Search images in gallery  (this will decrease the performance)", 'dnui'); ?>
+                        <?php _e("Search images in gallery", 'dnui'); ?>
                         <br/>
                         <?php _e("Certain gallery makers generate various sizes for responsive website use.", 'dnui'); ?>
 
@@ -334,12 +346,12 @@
         <tr>
             <td scope="row">
                 <p>
-                    <?php _e("Check if image is used in shortcodes", 'dnui'); ?>
+                    <?php _e("Check in shortcodes", 'dnui'); ?>
                 </p>
 
                 <p>
                     <small>
-                        <?php _e("Search image in shortcode, the plugin will found out every shortcode used and get the html (this will decrease the performance if checked)", 'dnui'); ?>
+                        <?php _e("Search image in shortcode (the plugin will found out every shortcode used and get the html)", 'dnui'); ?>
                         <br/>
 
                     </small>

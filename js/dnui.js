@@ -10,8 +10,6 @@ angular
         'ui.bootstrap'
     ]).factory('logFactoroy', function () {
 
-
-
         return {
             'isLog': function () {
                 return logDNUI.log;

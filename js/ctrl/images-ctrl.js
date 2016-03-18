@@ -15,7 +15,27 @@ angular.module('dnuiPlugin')
              */
             $scope.callServerStatus = 0;
 
+
+            $scope.changeShowUsedImage=function(){
+                $scope.options.showUsedImage= !$scope.options.showUsedImage;
+            }
+
+            var resetCountStatus=function(){
+                $scope.totalImageUsed=0;
+                $scope.totalImageNotUsed=0;
+            }
+            
+
+            var countStatus=function(status){
+                 if(status.used==1){
+                                                $scope.totalImageUsed++;
+                                            }else{
+                                                $scope.totalImageNotUsed++;
+                                            }
+            }
+
             var getImages = function (numberPage) {
+                resetCountStatus();
                 $scope.callServerStatus = 1;
                 //refreshing so change to false
                 refreshImages = false;
@@ -113,6 +133,7 @@ angular.module('dnuiPlugin')
                                             }
                                             //update the status of the original image
                                             image['status'] = status;
+                                            countStatus(status);
 
                                         } else {
                                             //found the imageSize from the image.imageSizes
@@ -123,13 +144,16 @@ angular.module('dnuiPlugin')
                                                 for (var key in $scope.htmlShortcodes) {
                                                     if ($scope.htmlShortcodes[key].indexOf(imageSize.name) > -1) {
                                                         status.used = 1;
+
                                                         break;
                                                     }
                                                 }
                                             }
                                             imageSize['status'] = status;
-                                        }
+                                            countStatus(status);
+                                           
 
+                                        }
 
                                     });
 

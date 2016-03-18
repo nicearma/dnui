@@ -8,6 +8,10 @@
     </div>
 
     <div ng-if="(callServerStatus==2)&&(images.length>0)">
+        <span ng-click="changeShowUsedImage()" ng-if="options.showUsedImage"><?php _e('Images used are show, click here for hide them', 'dnui') ?></span> 
+        <span ng-click="changeShowUsedImage()" ng-if="!options.showUsedImage"><?php _e('Images used are hide, click here for show them', 'dnui') ?></span>
+        <br/>
+        <span><?php _e('Your blog have {{totalImages}} original image, at this page you have {{totalImageUsed}} used images and {{totalImageNotUsed}} not used images', 'dnui') ?></span>
         <table class="wp-list-table widefat fixed">
             <thead>
             <tr>

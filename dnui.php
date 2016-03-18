@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: DNUI (Delete not used images)
-  Version: 2.5.2
+  Version: 2.5.3
   Plugin URI: http://www.nicearma.com/delete-not-used-image-wordpress-dnui/
   Author: Nicearma
   Author URI: http://www.nicearma.com/
@@ -135,7 +135,7 @@ function DNUI_display_menu()
                     <?php include_once 'html/options.php'; ?>
                 </uib-tab>
 
-                <uib-tab select='tabOptions()' heading="<?php _e('Logs', 'dnui') ?>">
+                <uib-tab select='tabLogs()' heading="<?php _e('Logs', 'dnui') ?>">
                     <h1>
                         <?php _e('DNUI Logs', 'dnui') ?>
                     </h1>
