@@ -25,11 +25,15 @@ This plugin use:
 * Bootstrap
 
 This version can search if the image is used at:
+
 * Excerpt (reference image or shortcode)
 * Publish Post/Page (reference image or shortcode)
 * Draft/Revesion Post/Page (reference image or shortcode)
 * Shortcodes (include gallery)
 
+Translation:
+
+* Spanish
 
 You can found the <a href="https://apps.nicearma.com/product/dnui-delete-not-used-image-pro/">DNUI PRO VERSION</a> if you need more useful features, like compatibility with WooCommerce
 
@@ -39,6 +43,7 @@ You can found the <a href="https://apps.nicearma.com/product/dnui-delete-not-use
 * Better user experience
 * Fix JS error log
 * Disabled errorHandler (catchching error from other plugin)
+* Add Spanish
 
 = Version 2.5.2 =
 * Fix bug PHP 5.3
