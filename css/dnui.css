@@ -3,5 +3,10 @@ table tbody tr.dnui_original {
     background-color: #AAAAAA;
 }
 
+.text-success {
+    color: #3c763d;
+}
 
-
+.text-warning {
+    color: #8a6d3b;
+}

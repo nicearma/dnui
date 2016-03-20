@@ -131,11 +131,13 @@
             <td scope="row">
                 <p>
                     <?php _e("Pagination max size", 'dnui'); ?>
+
+                </p>
+                <p>
                     <small>
-                        <?php _e("This will limit the pagination size", 'dnui'); ?>
+                    <?php _e("This will limit the pagination size", 'dnui'); ?>
                     </small>
                 </p>
-
             </td>
 
             <td>

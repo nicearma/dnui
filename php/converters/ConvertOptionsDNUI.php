@@ -19,7 +19,7 @@ class ConvertOptionsDNUI
         } else if (empty($optionsOld)) {
             $optionsDNUI = new OptionsDNUI();
         } else {
-            $optionsDNUI = $optionsOld;
+            $optionsDNUI = ConvertOptionsDNUI::convertOptionJsonToOptionDNUI($optionsOld);
         }
 
         if ($optionsDNUI->getVersion() != '2.0') {
