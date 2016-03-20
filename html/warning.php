@@ -9,11 +9,11 @@
 <p>
    <b> <a href="https://apps.nicearma.com/product/dnui-delete-not-used-image-pro/"><?php _e("DNUI PRO version have some useful features:", 'dnui'); ?></a></b>
 <ol>
-    <li><strong><?php _e("Compatibility with WooCommerce</strong> (the main WooCommerce plugin, not other extends plugins)", 'dnui'); ?></li>
+    <li><strong><?php _e("Compatibility with WooCommerce",'dnui'); ?></strong> <?php _e("(the main WooCommerce plugin, not other extends plugins)", 'dnui'); ?></li>
     <li><?php _e("Ignore images by clicking in the image name", 'dnui'); ?></li>
     <li><?php _e("Ignore size by clicking in the size name and include this size name to the ignore size list if this size does not exist", 'dnui'); ?>
     </li>
-    <li><strong><?php _e("Delete all automatic button</strong>, this will go page by page and delete all images not used", 'dnui'); ?></li>
+    <li><strong><?php _e("Delete all automatic button,",'dnui'); ?></strong> <?php _e(" this will go page by page and delete all images not used", 'dnui'); ?></li>
     <li><?php _e("Restore all backup", 'dnui'); ?></li>
     <li><?php _e("Delete all backup", 'dnui'); ?></li>
 </ol>

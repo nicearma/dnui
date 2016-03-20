@@ -1,0 +1,707 @@
+# Copyright (C) 2016 DNUI (Delete not used images)
+# This file is distributed under the same license as the DNUI (Delete not used images) package.
+msgid ""
+msgstr ""
+"Project-Id-Version: DNUI (Delete not used images) 2.5.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/dnui-delete-not-"
+"used-image-wordpress\n"
+"POT-Creation-Date: 2016-03-20 18:33+0100\n"
+"PO-Revision-Date: 2016-03-20 18:58+0100\n"
+"Last-Translator: \n"
+"Language-Team: nicearma <nicearma@yahoo.com>\n"
+"Language: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_\n"
+"X-Poedit-SearchPath-0: /home/detn/Documentos/dnui\n"
+
+#: /home/detn/Documentos/dnui/dnui.php:61
+#: /home/detn/Documentos/dnui/dnui.php:62
+msgid "DNUI Delete not used image"
+msgstr "DNUI Borrar imagenes no utilizadas"
+
+#: /home/detn/Documentos/dnui/dnui.php:109
+msgid "Warning"
+msgstr "Peligro"
+
+#: /home/detn/Documentos/dnui/dnui.php:111
+msgid "WARNING ABOUT THIS PLUGIN"
+msgstr "Peligros sobre este plugin"
+
+#: /home/detn/Documentos/dnui/dnui.php:116
+msgid "Images"
+msgstr "Imagenes"
+
+#: /home/detn/Documentos/dnui/dnui.php:118
+msgid "DNUI search unused/used image in database"
+msgstr "DNUI buscar imagenes usadas/no usadas en la base de datos"
+
+#: /home/detn/Documentos/dnui/dnui.php:123
+msgid "Backups"
+msgstr "Respaldo"
+
+#: /home/detn/Documentos/dnui/dnui.php:125
+msgid "DNUI backup"
+msgstr "DNUI respaldo"
+
+#: /home/detn/Documentos/dnui/dnui.php:131
+msgid "Options"
+msgstr "Opciones"
+
+#: /home/detn/Documentos/dnui/dnui.php:133
+msgid "DNUI options"
+msgstr "DNUI opciones"
+
+#: /home/detn/Documentos/dnui/dnui.php:138
+#: /home/detn/Documentos/dnui/html/log.php:3
+msgid "Logs"
+msgstr "Registro"
+
+#: /home/detn/Documentos/dnui/dnui.php:140
+msgid "DNUI Logs"
+msgstr "DNUI registros"
+
+#: /home/detn/Documentos/dnui/html/options.php:2
+msgid "Save"
+msgstr "Guardar"
+
+#: /home/detn/Documentos/dnui/html/options.php:4
+msgid "General"
+msgstr "General"
+
+#: /home/detn/Documentos/dnui/html/options.php:12
+msgid "Plugin version"
+msgstr "Version del plugin"
+
+#: /home/detn/Documentos/dnui/html/options.php:24
+msgid "Only admin user"
+msgstr "Solo administrador"
+
+#: /home/detn/Documentos/dnui/html/options.php:29
+msgid "For the moment only Administrator can use this plugin"
+msgstr ""
+"Por los momentos solo los administradores del sitio pueden utilizar el plugin"
+
+#: /home/detn/Documentos/dnui/html/options.php:42
+msgid "Update in server (make changes to database)"
+msgstr "Actualizar el servidor (directamente en la base de datos)"
+
+#: /home/detn/Documentos/dnui/html/options.php:47
+msgid ""
+"The plugin will try to update the server status every action made, if you "
+"want the classic button (bulk)save/update uncheck this"
+msgstr ""
+"Este plugin trata de actualizar el estado en la base de datos a cada accion "
+"realizadam si deseas un boton clasico para las acciones guardar/actualizar "
+"debes desactivar esto"
+
+#: /home/detn/Documentos/dnui/html/options.php:60
+msgid "Backup system"
+msgstr "Sistema de resguardo"
+
+#: /home/detn/Documentos/dnui/html/options.php:65
+msgid ""
+"Uncheck this if you don't want to use the backup system, because this plugin "
+"will delete images and update information in the database, is recommended to "
+"MAKE BACKUPS EVERY TIME YOU USE THIS PLUGIN however the MAIN USE OF THIS "
+"PLUGIN IS DELETE IMAGE AND UPDATE THE DATABASE, SO THIS BACKUP SYSTEM IS "
+"VERY SIMPLE AND NOT BULLET PROOF, SO USE ANOTHER BACKUP SYSTEM where possible"
+msgstr ""
+"Desactiva esto si no quieres tener el sistema de resguardom dado que este "
+"plugin va a borrar imagenes en el servidor y actualizar informaciones en la "
+"base de datos, ES RECOMENDABLE HACER UN RESGUARDO CADA VEZ QUE VAYAS A "
+"UTILIZAR ESTE PLUGIN, pero dado que este plugin esta diseñado para borrar "
+"imagenes y actualizar la base de datos, el sistema incluido para resguardar "
+"la informacion es basico, POR LO TANTO ES RECOMENDABLE UTILIZAR OTROS PLUGIN "
+"PARA REPALDAR TU SITIO. "
+
+#: /home/detn/Documentos/dnui/html/options.php:78
+#: /home/detn/Documentos/dnui/html/options.php:83
+msgid "Create backup folder"
+msgstr "Crear la carpeta de respaldo"
+
+#: /home/detn/Documentos/dnui/html/options.php:85
+msgid "Backup folder exist"
+msgstr "La carpeta de respaldo existe"
+
+#: /home/detn/Documentos/dnui/html/options.php:88
+msgid "Can not create backup folder, ask for help"
+msgstr "No se ha podido crear la carpeta de respaldo, pide ayuda"
+
+#: /home/detn/Documentos/dnui/html/options.php:94
+msgid "Page"
+msgstr "Pagina"
+
+#: /home/detn/Documentos/dnui/html/options.php:99
+msgid "Page number"
+msgstr "Numero de pagina"
+
+#: /home/detn/Documentos/dnui/html/options.php:114
+msgid "Number of images show on 1 page"
+msgstr "Numero de imagenes mostradas por pagina"
+
+#: /home/detn/Documentos/dnui/html/options.php:119
+msgid "A big number can kill your browser"
+msgstr "Un gran numero puede matar tu navegador"
+
+#: /home/detn/Documentos/dnui/html/options.php:133
+msgid "Pagination max size"
+msgstr "Numero de boton maximo en la paginacion"
+
+#: /home/detn/Documentos/dnui/html/options.php:138
+msgid "This will limit the pagination size"
+msgstr ""
+"Esto va a limitar la cantidad de butones que se generan para la paginacion"
+
+#: /home/detn/Documentos/dnui/html/options.php:152
+msgid "Debug"
+msgstr "Debug"
+
+#: /home/detn/Documentos/dnui/html/options.php:154
+msgid "Use this only if think the plugin is not workning fine"
+msgstr "Solo utilizar esta opcion si consideras que algo no funciona bien"
+
+#: /home/detn/Documentos/dnui/html/options.php:156
+msgid "If you use this option for normal use, you will have performance issues"
+msgstr ""
+"Puedes tener problemas de rendimientos si utilizas algunas de estas opciones"
+
+#: /home/detn/Documentos/dnui/html/options.php:171
+msgid "Default options"
+msgstr "Opciones por defecto"
+
+#: /home/detn/Documentos/dnui/html/options.php:176
+msgid "Restore default options"
+msgstr "Restaurar opciones por defecto"
+
+#: /home/detn/Documentos/dnui/html/options.php:183
+#: /home/detn/Documentos/dnui/html/backup.php:15
+#: /home/detn/Documentos/dnui/html/backup.php:26
+msgid "Restore"
+msgstr "Restaurar"
+
+#: /home/detn/Documentos/dnui/html/options.php:193
+msgid "Show"
+msgstr "Mostrar"
+
+#: /home/detn/Documentos/dnui/html/options.php:202
+msgid "Show used image"
+msgstr "Mostrar imagenes utilizadas"
+
+#: /home/detn/Documentos/dnui/html/options.php:207
+msgid ""
+"This can clean the view; i.e. only show only the images you want to be "
+"deleted"
+msgstr ""
+"Tendras una interfaz mas clara. Esto mostrara solo las imagenes que pueden "
+"ser borradas"
+
+#: /home/detn/Documentos/dnui/html/options.php:220
+msgid "Show ignored sizes"
+msgstr "Mostrar tamaño de imagenes ignoradas"
+
+#: /home/detn/Documentos/dnui/html/options.php:225
+msgid ""
+"This can clean the view, i.e. it will show you only images that need to be "
+"deleted"
+msgstr ""
+"Tendras una interfaz mas clara. Esto mostrara solo las imagenes que pueden "
+"ser borradas"
+
+#: /home/detn/Documentos/dnui/html/options.php:241
+msgid "Ignore size list"
+msgstr "Tamaños de imagenes a ser ignoradas"
+
+#: /home/detn/Documentos/dnui/html/options.php:246
+msgid ""
+"This option can be used to select sizes you know are being used i.e. plugin "
+"or theme basics that do not refer to the image by name, this will prevent "
+"deletion of those sizes by this plugin at least."
+msgstr ""
+"Esta opcion puede ser utilizada para seleccionar tamaños de  imagenes que el "
+"plugin no dectecdo. Como por ejemplo si teneis un tema que utiliza un cierto "
+"tamaño X, pero dado que es codigo generado fuera de la base de datos, DNUI "
+"no puede reconocerla como utilizada, por lo que seleccionandola este tamaño "
+"no sera borrado "
+
+#: /home/detn/Documentos/dnui/html/options.php:248
+msgid ""
+"Example: The theme Basico uses small-sizes or thumbnails but the DNUI plugin "
+"doesn’t see a reference for this, the small-sizes or thumbnails will display "
+"as 'not used', you can put small-sizes or thumbnails in the ignored size and "
+"the plugin will not let you delete this size."
+msgstr ""
+"Ejemplo: El tema basico utiliza el tamaño pequeño e las imagenes, pero DNUI "
+"no puede encontrar esta referencia, dado que es codigo generado por el tema "
+"y no existe referencia en la base de datos, por lo que estos tamaños seran "
+"mostrados como no utilizados. Puedes colocar el tamaño pequeño en la lista "
+"de tamaños ignorados, para que estos no puedan ser borrados "
+
+#: /home/detn/Documentos/dnui/html/options.php:263
+msgid "Check"
+msgstr "Verificar"
+
+#: /home/detn/Documentos/dnui/html/options.php:265
+msgid "All this checks can decrease performance"
+msgstr "Todas estas verificaciones pueden crear problemas de rendimiento"
+
+#: /home/detn/Documentos/dnui/html/options.php:275
+msgid "Check in excerpt"
+msgstr "verificar en descripcion corta"
+
+#: /home/detn/Documentos/dnui/html/options.php:280
+msgid "Theme or plugin can use the short description to show images"
+msgstr ""
+"Temas o plugin pueden utilizar informacion cortas para mostrar imagenes"
+
+#: /home/detn/Documentos/dnui/html/options.php:282
+msgid "Search image in excerpt (short description)."
+msgstr "Buscar imagen en descriptciones cortas"
+
+#: /home/detn/Documentos/dnui/html/options.php:284
+msgid "If you check the shorcode logic, shortcodes will be search to"
+msgstr ""
+"Al activar verificar en shortcode, los shortcode seran buscado tambien aqui"
+
+#: /home/detn/Documentos/dnui/html/options.php:300
+msgid "Check in Post meta"
+msgstr "Verificar en complemento de articulo (Post meta)"
+
+#: /home/detn/Documentos/dnui/html/options.php:305
+msgid "Theme or plugin can use the post meta table to save information"
+msgstr ""
+"Temas o plugin pueden utilizar esta zona para guardas sus informaciones"
+
+#: /home/detn/Documentos/dnui/html/options.php:307
+msgid ""
+"Search image in post meta, (this only will work if the image is in clear)"
+msgstr ""
+"Buscar imagen en el complemento del articulo (solo seran encontradas "
+"aquellas que tengan una referencia fisica)"
+
+#: /home/detn/Documentos/dnui/html/options.php:310
+msgid ""
+"(Ex: The plugin WooCommerce save products donwloabled with a direct ref "
+"like: toto.jpg, but the gallery image of the product will be save like "
+"(1,2,3...), each number is used to make reference to the image 1, image 2, "
+"image 3, etc..., so the plugin will show that the toto.jpg is used, but the "
+"image 1, image 2, image 3 will be showed like not used*"
+msgstr ""
+"(Ejemplo: El plugin WooCommerce guarda los productos descargables, en "
+"referencias directas como: todo.jpg, pero las imagenes utilizadas en la "
+"galeria del producto es guaradad asi (1,2,3...), cada numero representa una "
+"imagen, por lo tanto el 1 es para la imagen con ID 1, 2 para la imagen con "
+"ID 2, etc... Por lo que el plugin va encontrar la referencia toto.jpg, pero "
+"no las referencia para la imagen 1, image 2, por lo que estas tendran un "
+"estado no utilizado )"
+
+#: /home/detn/Documentos/dnui/html/options.php:314
+msgid ""
+"Don't worry, if you have DNUI PRO and checked the WooCommerce option, the "
+"plugin will found out that the image 1, image 2, image are used"
+msgstr ""
+"No te preocupes, si utilizas las DNUI PRO y tienes verificar WooCommerce, el "
+"plguin podra encontrar la referencia a las imagenes 1, 2 y colocarlas como "
+"utilizadas"
+
+#: /home/detn/Documentos/dnui/html/options.php:329
+msgid "Check in gallery"
+msgstr "verificar en galerias"
+
+#: /home/detn/Documentos/dnui/html/options.php:334
+msgid "Search images in gallery"
+msgstr "Buscar las imagenes en galerias"
+
+#: /home/detn/Documentos/dnui/html/options.php:336
+msgid ""
+"Certain gallery makers generate various sizes for responsive website use."
+msgstr ""
+"Algunas generadores de galerias puede utilizar tamaños de imagenes "
+"especificos"
+
+#: /home/detn/Documentos/dnui/html/options.php:351
+msgid "Check in shortcodes"
+msgstr "Verificar en shortcode"
+
+#: /home/detn/Documentos/dnui/html/options.php:356
+msgid ""
+"Search image in shortcode (the plugin will found out every shortcode used "
+"and get the html)"
+msgstr ""
+"Buscar imagenes en shortcodes (El plugin va a buscar todos los shortcodes y "
+"los convertira en HTML)"
+
+#: /home/detn/Documentos/dnui/html/options.php:372
+msgid "Check in draft"
+msgstr "Verificar en no publicados"
+
+#: /home/detn/Documentos/dnui/html/options.php:377
+msgid "The plugin will search in draft to"
+msgstr "Buscara en versiones en curso"
+
+#: /home/detn/Documentos/dnui/html/images.php:4
+#: /home/detn/Documentos/dnui/html/backup.php:4
+msgid "Fetching server..."
+msgstr "Llamando al servidor"
+
+#: /home/detn/Documentos/dnui/html/images.php:7
+msgid "Any pictures was found, try another page"
+msgstr "Ninguna imagen fue encontrada, intenta en otra pagina"
+
+#: /home/detn/Documentos/dnui/html/images.php:11
+msgid "Images used are displayed, click here for hide them"
+msgstr "Las imagenes utilizadas son visualizadas, click aqui para esconderlas "
+
+#: /home/detn/Documentos/dnui/html/images.php:12
+msgid "Images used are hidden, click here for show them"
+msgstr "Las imagenes utilizadas estan ocultas, click aqui para mostrarlas"
+
+#: /home/detn/Documentos/dnui/html/images.php:14
+msgid ""
+"Your blog have {{totalImages}} original image, at this page you have "
+"{{totalImageUsed}} used images and {{totalImageNotUsed}} not used images"
+msgstr ""
+"Vuestro blog tiene un total de {{totalImages}} imagenes originales, en esta "
+"pagina se estan mostrando {{totalImageUsed}} imagenes utilizadas y "
+"{{totalImageNotUsed}} no utilizadas."
+
+#: /home/detn/Documentos/dnui/html/images.php:19
+msgid "Name"
+msgstr "Nombre"
+
+#: /home/detn/Documentos/dnui/html/images.php:20
+msgid "Id"
+msgstr "Id"
+
+#: /home/detn/Documentos/dnui/html/images.php:21
+msgid "Size"
+msgstr "Tamaño"
+
+#: /home/detn/Documentos/dnui/html/images.php:22
+msgid "Source"
+msgstr "Fuente"
+
+#: /home/detn/Documentos/dnui/html/images.php:23
+msgid "In server"
+msgstr "En el servidor"
+
+#: /home/detn/Documentos/dnui/html/images.php:24
+msgid "Status"
+msgstr "Estado"
+
+#: /home/detn/Documentos/dnui/html/images.php:29
+msgid "Waiting..."
+msgstr "Esperando..."
+
+#: /home/detn/Documentos/dnui/html/images.php:44
+#: /home/detn/Documentos/dnui/html/images.php:53
+#: /home/detn/Documentos/dnui/html/images.php:80
+#: /home/detn/Documentos/dnui/html/images.php:89
+msgid "Unknown"
+msgstr "Desconocido"
+
+#: /home/detn/Documentos/dnui/html/images.php:45
+#: /home/detn/Documentos/dnui/html/images.php:54
+msgid "Pending"
+msgstr "Piendiendo"
+
+#: /home/detn/Documentos/dnui/html/images.php:49
+#: /home/detn/Documentos/dnui/html/images.php:60
+#: /home/detn/Documentos/dnui/html/images.php:85
+#: /home/detn/Documentos/dnui/html/images.php:99
+msgid "Backup..."
+msgstr "Restaurando..."
+
+#: /home/detn/Documentos/dnui/html/images.php:52
+#: /home/detn/Documentos/dnui/html/images.php:88
+msgid "Error"
+msgstr "Error"
+
+#: /home/detn/Documentos/dnui/html/images.php:55
+#: /home/detn/Documentos/dnui/html/images.php:91
+msgid "Used"
+msgstr "Usada"
+
+#: /home/detn/Documentos/dnui/html/images.php:56
+#: /home/detn/Documentos/dnui/html/images.php:93
+msgid "Not used"
+msgstr "No usada"
+
+#: /home/detn/Documentos/dnui/html/images.php:58
+#: /home/detn/Documentos/dnui/html/images.php:95
+#: /home/detn/Documentos/dnui/html/backup.php:34
+msgid "Deleted"
+msgstr "Borrado"
+
+#: /home/detn/Documentos/dnui/html/images.php:59
+#: /home/detn/Documentos/dnui/html/images.php:97
+msgid "Erasing..."
+msgstr "Borrando..."
+
+#: /home/detn/Documentos/dnui/html/images.php:81
+#: /home/detn/Documentos/dnui/html/images.php:90
+msgid "Asking..."
+msgstr "Preguntando..."
+
+#: /home/detn/Documentos/dnui/html/images.php:123
+msgid "Are you sure you want to delete the images?"
+msgstr "¡Seguro que deseas borrar la imagen?"
+
+#: /home/detn/Documentos/dnui/html/images.php:126
+msgid "this will be automatically continue in"
+msgstr "La accion sera validada automaticamente en "
+
+#: /home/detn/Documentos/dnui/html/images.php:131
+msgid "Yes delete all"
+msgstr "Si borrar todo"
+
+#: /home/detn/Documentos/dnui/html/images.php:132
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: /home/detn/Documentos/dnui/html/warning.php:2
+msgid ""
+"DNUI (<b>D</b>elete <b>N</b>ot <b>U</b>sed <b>I</b>mage) will search images "
+"from the database and try to find it on every Post and Page if one image has "
+"one reference in this either post or page native to WordPress or  if any "
+"reference is found, the plugin will tell you that the image is used."
+msgstr ""
+"DNUI Borrar imagenes no utilizadas en ingles (<b>D</b>elete <b>N</b>ot <b>U</"
+"b>sed <b>I</b>mage) buscara imagenes que estan en la base de datos e "
+"intentara encontrar si estas estan siendo o no utilizadas en cualquier tipo "
+"de articulo, pagina, shortcode o galeria de imagenes, siempre y cuando el "
+"comportamiento de WordPress no haya sido modificado."
+
+#: /home/detn/Documentos/dnui/html/warning.php:4
+msgid "Warning the backup system is deactivated, see the option page"
+msgstr ""
+"Advertencia, el sistema de respaldo esta descativado, mirad la pagina de "
+"opciones"
+
+#: /home/detn/Documentos/dnui/html/warning.php:6
+msgid ""
+"Warning you use wooCommerce plugin and you can have false 'not used' label, "
+"you have two options, you can select all wooCommerce sizes in the ignore "
+"size list or download the PRO version"
+msgstr ""
+"Advertencia, utilizas el plugin WooCommerce, por lo que puede encontrar "
+"falsos positivos 'no utilizada' en las imagenes, tienes dos opciones para "
+"arreglar esto, el primero es seleccionar los tres tamaños de imagenes "
+"relacionados con wooCommerce en la lista de ignorar tamaño de imagenes o "
+"descargar la version PRO "
+
+#: /home/detn/Documentos/dnui/html/warning.php:8
+msgid "Where i can foud DNUI PRO"
+msgstr "¡Donde puedo encontrar DNUI PRO?"
+
+#: /home/detn/Documentos/dnui/html/warning.php:10
+msgid "DNUI PRO version have some useful features:"
+msgstr "La version DNUI PRO , cuenta con algunas caracteristicas extras omo:"
+
+#: /home/detn/Documentos/dnui/html/warning.php:12
+msgid "Compatibility with WooCommerce"
+msgstr "Compatibilidad con WooCommerce "
+
+#: /home/detn/Documentos/dnui/html/warning.php:12
+msgid "(the main WooCommerce plugin, not other extends plugins)"
+msgstr "(Solo con la version oficial)"
+
+#: /home/detn/Documentos/dnui/html/warning.php:13
+msgid "Ignore images by clicking in the image name"
+msgstr "Ignorar imagenes con solo darle click en el nombre"
+
+#: /home/detn/Documentos/dnui/html/warning.php:14
+msgid ""
+"Ignore size by clicking in the size name and include this size name to the "
+"ignore size list if this size does not exist"
+msgstr ""
+"Ignorar tamaños de images con solo darle click en el nombre del tamaño y si "
+"algun tamaño no aparece en la lista agregarlo "
+
+#: /home/detn/Documentos/dnui/html/warning.php:16
+msgid "Delete all automatic button,"
+msgstr "Borrar automaticamente todas las imagenes con un solo click,"
+
+#: /home/detn/Documentos/dnui/html/warning.php:16
+msgid " this will go page by page and delete all images not used"
+msgstr " esto ira pagina por pagina borrando las imagenes no utilizadas"
+
+#: /home/detn/Documentos/dnui/html/warning.php:17
+msgid "Restore all backup"
+msgstr "Restaurar todos los respaldos"
+
+#: /home/detn/Documentos/dnui/html/warning.php:18
+msgid "Delete all backup"
+msgstr "Borrar todos los respaldos"
+
+#: /home/detn/Documentos/dnui/html/warning.php:21
+msgid "How to support this plugin"
+msgstr "Como ayudar este plugin"
+
+#: /home/detn/Documentos/dnui/html/warning.php:22
+msgid "You can give a good or bad review at "
+msgstr "Puedes dar un buen o mal comentarios en"
+
+#: /home/detn/Documentos/dnui/html/warning.php:22
+msgid "DNUI reviews"
+msgstr "DNUI comentarros"
+
+#: /home/detn/Documentos/dnui/html/warning.php:22
+msgid " or buy the DNUI PRO version"
+msgstr "o puedes comprar la version PRO"
+
+#: /home/detn/Documentos/dnui/html/warning.php:23
+msgid "Why i have to do Backup?"
+msgstr "¡Por que tengo que respaldar?"
+
+#: /home/detn/Documentos/dnui/html/warning.php:25
+msgid ""
+"This plugin will delete images and information from your server and the "
+"database, so you have to do a BACKUP every time you want to use this plugin."
+msgstr ""
+"Este lugin va a borrar imagenes e informacion en vuestro servidor y base de "
+"datos, por lo que es necesarios hacer un respaldo cada vew que vayas a "
+"utilizar este plugin"
+
+#: /home/detn/Documentos/dnui/html/warning.php:28
+msgid "Is the backup system from the DNUI plugin enough?"
+msgstr "¡Es suficiente el respaldo integrado?"
+
+#: /home/detn/Documentos/dnui/html/warning.php:30
+msgid ""
+"Yes and no, if you have the backup option active, the plugin will try to do "
+"one backup of every image you are try to delete, but this is not the main "
+"purpose of the DNUI plugin, so is not bullet proof"
+msgstr ""
+"Si y no, si tienes la opcion de respaldo activo, el plugin intentara hacer "
+"un respaldo de la imagen que estes borrando, pero dado que esto no es la "
+"principal utilzacion del plugin, la logica puede que no sea suficiente para "
+"mantener tu sitio integro"
+
+#: /home/detn/Documentos/dnui/html/warning.php:32
+msgid ""
+"Under plugins page there are various more effective plugins you can use. We "
+"suggest you try one"
+msgstr ""
+"En la pagina de WordPress para pluginsm puedes encontrar alguno que sea mas "
+"efectivo para hacer respaldos. "
+
+#: /home/detn/Documentos/dnui/html/warning.php:34
+msgid "Are the images actually not being not used?"
+msgstr "¡En realidad la imagen no esta siendo utilizada?"
+
+#: /home/detn/Documentos/dnui/html/warning.php:36
+msgid ""
+"Yes and not, the 'not used' label, tells you that the imageName.imageType "
+"(toto.jpg) is not found in any Post/Page/Shortcode, this does not mean that "
+"a page generated by a plugin is not using this image and therefore if you "
+"delete said image, be aware, that it could be that a plugin is using it."
+msgstr ""
+"Si y no, la mencion 'no utilizada', hace referencia a que el plugin no ha "
+"logrado conseguir una referencia de esta en la base de datos, lo que quiere "
+"decir, que si tu tema o otro plugin utiliza de alguna manera esta imagen sin "
+"agregar una referencia de la base de datos, el plugin puede dar falsos "
+"positivos."
+
+#: /home/detn/Documentos/dnui/html/warning.php:38
+msgid "To go further:"
+msgstr "Para ir mas lejos"
+
+#: /home/detn/Documentos/dnui/html/warning.php:40
+msgid ""
+"So if you have another plugin, for example 'Easy load X' that use the "
+"example.jpg in one HTML code or Javascript, if the DNUI plugin can't find "
+"any reference at the database, it will return a false 'not used' label"
+msgstr ""
+"Si tienes otro plugin o tema, que utliza la imagen ejemplo.jpg en algun "
+"codigo HTML o Javascript, si DNUI no logra encontrar la referencia de la "
+"imagen en la base de datos, obtendras un falso 'no utilizada'"
+
+#: /home/detn/Documentos/dnui/html/warning.php:44
+msgid "How to fix the false 'not used' label?"
+msgstr "¡Como resolver el falos positivo 'no utilizada'?"
+
+#: /home/detn/Documentos/dnui/html/warning.php:46
+msgid "This question is a little complex to answer however,"
+msgstr "Esta pregunta puede ser algo dificil de responder, aunque"
+
+#: /home/detn/Documentos/dnui/html/warning.php:48
+msgid ""
+"I built this plugin to help you to fix this problem and thus you do have "
+"some options, PLEASE USE THEM:"
+msgstr ""
+"Yo construi este plugin con algunas herramientas para resolver este "
+"problemas, UTILIZALAS"
+
+#: /home/detn/Documentos/dnui/html/warning.php:51
+msgid ""
+"Use the Ignore Size Option, you can select one or more options (use Ctrl"
+"+Click-to un/select) to ignore the size's"
+msgstr ""
+"Utiliza la opcion de ignorar tamaños de imagenes, puedes seleccion una o mas "
+"de esta lista (Utiliza los comando ctrl+click para seleccion o no)"
+
+#: /home/detn/Documentos/dnui/html/warning.php:54
+msgid ""
+"You can dev your own Checker Image[Plugin].php code, and add this to "
+"Checkers DNUI (you can send me the code and I will put this in the wordpress."
+"org version)"
+msgstr ""
+"Realizar vuestra propia version de Checker Image[Plugin].php y agregarla a "
+"Checkers DNUI (Puedes enviarme el codigo y yo lo agregare a la proxima "
+"version de Wordpress.org)"
+
+#: /home/detn/Documentos/dnui/html/warning.php:57
+msgid ""
+"Ask me to do it this plugin compatible with the X Plugin (Only for Pro "
+"version)"
+msgstr ""
+"Pedirme agregar la compatibilidad con el plugin X (Solo en versiones PRO)"
+
+#: /home/detn/Documentos/dnui/html/backup.php:7
+msgid "Any backup was found"
+msgstr "Ninguna resguardo fue encontrado"
+
+#: /home/detn/Documentos/dnui/html/backup.php:14
+msgid "Backup ID (Image ID)"
+msgstr "ID Resguardo (ID image) "
+
+#: /home/detn/Documentos/dnui/html/backup.php:16
+#: /home/detn/Documentos/dnui/html/backup.php:33
+msgid "Delete"
+msgstr "Borrar"
+
+#: /home/detn/Documentos/dnui/html/backup.php:27
+msgid "Restoring..."
+msgstr "Restaurando..."
+
+#: /home/detn/Documentos/dnui/html/backup.php:28
+msgid "Restored and deleting..."
+msgstr "Recuperado y borrando..."
+
+#: /home/detn/Documentos/dnui/html/backup.php:29
+msgid "Restored"
+msgstr "Restaurado"
+
+#: /home/detn/Documentos/dnui/html/backup.php:35
+msgid "Deleting..."
+msgstr "Borrando..."
+
+#: /home/detn/Documentos/dnui/html/log.php:5
+msgid "Logs are empty..."
+msgstr "Los registros estan vacios"
+
+#~ msgid "DNUI (Delete not used images)"
+#~ msgstr "DNUI (Borrar imagenes no utilizadas)"
+
+#~ msgid ""
+#~ "This plugin will delete all not used images file, the plugin search all "
+#~ "image, not referred by any post of wordpress"
+#~ msgstr ""
+#~ "Este plugin va a borrar todas las imagenes no utilizadas, buscando todas "
+#~ "las imagenes, encontrando las que no son referenciadas en ninguna "
+#~ "articulo o pagina de tu sitio wordpress"
