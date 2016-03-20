@@ -243,7 +243,7 @@ if (is_admin()) {
     }
 
     
-        include_once 'php/rest/ConfRestDNUI.php';
+    include_once 'php/rest/ConfRestDNUI.php';
     
 
 
