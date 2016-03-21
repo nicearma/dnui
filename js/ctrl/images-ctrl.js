@@ -18,12 +18,12 @@ angular.module('dnuiPlugin')
 
             $scope.changeShowUsedImage=function(){
                 $scope.options.showUsedImage= !$scope.options.showUsedImage;
-            }
+            };
 
             var resetCountStatus=function(){
                 $scope.totalImageUsed=0;
                 $scope.totalImageNotUsed=0;
-            }
+            };
             
 
             var countStatus=function(status){
@@ -32,7 +32,7 @@ angular.module('dnuiPlugin')
                                             }else{
                                                 $scope.totalImageNotUsed++;
                                             }
-            }
+            };
 
             var getImages = function (numberPage) {
                 resetCountStatus();
