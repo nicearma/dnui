@@ -6,14 +6,19 @@ angular.module('dnuiPlugin')
         function ($scope, $rootScope, OptionsResource, BackupResource,logFactoroy) {
 
             var inutilCallOptions = true;
-            var inutilCallNumberPage = true;
 
             OptionsResource.get().$promise.then(function (options) {
+
                 $scope.options = options;
                 logFactoroy.setLog($scope.options.debug);
+                OptionsResource.getSizes().$promise.then(function (sizes) {
+                    $scope.sizes = sizes;
+
+                });
 
                 $scope.$watchCollection('options', function (newCollection, oldCollection, scope) {
 
+                    logFactoroy.setLog($scope.options.debug);
                     //first call
                     if (inutilCallOptions) {
                         inutilCallOptions = false;
@@ -43,10 +48,6 @@ angular.module('dnuiPlugin')
 
             });
 
-            OptionsResource.getSizes().$promise.then(function (sizes) {
-                $scope.sizes = sizes;
-
-            });
 
             $scope.resetNumberPage = function () {
                 $scope.options.numberPage = 1;

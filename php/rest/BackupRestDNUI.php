@@ -23,8 +23,8 @@ class BackupRestDNUI
 
     public function readAll()
     {
-        echo json_encode(HelperDNUI::scanDir(HelperDNUI::backupDir()), JSON_FORCE_OBJECT);
-        wp_die();
+
+        die(json_encode(HelperDNUI::scanDir(HelperDNUI::backupDir()), JSON_FORCE_OBJECT));
     }
 
     public function deleteAll()
@@ -60,8 +60,8 @@ class BackupRestDNUI
         } else {
             $statusBackup->setInServer(3);
         }
-        echo json_encode($statusBackup);
-        wp_die();
+
+        die(json_encode($statusBackup));
     }
 
     public function make()
@@ -150,8 +150,7 @@ class BackupRestDNUI
 
         }
 
-        echo json_encode($statusBySizes);
-        wp_die();
+        die(json_encode($statusBySizes));
     }
 
     public function restoreBackup()
@@ -194,8 +193,8 @@ class BackupRestDNUI
         }
 
         $statusBackup->setInServer(2); //2 -> in the upload folder
-        echo json_encode($statusBackup);
-        wp_die();
+
+        die(json_encode($statusBackup));
     }
 
 
@@ -211,12 +210,13 @@ class BackupRestDNUI
                 $statusBackup->setInServer(1); // 1 -> exists
             }
         }
-        echo json_encode($statusBackup);
-        wp_die();
+
+        die(json_encode($statusBackup));
     }
 
     public static function  existsBackupFolder()
     {
+
         $statusBackup = new StatusBackupDNUI();
 
         if (HelperDNUI::backupFolderExist()) {
@@ -224,8 +224,8 @@ class BackupRestDNUI
         } else {
             $statusBackup->setInServer(0); // 0 -> not exists
         }
-        echo json_encode($statusBackup);
-        wp_die();
+
+        die(json_encode($statusBackup));
     }
 
 

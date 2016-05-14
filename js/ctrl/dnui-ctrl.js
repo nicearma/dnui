@@ -8,7 +8,6 @@ angular.module('dnuiPlugin')
             $scope.options= {backup:-1};
             $scope.wc={active:-1};
             //go to tabImage
- 			$scope.wc=OptionsResource.haveWC();
             $scope.tabImages=function(){
                 $rootScope.$broadcast('tabImages', $scope.options);
             };
@@ -29,6 +28,7 @@ angular.module('dnuiPlugin')
             $rootScope.$on('options', function (event, options) {
 
                 $scope.options = options;
+                $scope.wc=OptionsResource.haveWC();
 
             });
 

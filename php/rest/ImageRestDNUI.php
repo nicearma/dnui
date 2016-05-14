@@ -31,8 +31,7 @@ class ImageRestDNUI
     public function countImage()
     {
         $count = $this->databaseDNUI->countImages();
-        echo json_encode(array('0' => $count[0]['count(*)']));
-        wp_die();
+        die(json_encode(array('0' => $count[0]['count(*)'])));
     }
 
 
@@ -44,20 +43,20 @@ class ImageRestDNUI
 
         $imagesIds = $this->databaseDNUI->getImages($this->optionsDNUI->getNumberPage(), $this->optionsDNUI->getImageShowInPage(), $this->optionsDNUI->getOrder());
         $images = ConvertWordpressToDNUI::convertIdsToImagesDNUI($imagesIds);
-        echo json_encode($images);
-        wp_die();
+        die(json_encode($images));
     }
 
     public function readGalleries()
     {
         $result = ConvertWordpressToDNUI::convertIdToGalleriesSizes($this->databaseDNUI->getGalleries($this->optionsDNUI));
+
         if (!empty($result)) {
-            echo json_encode($result);
+            $output= json_encode($result);
         } else {
-            echo '{}';
+            $output= '{}';
         }
 
-        wp_die();
+        die($output);
     }
 
     public function readShortCodes()
@@ -71,9 +70,8 @@ class ImageRestDNUI
         }
 
         $result= array_values(array_merge($resultContent,$resultExcerpt));
-       
-        echo json_encode($result);
-        wp_die();
+
+        die( json_encode($result));
     }
     
     public function verifyStatusById()
@@ -95,10 +93,7 @@ class ImageRestDNUI
             $status[$imageDNUI->getId()][$imageSize->getSizeName()] = $statusDNUI;
         }
 
-        echo json_encode($status);
-        wp_die();
-
-
+        die( json_encode($status));
     }
 
 
@@ -106,8 +101,7 @@ class ImageRestDNUI
     {
         $nameSizes = get_intermediate_image_sizes();
         array_push($nameSizes, 'original');
-        echo json_encode($nameSizes);
-        wp_die();
+        die(json_encode($nameSizes));
     }
 
     public function deleteByIdAndSize()
@@ -128,8 +122,7 @@ class ImageRestDNUI
         }
 
         $imageDNUI = ConvertWordpressToDNUI::convertIdToImageDNUI($imageId);
-        echo json_encode($this->databaseDNUI->delete($imageDNUI, $sizeNames, $this->optionsDNUI));
-        wp_die();
+        die(json_encode($this->databaseDNUI->delete($imageDNUI, $sizeNames, $this->optionsDNUI)));
     }
 
 

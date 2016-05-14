@@ -1,18 +1,17 @@
-=== DNUI Delete not used image===
+=== DNUI ===
 Contributors: nicearma
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DX8UCXHB6RMD4&lc=US&item_name=DNUI%20donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
-Tags: image, clean up, images, delete, image not used, image unused, delete unused image, delete not used image, clean up image, clean image, clean images
+Tags: image, clean up, images, delete, image not used, image unused, delete unused image, delete not used image, clean up image, clean image, clean images, clean, clean wp, clean wordpress
 Requires at least: 4.4
 Tested up to: 4.4
-Stable tag: 2.5.3
+Stable tag: 2.5.4
 
-Search/Delete all not used images from the database and make space in your server and cleanup the database from all unused images
+Search image from the database and delete all unused images making space in your server and clean up the database from all them
  
 == Description ==
 
-DNUI (<b>D</b>elete <b>N</b>ot <b>U</b>sed <b>I</b>mage) will search images from the database and try to find it on every Post and Page if one image has one reference in this either post or page native to WordPress or  if any reference is found, the plugin will tell you that the image is used.
+DNUI (<b>D</b>elete <b>N</b>ot <b>U</b>sed <b>I</b>mage) will search images from the database and try to find it on every Post and Page, if one image has one reference in this either post or page, the plugin will tell you that the image is used.
 
-The version 2.0 is one big remake of this plugin, all the code changed, now the code work by Rest Service and use AngularJS (not more the BackboneJS)
+The version 2.0 is one big remake of this plugin, all the code have changed, now the code work by Rest Service and use AngularJS (not more the BackboneJS)
 
 The update from the 1.x to the 2.0 is automatic, the only problem is that you will lost the backup folder and all backups made from the version 1.x
 
@@ -37,7 +36,19 @@ Translation:
 
 You can found the <a href="https://apps.nicearma.com/product/dnui-delete-not-used-image-pro/">DNUI PRO VERSION</a> if you need more useful features, like compatibility with WooCommerce
 
+If you need search all type of file or search from you upload folder try <a href="https://es.wordpress.org/plugins/cuf-cleanup-upload-folder/">CUF</a>
+
+Github at <a href="https://github.com/nicearma/dnui">DNUI</a>
+
 == Changelog ==
+
+= Version 2.5.4 =
+* Change log
+* Added ob_clean to clean the output
+* Change wp_die for die(json) (see at other plugin)
+* Added more useful information
+* Add new context for translation
+* Added alert if fetching server go wrong
 
 = Version 2.5.3 =
 * Better user experience
@@ -165,7 +176,6 @@ The hard way :
 
 == Frequently Asked Questions ==
 
-
 = Why i have to do Backup? =
 
 This plugin will delete images and information's in your server and the database, so you have to do one BACKUP every time you want
@@ -178,10 +188,9 @@ In the WordPress.org plugin page you can find a lots of Backup Plugin, so the wi
 
 = Is really not used / unused? =
 
-Yes and not, the not used label, tell you that the imageName.imageType (toto.jpg) is not found in any Post or Page
-So if you have another plugin, for example 'E-commerce X' that use the toto.jpg in one HTML code or SHORTCODE, the
-DNUI plugin can't work find any reference, so you will have one false 'not used' label
-
+Yes and not, the not used label, tell you that the imageName.imageType (toto.jpg) is not found in any Post/Page/Shortcode
+So if you have another plugin, for example 'E-commerce X' that use the toto.jpg in one HTML code, the
+DNUI plugin can't work finding any reference, so you will have one false 'not used' label
 
 = How to fix the false 'not used' label? =
 
@@ -192,15 +201,12 @@ I build this plugin for help you to fix this problem, you have somes options:
 2.  You can dev your own ChekkerImage[Plugin].php code, and add this to CheckersDNUI (you can send me the code and i will put this in the Free version)
 3.  Ask me to do it this plugin compatible with the X Plugin (Only for Pro version)
 
-
 = Where i can found the version pro? =
 You can found it at https://apps.nicearma.com
 
-= Why after upgrade the plugin, doesn't work =
+= Fetching server... all time =
 
-This is a bug that i don't know have to resolver, the problem is that i change some value from the database, and in the update this value is not added to the database, but the solution is easy: 
-*Deactivate and active it the plugin again*
-
+I really don't know why some of you have this problem, try to reset the options at the option tab, and if the problem continue make a Support Threads at wordpress.org
 
 = How to test the plugin in my page =
 

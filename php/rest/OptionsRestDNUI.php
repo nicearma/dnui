@@ -18,8 +18,7 @@ class OptionsRestDNUI
     public function read()
     {
         $optionsDNUI = OptionsRestDNUI::readOptions();
-        echo json_encode($optionsDNUI);
-        wp_die();
+        die( json_encode($optionsDNUI));
     }
 
     public function update()
@@ -27,7 +26,7 @@ class OptionsRestDNUI
         $optionsJson = json_decode(file_get_contents('php://input'));
         $optionsDNUI = ConvertOptionsDNUI::convertOptionJsonToOptionDNUI($optionsJson);
         update_option('dnui_options', serialize($optionsDNUI));
-        wp_die();
+        die();
     }
 
 
@@ -48,14 +47,12 @@ class OptionsRestDNUI
 
         $optionsDNUI = new OptionsDNUI();
         update_option('dnui_options', serialize($optionsDNUI));
-        echo json_encode($optionsDNUI);
-        wp_die();
+        die( json_encode($optionsDNUI));
     }
 
 	public function haveWooCommerce(){
         $haveWC=array("active"=>in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) );
-        echo json_encode($haveWC);
-        wp_die();
+        die(json_encode($haveWC));
     }
 
 }

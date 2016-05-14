@@ -58,5 +58,8 @@
     </li>
 </ul>
 </p>
-
+<h3><?php _e("Dropout of your site", 'dnui'); ?></h3>
+<p>
+    <?php _e("This plugin use a lots ajax, so the plugin will call several time your server, some server company have special protection against this kind of logic (search about denial-of-service (DoS) attack)", 'dnui'); ?>
+</p>
 

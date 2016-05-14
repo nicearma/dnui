@@ -16,22 +16,22 @@ angular.module('dnuiPlugin')
             $scope.callServerStatus = 0;
 
 
-            $scope.changeShowUsedImage=function(){
-                $scope.options.showUsedImage= !$scope.options.showUsedImage;
+            $scope.changeShowUsedImage = function () {
+                $scope.options.showUsedImage = !$scope.options.showUsedImage;
             };
 
-            var resetCountStatus=function(){
-                $scope.totalImageUsed=0;
-                $scope.totalImageNotUsed=0;
+            var resetCountStatus = function () {
+                $scope.totalImageUsed = 0;
+                $scope.totalImageNotUsed = 0;
             };
-            
 
-            var countStatus=function(status){
-                 if(status.used==1){
-                                                $scope.totalImageUsed++;
-                                            }else{
-                                                $scope.totalImageNotUsed++;
-                                            }
+
+            var countStatus = function (status) {
+                if (status.used == 1) {
+                    $scope.totalImageUsed++;
+                } else {
+                    $scope.totalImageNotUsed++;
+                }
             };
 
             var getImages = function (numberPage) {
@@ -151,7 +151,7 @@ angular.module('dnuiPlugin')
                                             }
                                             imageSize['status'] = status;
                                             countStatus(status);
-                                           
+
 
                                         }
 
@@ -170,6 +170,9 @@ angular.module('dnuiPlugin')
                             $scope.deleteAllButton = 1; //delete all button
 
                         });
+                    }, function(result){
+                        alert("Something go wrong, please activate the debug option, see the last 'tranform' and 'response: dnui_get_all_by_options_image', you can see to the console 'shift+ctrl+i'");
+                        console.log('Error fetching server...:',result);
                     }
                 );
             };
@@ -184,7 +187,7 @@ angular.module('dnuiPlugin')
 
             });
 
-            var getChecks=function (numberPage){
+            var getChecks = function (numberPage) {
                 var syncCall = [];
 
                 //i have to refresh the image tab
@@ -226,7 +229,6 @@ angular.module('dnuiPlugin')
                     }
 
 
-
                     if (syncCall.length > 0) {
                         $q.all(syncCall).then(function () {
                             getImages(numberPage);
@@ -239,19 +241,17 @@ angular.module('dnuiPlugin')
             }
 
 
-
-
             //tab image is call
             $rootScope.$on('tabImages', function () {
 
                 getChecks();
-                
+
             });
 
             //call if the numberPage change
             $scope.changeNumberPage = function () {
                 refreshImages = true;
-               getChecks($scope.options.numberPage);
+                getChecks($scope.options.numberPage);
             };
 
             //refresh the image tab went is call
@@ -265,7 +265,7 @@ angular.module('dnuiPlugin')
                 ImagesResource.count().$promise.then(function (count) {
                     $scope.totalImages = count['0'];
                 });
-              
+
             });
 
             //not delete original image if one size is used
@@ -280,7 +280,7 @@ angular.module('dnuiPlugin')
                     //if one size is used, the origina image have to be ignored
                     for (var imageSize in image.imageSizes) {
                         //image size used or this is ignored, the original image have to be ignored
-                        if (image.imageSizes[imageSize].status.used == 1 ) {
+                        if (image.imageSizes[imageSize].status.used == 1) {
                             return false;
                         }
                     }
@@ -440,11 +440,11 @@ angular.module('dnuiPlugin')
 
                                 //nothing to do
                                 if (sizeNames.length == 0) {
-                                    
-                                } else if($scope.options.backup) {
-                                     syncCall.push(makeBackupAndDelete(image.id, sizeNames, image));
-                                   
-                                }else{
+
+                                } else if ($scope.options.backup) {
+                                    syncCall.push(makeBackupAndDelete(image.id, sizeNames, image));
+
+                                } else {
                                     //skip the validation and go to delete function
                                     syncCall.push(deleteFunction(image.id, sizeNames, image));
                                 }
@@ -454,9 +454,9 @@ angular.module('dnuiPlugin')
 
                         });
 
-                           $q.all(syncCall).then(function () {
+                        $q.all(syncCall).then(function () {
                             //TODO: reactivate button
-                           });
+                        });
                     } else {
                         $scope.deleteAllButton = 1;
                     }
@@ -467,7 +467,6 @@ angular.module('dnuiPlugin')
 
 
             };
-
 
 
         }
