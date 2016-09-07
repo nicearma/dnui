@@ -1,8 +1,8 @@
 <div id="logDNUI" ng-controller="LogCtrl">
 
-<h3><?php _e('Logs', 'dnui') ?></h3>
+<h3><?php _e('Logs','dnui-delete-not-used-image-wordpress'); ?></h3>
 
-    <p ng-if="logs.length==0"><?php _e('Logs are empty...', 'dnui') ?></p>
+    <p ng-if="logs.length==0"><?php _e('Logs are empty...','dnui-delete-not-used-image-wordpress'); ?></p>
 
     <uib-accordion close-others="oneAtATime">
         <uib-accordion-group heading="{{log.type}}" ng-repeat="log in logs">

@@ -15,6 +15,15 @@ angular.module('dnuiPlugin')
              */
             $scope.callServerStatus = 0;
 
+            var currentsCalls=[];
+
+            var resetCurrentsCalls=function(){
+                if(currentsCalls.length>0){
+                    currentsCalls.forEach(function(call){
+                        call.$cancelRequest();
+                    });
+                }
+            };
 
             $scope.changeShowUsedImage = function () {
                 $scope.options.showUsedImage = !$scope.options.showUsedImage;
@@ -49,6 +58,11 @@ angular.module('dnuiPlugin')
                 } else {
                     numberPage = {numberPage: numberPage};
                 }
+
+               resetCurrentsCalls();
+
+
+
                 //important array, this will help to sync all ansync call to the server, use for the delete all logic
                 var syncCall = [];
                 //call to server
@@ -83,9 +97,12 @@ angular.module('dnuiPlugin')
                                 imageSize.status.inServer = -1;
                             });
 
+                            var call=ImagesResource.verifyUsedById({id: image['id']});
+                            currentsCalls.push(call);
+
                             //all ansync call of verify status added to the sync help array
                             //all image going to be verified
-                            syncCall.push(ImagesResource.verifyUsedById({id: image['id']}).$promise.then(function (statusSizes) {
+                            syncCall.push(call.$promise.then(function (statusSizes) {
 
                                     //try to fix thumbnail or size used in gallery but not found in image
                                     if ($scope.options.galleryCheck) {
@@ -209,6 +226,7 @@ angular.module('dnuiPlugin')
 
                                 delete galleriesSizes.$promise;
                                 delete galleriesSizes.$resolved;
+                                delete galleriesSizes.$cancelRequest;
                                 $scope.galleriesSizes = galleriesSizes;
 
                             }));
@@ -222,6 +240,7 @@ angular.module('dnuiPlugin')
                             syncCall.push(ImagesResource.shortcodes().$promise.then(function (htmlShortcodes) {
                                 delete htmlShortcodes.$promise;
                                 delete htmlShortcodes.$resolved;
+                                delete htmlShortcodes.$cancelRequest;
                                 $scope.htmlShortcodes = htmlShortcodes;
 
                             }));
@@ -251,6 +270,7 @@ angular.module('dnuiPlugin')
             //call if the numberPage change
             $scope.changeNumberPage = function () {
                 refreshImages = true;
+                resetCurrentsCalls();
                 getChecks($scope.options.numberPage);
             };
 

@@ -21,6 +21,7 @@ angular.module('dnuiPlugin')
                     //clean the object
                     delete backupIds.$resolved;
                     delete backupIds.$promise;
+                    delete backupIds.$cancelRequest;
                     //
                     //create the backupId Object, all file can be deleted
                     angular.forEach(backupIds, function (backupId, key, obj) {

@@ -1,8 +1,8 @@
 <?php
 /*
   Plugin Name: DNUI
-  Version: 2.5.4
-  Plugin URI: http://www.nicearma.com/delete-not-used-image-wordpress-dnui/
+  Version: 2.5.6
+  Plugin URI: http://www.nicearma.com/dnui-delete-not-used-image-wordpress/
   Author: Nicearma
   Author URI: http://www.nicearma.com/
   Text Domain: dnui
@@ -106,38 +106,38 @@ function DNUI_display_menu()
 
             <uib-tabset>
 
-                <uib-tab  heading="<?php _e('Warning', 'dnui') ?>">
+                <uib-tab  heading="<?php _e('Warning','dnui-delete-not-used-image-wordpress'); ?>">
                     <h1>
-                        <?php _e('WARNING ABOUT THIS PLUGIN', 'dnui') ?>
+                        <?php _e('WARNING ABOUT THIS PLUGIN','dnui-delete-not-used-image-wordpress'); ?>
                     </h1>
                     <?php include_once 'html/warning.php'; ?>
                 </uib-tab>
 
-                <uib-tab select='tabImages()' heading="<?php _e('Images', 'dnui') ?>">
+                <uib-tab select='tabImages()' heading="<?php _e('Images','dnui-delete-not-used-image-wordpress'); ?>">
                     <h1>
-                        <?php _e('DNUI search unused/used image in database', 'dnui') ?>
+                        <?php _e('DNUI search unused/used image in database','dnui-delete-not-used-image-wordpress'); ?>
                     </h1>
                     <?php include_once 'html/images.php'; ?>
                 </uib-tab>
 
-                <uib-tab select='tabBackups()' heading="<?php _e('Backups', 'dnui') ?>">
+                <uib-tab select='tabBackups()' heading="<?php _e('Backups','dnui-delete-not-used-image-wordpress'); ?>">
                     <h1>
-                        <?php _e('DNUI backup', 'dnui') ?>
+                        <?php _e('DNUI backup','dnui-delete-not-used-image-wordpress'); ?>
                     </h1>
                     <?php include_once 'html/backup.php'; ?>
 
                 </uib-tab>
 
-                <uib-tab select='tabOptions()' heading="<?php _e('Options', 'dnui') ?>">
+                <uib-tab select='tabOptions()' heading="<?php _e('Options','dnui-delete-not-used-image-wordpress'); ?>">
                     <h1>
-                        <?php _e('DNUI options', 'dnui') ?>
+                        <?php _e('DNUI options','dnui-delete-not-used-image-wordpress'); ?>
                     </h1>
                     <?php include_once 'html/options.php'; ?>
                 </uib-tab>
 
-                <uib-tab select='tabLogs()' heading="<?php _e('Logs', 'dnui') ?>">
+                <uib-tab select='tabLogs()' heading="<?php _e('Logs','dnui-delete-not-used-image-wordpress'); ?>">
                     <h1>
-                        <?php _e('DNUI Logs', 'dnui') ?>
+                        <?php _e('DNUI Logs','dnui-delete-not-used-image-wordpress'); ?>
                     </h1>
                     <?php include_once 'html/log.php'; ?>
                 </uib-tab>

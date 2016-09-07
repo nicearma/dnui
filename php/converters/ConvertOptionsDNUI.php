@@ -60,7 +60,7 @@ class ConvertOptionsDNUI
         $optionsDNUI->setShowIgnoreSizes($optionJson->showIgnoreSizes);
 
         $optionsDNUI->setGalleryCheck($optionJson->galleryCheck);
-        $optionsDNUI->setShortCodeCheck($optionJson->galleryCheck);
+        $optionsDNUI->setShortCodeCheck($optionJson->shortCodeCheck);
         $optionsDNUI->setExcerptCheck($optionJson->excerptCheck);
         $optionsDNUI->setPostMetaCheck($optionJson->postMetaCheck);
         $optionsDNUI->setDraftCheck($optionJson->draftCheck);

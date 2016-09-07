@@ -95,7 +95,7 @@ angular
 
         $httpProvider.defaults.transformResponse = appendTransform(newTransformResponse,function (value) {
 
-            if(!_.isUndefined(value.httpStatus)){
+            if(!_.isNull(value)&&!_.isUndefined(value)&&!_.isUndefined(value.httpStatus)){
                 var httpStatus= value.httpStatus;
                 delete value.httpStatus;
                 if (httpStatus == 400) {
@@ -108,15 +108,47 @@ angular
 
         $httpProvider.interceptors.push('myHttpInterceptor');
 
-    }]);
-    /*.factory('$exceptionHandler', ['logFactoroy', function (logFactoroy) {
+    }])    .factory('$exceptionHandler', ['logFactoroy','$injector', function (logFactoroy,$injector) {
 
         return function (exception, cause) {
-            console.log(exception, cause);
-            logFactoroy.addErrors('exception',exception);
+
+            var messages= {exception:exception, cause:cause};
+            logFactoroy.addLogs('Exception:',messages);
+
+            console.log(messages);
+            var $uibModal = $injector.get('$uibModal');
+
+
+            var modalInstance = $uibModal.open({
+
+                templateUrl: 'errorDnui.html',
+                controller: 'errorCtrl',
+                resolve: {
+                    messages: function () {
+                        return messages;
+                    }
+                }
+            });
+
+
+            modalInstance.result.then(function (validation) {
+
+            });
 
 
         };
     }]
-);*/
+).config(['$resourceProvider', function ($resourceProvider) {
+        $resourceProvider.defaults.cancellable = true;
+    }]).controller('errorCtrl', function ($scope, $uibModalInstance,messages) {
+
+
+        $scope.messages=messages;
+
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
+
+    });
+
 

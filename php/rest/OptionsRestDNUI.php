@@ -50,9 +50,22 @@ class OptionsRestDNUI
         die( json_encode($optionsDNUI));
     }
 
-	public function haveWooCommerce(){
-        $haveWC=array("active"=>in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) );
+    public function haveWooCommerce()
+    {
+        $haveWC = OptionsRestDNUI::havePlugin('woocommerce');
+
         die(json_encode($haveWC));
     }
 
+    public static function  havePlugin($pluginName)
+    {
+        $havePlugin = false;
+        foreach (apply_filters('active_plugins', get_option('active_plugins')) as $plugin) {
+            if (strpos($pluginName, $plugin) == !false) {
+                $havePlugin = true;
+                break;
+            }
+        }
+        return $havePlugin;
+    }
 }
