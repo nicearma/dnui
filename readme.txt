@@ -3,7 +3,7 @@ Contributors: nicearma
 Tags: image, clean up, images, delete, image not used, image unused, delete unused image, delete not used image, clean up image, clean image, clean images, clean, clean wp, clean wordpress
 Requires at least: 4.4
 Tested up to: 4.6
-Stable tag: 2.5.6
+Stable tag: 2.5.7
 
 Search image from the database and delete all unused images making space in your server and clean up the database from all them
  
@@ -41,6 +41,9 @@ If you need search all type of file or search from you upload folder try <a href
 Github at <a href="https://github.com/nicearma/dnui">DNUI</a>
 
 == Changelog ==
+
+= Version 2.5.7 =
+* Verify if post is not null at getShortCode
 
 = Version 2.5.6 =
 * Migration angular 1.4.x to 1.5.x

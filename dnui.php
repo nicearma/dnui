@@ -1,11 +1,11 @@
 <?php
 /*
   Plugin Name: DNUI
-  Version: 2.5.6
+  Version: 2.5.7
   Plugin URI: http://www.nicearma.com/dnui-delete-not-used-image-wordpress/
   Author: Nicearma
   Author URI: http://www.nicearma.com/
-  Text Domain: dnui
+  Text Domain: dnui-delete-not-used-image-wordpress
   Domain Path: /languages
   Description: Search image from the database and delete all unused images making space in your server and clean up the database from all unused images
  */

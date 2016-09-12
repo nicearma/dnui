@@ -131,35 +131,36 @@ class ConvertWordpressToDNUI
         foreach ($postIds as $postId) {
             $post = get_post($postId['id']);
 
-            if ($row == 'content') {
-                $text = $post->post_content;
+            if ($post != null) {
 
-            } else if ($row == 'excerpt') {
-                $text = $post->post_excerpt;
-            } else {
-                $text = '';
-            }
-            if (preg_match_all('/' . $pattern . '/s', $text, $matches)
-                && array_key_exists(2, $matches)
-            ) {
-                unset($post);
+                if ($row == 'content') {
+                    $text = $post->post_content;
 
-                $htlm = '';
+                } else if ($row == 'excerpt') {
+                    $text = $post->post_excerpt;
+                } else {
+                    $text = '';
+                }
+                if (preg_match_all('/' . $pattern . '/s', $text, $matches)
+                    && array_key_exists(2, $matches)
+                ) {
+                    unset($post);
 
-                foreach ($matches[0] as $shortCode) {
+                    $htlm = '';
 
-                    $htlm .= do_shortcode($shortCode);
+                    foreach ($matches[0] as $shortCode) {
+
+                        $htlm .= do_shortcode($shortCode);
+                    }
+
+                    if (!empty($htlm)) {
+                        $htlm = str_replace($special, "", $htlm);
+                        $htlmShortCode[] = $htlm;
+                    }
+
                 }
 
-                if (!empty($htlm)) {
-                    $htlm = str_replace($special, "", $htlm);
-                    $htlmShortCode[] = $htlm;
-                }
-
-
             }
-
-
         }
         return $htlmShortCode;
 
